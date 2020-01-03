@@ -33,13 +33,11 @@ public class Level1Enemies {
         }
     }
 
-    public void attack1(ArrayList<String> enemyNames){
+    public void attack1(String name){
         for (ArrayList list : enemies){
             for (TargetDummy targetDummy : targetDummies){
-                for (String name : enemyNames){
-                    if (name.equals(targetDummy.getName())){
-                        targetDummy.attack1(1);
-                    }
+                if (targetDummy.getName().equals(name)){
+                    targetDummy.attack1(1);
                 }
             }
         }

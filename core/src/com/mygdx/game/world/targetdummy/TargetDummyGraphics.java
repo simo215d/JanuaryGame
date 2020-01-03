@@ -11,6 +11,12 @@ public class TargetDummyGraphics{
     //body sprite stuff
     private Texture targetdummyTexture;
     private Sprite targetdummySprite;
+    //health bar sprite green
+    private Texture greenHealthBarTexture;
+    private Sprite greenHealthBarSprite;
+    //health bar sprite red
+    private Texture redHealthBarTexture;
+    private Sprite redHealthBarSprite;
     //animation stuff
     private static final int FRAME_COLS = 2, FRAME_ROWS = 1;
     private Animation<TextureRegion> walkAnimation; // Must declare frame type (TextureRegion)
@@ -22,6 +28,14 @@ public class TargetDummyGraphics{
         targetdummyTexture = new Texture(Gdx.files.internal("targetdummy.png"));
         targetdummySprite = new Sprite(targetdummyTexture,0,0,16,32);
         targetdummySprite.setSize(8,16);
+        //health bar sprite green
+        greenHealthBarTexture = new Texture(Gdx.files.internal("greenHealthBar1.png"));
+        greenHealthBarSprite = new Sprite(greenHealthBarTexture,0,0,10,2);
+        greenHealthBarSprite.setSize(5,1);
+        //health bar sprite red
+        redHealthBarTexture = new Texture(Gdx.files.internal("redHealthBar1.png"));
+        redHealthBarSprite = new Sprite(redHealthBarTexture,0,0,10,2);
+        redHealthBarSprite.setSize(5,1);
         //animation
         walkSheet = new Texture(Gdx.files.internal("targetdummysheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight() / FRAME_ROWS);
@@ -36,7 +50,8 @@ public class TargetDummyGraphics{
         stateTime = 0f;
     }
 
-    public void draw(Batch batch, float physicsX, float physicsY){
+    public void draw(Batch batch, float physicsX, float physicsY, int health, int maxHealth){
+        //render the body
         targetdummySprite.setPosition(physicsX-3.75f,physicsY-7);
         if (isAttacked){
             //Accumulate elapsed animation time of animation
@@ -66,5 +81,13 @@ public class TargetDummyGraphics{
             }
             targetdummySprite.draw(batch);
         }
+        //render the healthBar
+        redHealthBarSprite.setPosition(-2.5f+physicsX,physicsY+8);
+        redHealthBarSprite.draw(batch);
+        greenHealthBarSprite.setPosition(-2.5f+physicsX,physicsY+8);
+        //this calculates the scale of the green bar based on how many percent the object is missing from its max health
+        float healthScale = 5f*((float) health/(float) maxHealth);
+        greenHealthBarSprite.setSize(healthScale,greenHealthBarSprite.getHeight());
+        greenHealthBarSprite.draw(batch);
     }
 }

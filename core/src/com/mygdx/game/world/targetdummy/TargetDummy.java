@@ -21,7 +21,7 @@ public class TargetDummy {
     }
 
     public void draw(Batch batch){
-        graphics.draw(batch, physics.getBody().getPosition().x, physics.getBody().getPosition().y);
+        graphics.draw(batch, physics.getBody().getPosition().x, physics.getBody().getPosition().y, actions.getHealth(), actions.getMaxHealth());
         //System.out.println("we drew with pos x: "+physics.getBody().getPosition().x+" y: "+physics.getBody().getPosition().y);
     }
 

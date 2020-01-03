@@ -74,7 +74,7 @@ public class PlayerActions {
         if (darkknight.playerGraphics.getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentLeftEnemies.size()>0){
                 for (String string : CollisionDetector.currentLeftEnemies){
-                    darkknight.level1.level1Enemies.attack1(CollisionDetector.currentLeftEnemies);
+                    darkknight.level1.level1Enemies.attack1(string);
                 }
             }
         }
@@ -82,7 +82,7 @@ public class PlayerActions {
         if (!darkknight.playerGraphics.getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentRightEnemies.size()>0){
                 for (String string : CollisionDetector.currentRightEnemies){
-                    darkknight.level1.level1Enemies.attack1(CollisionDetector.currentRightEnemies);
+                    darkknight.level1.level1Enemies.attack1(string);
                 }
             }
         }
