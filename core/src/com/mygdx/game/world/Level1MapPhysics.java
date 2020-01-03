@@ -9,10 +9,10 @@ import com.mygdx.game.darkknight;
 
 public class Level1MapPhysics {
     //box colliders
-    private BoxCollider groundBox1 = new BoxCollider(16,6,16,1,"TFFGroundBody1");
-    private BoxCollider groundBox2 = new BoxCollider(48,14,16,1,"TFFGroundBody2");
-    private BoxCollider wallBox1 = new BoxCollider(33,10,1,3,"FTFWallBody1");
-    private BoxCollider wallBox2 = new BoxCollider(8,19,1,12,"FTFWallBody2");
+    private BoxCollider groundBox1 = new BoxCollider(16,6,16,1,"TFFFGroundBody1");
+    private BoxCollider groundBox2 = new BoxCollider(48,14,16,1,"TFFFGroundBody2");
+    private BoxCollider wallBox1 = new BoxCollider(33,10,1,3,"FTFFWallBody1");
+    private BoxCollider wallBox2 = new BoxCollider(8,19,1,12,"FTFFWallBody2");
     //test joy body
     private BodyDef joyBodyDef;
     public static Body joyBody;
@@ -22,7 +22,7 @@ public class Level1MapPhysics {
     public Level1MapPhysics(){
         //joy testing
         joyBodyDef = new BodyDef();
-        joyBodyDef.position.set(new Vector2(50, 40f));
+        joyBodyDef.position.set(new Vector2(55, 45f));
         joyBody = darkknight.world.createBody(joyBodyDef);
         joyBody.setType(BodyDef.BodyType.DynamicBody);
         joyBody.setAngularDamping(1f);
@@ -30,7 +30,7 @@ public class Level1MapPhysics {
         joyShape.setAsBox(4f, 4f);
         joyFixture = joyBody.createFixture(joyShape, 50.0f);
         joyFixture.setFriction(0.5f);
-        joyFixture.setUserData("TTTJoyBody");
+        joyFixture.setUserData("TTTFJoyBody");
         joyShape.dispose();
     }
 }

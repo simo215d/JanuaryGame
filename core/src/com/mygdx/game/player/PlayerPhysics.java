@@ -160,7 +160,7 @@ public class PlayerPhysics {
     }
 
     public void fallFaster(float fallMultiplier) {
-        if (darkknight.player.getPlayerActions().getIsAirBorne() && darkknight.player.getPlayerPhysics().getPlayerBody().getLinearVelocity().y<0){
+        if (darkknight.player.getPlayerMovement().getIsAirBorne() && darkknight.player.getPlayerPhysics().getPlayerBody().getLinearVelocity().y<0){
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(darkknight.player.getPlayerPhysics().getPlayerBody().getLinearVelocity().x,darkknight.player.getPlayerPhysics().getPlayerBody().getLinearVelocity().y-fallMultiplier);
         }
     }

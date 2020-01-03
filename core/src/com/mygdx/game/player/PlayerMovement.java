@@ -4,14 +4,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.world.CollisionDetector;
 
-public class PlayerActions {
+public class PlayerMovement {
     private boolean isAirBorne = true;
     private boolean pushingRight = false;
     private boolean pushingLeft = false;
     private boolean attacking1 = false;
     private Body playerBody;
 
-    public PlayerActions(Body playerBody){
+    public PlayerMovement(Body playerBody){
         this.playerBody = playerBody;
     }
 

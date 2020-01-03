@@ -2,21 +2,15 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.hmi.InputHandler;
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.PlayerActions;
-import com.mygdx.game.player.PlayerGraphics;
-import com.mygdx.game.player.PlayerPhysics;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
-import com.mygdx.game.world.Level1MapGraphics;
 
 public class darkknight extends ApplicationAdapter {
 	private OrthographicCamera cam;
@@ -87,7 +81,7 @@ public class darkknight extends ApplicationAdapter {
 		world.step(1/60f, 6, 2);
 		world.setContactListener(collisionDetector);
 		//box2d collider graphics
-		//debugRenderer.render(world, cam.combined);
+		debugRenderer.render(world, cam.combined);
 	}
 
 	@Override

@@ -45,8 +45,8 @@ public class PlayerAnimation {
         batch.draw(currentFrame, spritePlayer.getX(), spritePlayer.getY(),16,16);
         //event upon animation ending
         if (stateTime>=frameDuration*FRAME_ROWS*FRAME_COLS){
-            if (darkknight.player.getPlayerActions().isAttacking1()){
-                darkknight.player.getPlayerActions().setAttacking1(false);
+            if (darkknight.player.getPlayerMovement().isAttacking1()){
+                darkknight.player.getPlayerMovement().setAttacking1(false);
                 darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
                 darkknight.player.getPlayerGraphics().setAnimationState("");
             }

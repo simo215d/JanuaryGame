@@ -42,7 +42,7 @@ public class PlayerGraphics {
         //in some weird interaction with bodies that are walkable we might accidentaly be able to hit while we are sliding down
         //which means hitting is illegal //TODO FIX FOOT SENSOR BECAUSE OF THIS?
         if (!state.equals("attacking1")){
-            darkknight.player.getPlayerActions().setAttacking1(false);
+            darkknight.player.getPlayerMovement().setAttacking1(false);
         }
         animationState=state;
         for (PlayerAnimation animation : animations){

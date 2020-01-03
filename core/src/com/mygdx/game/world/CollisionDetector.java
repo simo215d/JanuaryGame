@@ -18,42 +18,42 @@ public class CollisionDetector implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         //Regarding fixture a and b: We don't know which is which, so we'll need to check.
-        //The first letters of other objects are T or F. Current booleans: walkable, pushable, attackable
+        //The first letters of other objects are T or F. Current booleans: walkable, pushable, attackable, damageObject
         //System.out.println("ENTERED: FA: "+contact.getFixtureA().getUserData()+" FB: "+contact.getFixtureB().getUserData());
         //airborne checker
         if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().toString().charAt(0)=='T' || contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().equals("Foot")){
             //if we land while we should be pushing it needs to know to go to pushing animation, because there is a scenario where
             //you jump without exiting pushing sensor, so we need to set it back to pushing
-            if (darkknight.player.getPlayerActions().getIsAirBorne()){
+            if (darkknight.player.getPlayerMovement().getIsAirBorne()){
                 //set animation state based on ongoing player-actions
-                if (darkknight.player.getPlayerActions().getPushingRight()){
+                if (darkknight.player.getPlayerMovement().getPushingRight()){
                     darkknight.player.getPlayerGraphics().setAnimationState("pushingRight");
                 }
-                if (darkknight.player.getPlayerActions().getPushingLeft()){
+                if (darkknight.player.getPlayerMovement().getPushingLeft()){
                     darkknight.player.getPlayerGraphics().setAnimationState("pushingLeft");
                 }
             }
-            darkknight.player.getPlayerActions().setAirBorne(false);
+            darkknight.player.getPlayerMovement().setAirBorne(false);
             //check if our foot collided with a walkable, if so then add
             addToContacts(contact);
         }
         //shroom bounce
         //TODO WE SHOULD ADD A THIRD DATA BOOLEAN: BOUNCABLE BECAUSE WE MIGHT NEED MULTIBLE SHROOMS WITH DIFFERENT ID
-        if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().equals("FFFShroomCollider1") || contact.getFixtureA().getUserData().equals("FFFShroomCollider1") && contact.getFixtureB().getUserData().equals("Foot")){
-            if (contact.getFixtureB().getUserData().equals("FFFShroomCollider1")){
-                darkknight.player.getPlayerActions().shroomBounce(contact.getFixtureB().getUserData().toString());
-            } else darkknight.player.getPlayerActions().shroomBounce(contact.getFixtureA().getUserData().toString());
+        if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().equals("FFFFShroomCollider1") || contact.getFixtureA().getUserData().equals("FFFFShroomCollider1") && contact.getFixtureB().getUserData().equals("Foot")){
+            if (contact.getFixtureB().getUserData().equals("FFFFShroomCollider1")){
+                darkknight.player.getPlayerMovement().shroomBounce(contact.getFixtureB().getUserData().toString());
+            } else darkknight.player.getPlayerMovement().shroomBounce(contact.getFixtureA().getUserData().toString());
         }
         //push right
         if (contact.getFixtureA().getUserData().equals("UpperRightBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperRightBody")){
-            darkknight.player.getPlayerActions().setPushingRight(true);
+            darkknight.player.getPlayerMovement().setPushingRight(true);
             darkknight.player.getPlayerGraphics().setAnimationState("pushingRight");
             darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(false,false);
             darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
         }
         //push left
         if (contact.getFixtureA().getUserData().equals("UpperLeftBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperLeftBody")){
-            darkknight.player.getPlayerActions().setPushingLeft(true);
+            darkknight.player.getPlayerMovement().setPushingLeft(true);
             darkknight.player.getPlayerGraphics().setAnimationState("pushingLeft");
             darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(true,false);
             darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
@@ -68,6 +68,14 @@ public class CollisionDetector implements ContactListener {
             System.out.println("Enemy left ENTER");
             addToCurrentEnemies(contact,currentLeftEnemies,"LeftCombatSensor");
         }
+        //damage object
+        if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().toString().charAt(3)=='T'|| contact.getFixtureA().getUserData().toString().charAt(3)=='T' && contact.getFixtureB().getUserData().equals("Foot")){
+            for (DamageObject object : Level1.level1Enemies.damageObjects){
+                if (object.getName().equals(contact.getFixtureA().getUserData()) || object.getName().equals(contact.getFixtureB().getUserData())){
+                    object.setActive(true);
+                }
+            }
+        }
     }
 
     @Override
@@ -79,20 +87,20 @@ public class CollisionDetector implements ContactListener {
         }
         //airborne checker
         if (contact.getFixtureA().getUserData().equals("Foot") && getCountOfWalkableContacts()==0 || getCountOfWalkableContacts()==0 && contact.getFixtureB().getUserData().equals("Foot")){
-            darkknight.player.getPlayerActions().setAirBorne(true);
+            darkknight.player.getPlayerMovement().setAirBorne(true);
             darkknight.player.getPlayerGraphics().setAnimationState("jumping");
         }
         //push right
         if (contact.getFixtureA().getUserData().equals("UpperRightBody") &&contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperRightBody")){
-            darkknight.player.getPlayerActions().setPushingRight(false);
-            if (darkknight.player.getPlayerActions().getIsAirBorne()){
+            darkknight.player.getPlayerMovement().setPushingRight(false);
+            if (darkknight.player.getPlayerMovement().getIsAirBorne()){
                 darkknight.player.getPlayerGraphics().setAnimationState("jumping");
             }
         }
         //push left
         if (contact.getFixtureA().getUserData().equals("UpperLeftBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperLeftBody")){
-            darkknight.player.getPlayerActions().setPushingLeft(false);
-            if (darkknight.player.getPlayerActions().getIsAirBorne()){
+            darkknight.player.getPlayerMovement().setPushingLeft(false);
+            if (darkknight.player.getPlayerMovement().getIsAirBorne()){
                 darkknight.player.getPlayerGraphics().setAnimationState("jumping");
             }
         }
@@ -105,6 +113,14 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().equals("LeftCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T'|| contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("LeftCombatSensor")){
             System.out.println("Enemy left EXIT");
             removeFromCurrentEnemies(contact,currentLeftEnemies);
+        }
+        //damage object
+        if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().toString().charAt(3)=='T'|| contact.getFixtureA().getUserData().toString().charAt(3)=='T' && contact.getFixtureB().getUserData().equals("Foot")){
+            for (DamageObject object : Level1.level1Enemies.damageObjects){
+                if (object.getName().equals(contact.getFixtureA().getUserData()) || object.getName().equals(contact.getFixtureB().getUserData())){
+                    object.setActive(false);
+                }
+            }
         }
     }
 

@@ -42,7 +42,7 @@ public class Shroom {
         colliderShape = new PolygonShape();
         colliderShape.set(verticesCollider);
         fixture = body.createFixture(colliderShape,0.0f);
-        fixture.setUserData("FFFShroomCollider1");
+        fixture.setUserData("FFFFShroomCollider1");
         fixture.setSensor(true);
         colliderShape.dispose();
         //animation
