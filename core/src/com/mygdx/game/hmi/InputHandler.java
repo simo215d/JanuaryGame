@@ -20,61 +20,61 @@ public class InputHandler {
                 cam.zoom -= 0.02;
             }
             //idle
-            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.playerActions.getIsAirBorne() && !darkknight.playerActions.getPushingRight() && !darkknight.playerActions.getPushingLeft() && !darkknight.playerActions.isAttacking1()){
-                darkknight.playerGraphics.getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
-                darkknight.playerGraphics.setAnimationState("idle");
-                darkknight.playerActions.moveStop();
+            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerActions().getIsAirBorne() && !darkknight.player.getPlayerActions().getPushingRight() && !darkknight.player.getPlayerActions().getPushingLeft() && !darkknight.player.getPlayerActions().isAttacking1()){
+                darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
+                darkknight.player.getPlayerGraphics().setAnimationState("idle");
+                darkknight.player.getPlayerActions().moveStop();
             }
             //run left
-            if (Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.playerActions.getPushingLeft() && !darkknight.playerActions.isAttacking1()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerActions().getPushingLeft() && !darkknight.player.getPlayerActions().isAttacking1()) {
                 //cam.translate(-0.5f, 0, 0);
-                darkknight.playerActions.moveLeft();
+                darkknight.player.getPlayerActions().moveLeft();
             }
             //run right
-            if (Gdx.input.isKeyPressed(Input.Keys.E) && !darkknight.playerActions.getPushingRight() && !darkknight.playerActions.isAttacking1()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.E) && !darkknight.player.getPlayerActions().getPushingRight() && !darkknight.player.getPlayerActions().isAttacking1()) {
                 //cam.translate(0.5f, 0, 0);
-                darkknight.playerActions.moveRight();
+                darkknight.player.getPlayerActions().moveRight();
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.playerActions.getPushingLeft() && !darkknight.playerActions.isAttacking1()) {
-                if (!darkknight.playerActions.getIsAirBorne()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.player.getPlayerActions().getPushingLeft() && !darkknight.player.getPlayerActions().isAttacking1()) {
+                if (!darkknight.player.getPlayerActions().getIsAirBorne()) {
                     sprite3.setTexture(new Texture((Gdx.files.internal("knight5.png"))));
                     sprite3.setFlip(true,false);
-                    darkknight.playerActions.moveLeft();
+                    darkknight.player.getPlayerActions().moveLeft();
                 }
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.playerActions.getPushingRight() && !darkknight.playerActions.isAttacking1()) {
-                if (!darkknight.playerActions.getIsAirBorne()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.player.getPlayerActions().getPushingRight() && !darkknight.player.getPlayerActions().isAttacking1()) {
+                if (!darkknight.player.getPlayerActions().getIsAirBorne()) {
                     sprite3.setTexture(new Texture((Gdx.files.internal("knight5.png"))));
                     sprite3.setFlip(false, false);
-                    darkknight.playerActions.moveRight();
+                    darkknight.player.getPlayerActions().moveRight();
                 }
             }
-            if (!Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.playerActions.getPushingLeft() && !darkknight.playerActions.isAttacking1()) {
-                if (!darkknight.playerActions.getIsAirBorne()) {
+            if (!Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.player.getPlayerActions().getPushingLeft() && !darkknight.player.getPlayerActions().isAttacking1()) {
+                if (!darkknight.player.getPlayerActions().getIsAirBorne()) {
                     sprite3.setTexture(new Texture((Gdx.files.internal("knight4.png"))));
                     sprite3.setFlip(true,false);
                 }
             }
-            if (!Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.playerActions.getPushingRight() && !darkknight.playerActions.isAttacking1()) {
-                if (!darkknight.playerActions.getIsAirBorne()) {
+            if (!Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.player.getPlayerActions().getPushingRight() && !darkknight.player.getPlayerActions().isAttacking1()) {
+                if (!darkknight.player.getPlayerActions().getIsAirBorne()) {
                     sprite3.setTexture(new Texture((Gdx.files.internal("knight4.png"))));
                     sprite3.setFlip(false, false);
                 }
             }
-            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.playerActions.getIsAirBorne()) {
-                darkknight.playerActions.moveStop();
+            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerActions().getIsAirBorne()) {
+                darkknight.player.getPlayerActions().moveStop();
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.W) && !darkknight.playerActions.isAttacking1()) {
-                darkknight.playerActions.jump();
+            if (Gdx.input.isKeyPressed(Input.Keys.W) && !darkknight.player.getPlayerActions().isAttacking1()) {
+                darkknight.player.getPlayerActions().jump();
             }
 
             //TODO RESPECT THE COOLDOWN/DRIP FAM
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && !darkknight.playerActions.getIsAirBorne()  && !darkknight.playerActions.isAttacking1() && !darkknight.playerGraphics.getAnimationState().equals("jumping")){
-                darkknight.playerActions.attack1();
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && !darkknight.player.getPlayerActions().getIsAirBorne()  && !darkknight.player.getPlayerActions().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerActions().attack1();
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-                System.out.println("animation state: "+darkknight.playerGraphics.getAnimationState()+" airborne= "+darkknight.playerActions.getIsAirBorne());
+                System.out.println("animation state: "+darkknight.player.getPlayerGraphics().getAnimationState()+" airborne= "+darkknight.player.getPlayerActions().getIsAirBorne());
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)){

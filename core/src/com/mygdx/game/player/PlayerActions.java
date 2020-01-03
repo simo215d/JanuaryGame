@@ -11,8 +11,8 @@ public class PlayerActions {
     private boolean attacking1 = false;
     private Body playerBody;
 
-    public PlayerActions(){
-        playerBody = darkknight.playerPhysics.getPlayerBody();
+    public PlayerActions(Body playerBody){
+        this.playerBody = playerBody;
     }
 
     private boolean isAirBorne() { return isAirBorne; }
@@ -34,32 +34,32 @@ public class PlayerActions {
     }
 
     public void moveLeft(){
-        darkknight.playerPhysics.getPlayerBody().setLinearVelocity(-18,playerBody.getLinearVelocity().y);
-        darkknight.playerGraphics.getSpritePlayer().setFlip(true, false);
-        if (!isAirBorne() && !getPushingLeft() && !darkknight.playerGraphics.getAnimationState().equals("running")){
+        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(-18,playerBody.getLinearVelocity().y);
+        darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(true, false);
+        if (!isAirBorne() && !getPushingLeft() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("running")){
             //darkknight.playerGraphics.getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight3.gif"))));
-            darkknight.playerGraphics.setAnimationState("running");
+            darkknight.player.getPlayerGraphics().setAnimationState("running");
         }
     }
 
     public void moveRight(){
-        darkknight.playerPhysics.getPlayerBody().setLinearVelocity(18,playerBody.getLinearVelocity().y);
-        darkknight.playerGraphics.getSpritePlayer().setFlip(false, false);
-        if (!isAirBorne() && !pushingRight && !darkknight.playerGraphics.getAnimationState().equals("running")){
+        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(18,playerBody.getLinearVelocity().y);
+        darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(false, false);
+        if (!isAirBorne() && !pushingRight && !darkknight.player.getPlayerGraphics().getAnimationState().equals("running")){
             //darkknight.playerGraphics.getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight3.gif"))));
-            darkknight.playerGraphics.setAnimationState("running");
+            darkknight.player.getPlayerGraphics().setAnimationState("running");
         }
     }
 
     public void moveStop(){
-        darkknight.playerPhysics.getPlayerBody().setLinearVelocity(0,playerBody.getLinearVelocity().y);
+        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,playerBody.getLinearVelocity().y);
     }
 
     public void shroomBounce(String shroomData){
         playerBody.setLinearVelocity(playerBody.getLinearVelocity().x,20);
         darkknight.level1.level1MapGraphics.shroomBounce(shroomData);
         setAirBorne(true);
-        darkknight.playerGraphics.setAnimationState("jumping");
+        darkknight.player.getPlayerGraphics().setAnimationState("jumping");
     }
 
     public void attack1(){
@@ -67,11 +67,11 @@ public class PlayerActions {
         //if the player jumps and immediately presses 1, then his foot is still grounded.
         // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
         // therefore we need to make sure that the player is static when he attacks
-        darkknight.playerPhysics.getPlayerBody().setLinearVelocity(0,0);
-        darkknight.playerGraphics.setAnimationState("attacking1");
+        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,0);
+        darkknight.player.getPlayerGraphics().setAnimationState("attacking1");
         //handling the actual attack logic
         //if sprite facing left
-        if (darkknight.playerGraphics.getSpritePlayer().isFlipX()){
+        if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentLeftEnemies.size()>0){
                 for (String string : CollisionDetector.currentLeftEnemies){
                     darkknight.level1.level1Enemies.attack1(string);
@@ -79,7 +79,7 @@ public class PlayerActions {
             }
         }
         //if sprite facing right
-        if (!darkknight.playerGraphics.getSpritePlayer().isFlipX()){
+        if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentRightEnemies.size()>0){
                 for (String string : CollisionDetector.currentRightEnemies){
                     darkknight.level1.level1Enemies.attack1(string);

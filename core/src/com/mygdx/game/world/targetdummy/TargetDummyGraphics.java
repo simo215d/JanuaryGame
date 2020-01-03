@@ -59,7 +59,7 @@ public class TargetDummyGraphics{
             // Get current frame of animation for the current stateTime
             TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, false);
             //flip frame based on player pos in relation to this pos
-            if (physicsX>darkknight.playerPhysics.getPlayerBody().getPosition().x){
+            if (physicsX>darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
                 currentFrame.flip(false,false);
             }else {
                 if (!currentFrame.isFlipX()) {
@@ -74,7 +74,7 @@ public class TargetDummyGraphics{
                 stateTime=0;
             }
         } else {
-            if (physicsX>darkknight.playerPhysics.getPlayerBody().getPosition().x){
+            if (physicsX>darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
                 targetdummySprite.setFlip(false,false);
             }else {
                 targetdummySprite.setFlip(true,false);

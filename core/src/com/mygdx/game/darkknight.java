@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.hmi.InputHandler;
+import com.mygdx.game.player.Player;
 import com.mygdx.game.player.PlayerActions;
 import com.mygdx.game.player.PlayerGraphics;
 import com.mygdx.game.player.PlayerPhysics;
@@ -23,12 +24,13 @@ public class darkknight extends ApplicationAdapter {
 
 	public static Level1 level1;
 	private InputHandler inputHandler;
-	public static PlayerActions playerActions;
-	public static PlayerGraphics playerGraphics;
+	//public static PlayerActions playerActions;
+	//public static PlayerGraphics playerGraphics;
+	public static Player player;
 	//box2d stuff
 	public static World world;
 	private Box2DDebugRenderer debugRenderer;
-	public static PlayerPhysics playerPhysics;
+	//public static PlayerPhysics playerPhysics;
 	private CollisionDetector collisionDetector;
 
 	@Override
@@ -40,9 +42,12 @@ public class darkknight extends ApplicationAdapter {
 		//class creators
 		level1 = new Level1();
 		inputHandler = new InputHandler();
+		/*
 		playerGraphics = new PlayerGraphics();
 		playerPhysics = new PlayerPhysics();
 		playerActions = new PlayerActions();
+		 */
+		player = new Player();
 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -59,11 +64,11 @@ public class darkknight extends ApplicationAdapter {
 	@Override
 	public void render() {
 	    //downward fall multiplier
-        playerPhysics.fallFaster(1f);
+        player.getPlayerPhysics().fallFaster(1f);
 		//player follow circle
-		playerGraphics.getSpritePlayer().setPosition(playerPhysics.getPlayerBody().getPosition().x-playerGraphics.getSpritePlayer().getWidth()/2,playerPhysics.getPlayerBody().getPosition().y-3f);
+		player.getPlayerGraphics().getSpritePlayer().setPosition(player.getPlayerPhysics().getPlayerBody().getPosition().x-player.getPlayerGraphics().getSpritePlayer().getWidth()/2,player.getPlayerPhysics().getPlayerBody().getPosition().y-3f);
 		//checks for inputs
-		inputHandler.handleInput(cam,playerGraphics.getSpritePlayer());
+		inputHandler.handleInput(cam,player.getPlayerGraphics().getSpritePlayer());
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 
@@ -75,7 +80,8 @@ public class darkknight extends ApplicationAdapter {
 		level1.level1MapGraphics.draw(batch);
 		//render enemies
 		level1.level1Enemies.draw(batch);
-		playerGraphics.draw(batch);
+		//player.getPlayerGraphics().draw(batch);
+		player.draw(batch, cam);
 		batch.end();
 		//box2d
 		world.step(1/60f, 6, 2);

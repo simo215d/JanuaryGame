@@ -24,16 +24,16 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().toString().charAt(0)=='T' || contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().equals("Foot")){
             //if we land while we should be pushing it needs to know to go to pushing animation, because there is a scenario where
             //you jump without exiting pushing sensor, so we need to set it back to pushing
-            if (darkknight.playerActions.getIsAirBorne()){
+            if (darkknight.player.getPlayerActions().getIsAirBorne()){
                 //set animation state based on ongoing player-actions
-                if (darkknight.playerActions.getPushingRight()){
-                    darkknight.playerGraphics.setAnimationState("pushingRight");
+                if (darkknight.player.getPlayerActions().getPushingRight()){
+                    darkknight.player.getPlayerGraphics().setAnimationState("pushingRight");
                 }
-                if (darkknight.playerActions.getPushingLeft()){
-                    darkknight.playerGraphics.setAnimationState("pushingLeft");
+                if (darkknight.player.getPlayerActions().getPushingLeft()){
+                    darkknight.player.getPlayerGraphics().setAnimationState("pushingLeft");
                 }
             }
-            darkknight.playerActions.setAirBorne(false);
+            darkknight.player.getPlayerActions().setAirBorne(false);
             //check if our foot collided with a walkable, if so then add
             addToContacts(contact);
         }
@@ -41,22 +41,22 @@ public class CollisionDetector implements ContactListener {
         //TODO WE SHOULD ADD A THIRD DATA BOOLEAN: BOUNCABLE BECAUSE WE MIGHT NEED MULTIBLE SHROOMS WITH DIFFERENT ID
         if (contact.getFixtureA().getUserData().equals("Foot") && contact.getFixtureB().getUserData().equals("FFFShroomCollider1") || contact.getFixtureA().getUserData().equals("FFFShroomCollider1") && contact.getFixtureB().getUserData().equals("Foot")){
             if (contact.getFixtureB().getUserData().equals("FFFShroomCollider1")){
-                darkknight.playerActions.shroomBounce(contact.getFixtureB().getUserData().toString());
-            } else darkknight.playerActions.shroomBounce(contact.getFixtureA().getUserData().toString());
+                darkknight.player.getPlayerActions().shroomBounce(contact.getFixtureB().getUserData().toString());
+            } else darkknight.player.getPlayerActions().shroomBounce(contact.getFixtureA().getUserData().toString());
         }
         //push right
         if (contact.getFixtureA().getUserData().equals("UpperRightBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperRightBody")){
-            darkknight.playerActions.setPushingRight(true);
-            darkknight.playerGraphics.setAnimationState("pushingRight");
-            darkknight.playerGraphics.getSpritePlayer().setFlip(false,false);
-            darkknight.playerGraphics.getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
+            darkknight.player.getPlayerActions().setPushingRight(true);
+            darkknight.player.getPlayerGraphics().setAnimationState("pushingRight");
+            darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(false,false);
+            darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
         }
         //push left
         if (contact.getFixtureA().getUserData().equals("UpperLeftBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperLeftBody")){
-            darkknight.playerActions.setPushingLeft(true);
-            darkknight.playerGraphics.setAnimationState("pushingLeft");
-            darkknight.playerGraphics.getSpritePlayer().setFlip(true,false);
-            darkknight.playerGraphics.getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
+            darkknight.player.getPlayerActions().setPushingLeft(true);
+            darkknight.player.getPlayerGraphics().setAnimationState("pushingLeft");
+            darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(true,false);
+            darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
         }
         //player right combat sensor
         if (contact.getFixtureA().getUserData().equals("RightCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("RightCombatSensor")){
@@ -79,21 +79,21 @@ public class CollisionDetector implements ContactListener {
         }
         //airborne checker
         if (contact.getFixtureA().getUserData().equals("Foot") && getCountOfWalkableContacts()==0 || getCountOfWalkableContacts()==0 && contact.getFixtureB().getUserData().equals("Foot")){
-            darkknight.playerActions.setAirBorne(true);
-            darkknight.playerGraphics.setAnimationState("jumping");
+            darkknight.player.getPlayerActions().setAirBorne(true);
+            darkknight.player.getPlayerGraphics().setAnimationState("jumping");
         }
         //push right
         if (contact.getFixtureA().getUserData().equals("UpperRightBody") &&contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperRightBody")){
-            darkknight.playerActions.setPushingRight(false);
-            if (darkknight.playerActions.getIsAirBorne()){
-                darkknight.playerGraphics.setAnimationState("jumping");
+            darkknight.player.getPlayerActions().setPushingRight(false);
+            if (darkknight.player.getPlayerActions().getIsAirBorne()){
+                darkknight.player.getPlayerGraphics().setAnimationState("jumping");
             }
         }
         //push left
         if (contact.getFixtureA().getUserData().equals("UpperLeftBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperLeftBody")){
-            darkknight.playerActions.setPushingLeft(false);
-            if (darkknight.playerActions.getIsAirBorne()){
-                darkknight.playerGraphics.setAnimationState("jumping");
+            darkknight.player.getPlayerActions().setPushingLeft(false);
+            if (darkknight.player.getPlayerActions().getIsAirBorne()){
+                darkknight.player.getPlayerGraphics().setAnimationState("jumping");
             }
         }
         //player right combat sensor
