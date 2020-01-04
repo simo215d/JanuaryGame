@@ -3,6 +3,7 @@ package com.mygdx.game.player;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.player.PlayerEffects.FireBall;
 
 public class Player {
     private PlayerGraphics playerGraphics;
@@ -40,5 +41,8 @@ public class Player {
     public void draw(Batch batch, OrthographicCamera camera){
         playerGraphics.draw(batch);
         playerUI.draw(batch, camera, playerCombat.getHealth(), playerCombat.getMaxHealth());
+        for (FireBall fireBall : getPlayerCombat().getFireBalls()){
+            fireBall.draw(batch);
+        }
     }
 }

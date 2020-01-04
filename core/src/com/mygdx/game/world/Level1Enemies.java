@@ -19,7 +19,7 @@ public class Level1Enemies {
     private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 20, 30);
     ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //bonfire test
-    private DamageObject bonfire = new DamageObject("FFFTbonfire1","bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
+    private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
     ArrayList<DamageObject> damageObjects = new ArrayList<>();
 
     public Level1Enemies(){

@@ -67,9 +67,14 @@ public class InputHandler {
                 darkknight.player.getPlayerMovement().jump();
             }
 
-            //TODO RESPECT THE COOLDOWN/DRIP FAM
+            //TODO RESPECT THE COOLDOWN/MANA
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
-                darkknight.player.getPlayerMovement().attack1();
+                darkknight.player.getPlayerCombat().attack1();
+            }
+
+            //TODO SPELL 2
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerCombat().attack2();
             }
 
             cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 65/cam.viewportWidth);

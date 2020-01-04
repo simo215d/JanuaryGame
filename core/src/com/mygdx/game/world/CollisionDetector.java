@@ -76,6 +76,11 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
+        //fireBall. first make sure we only call the substring on strings that even have that amount of characters in it
+        if (contact.getFixtureA().getUserData().toString().length()>=8 && contact.getFixtureB().getUserData().toString().length()>=8){
+            if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall"))
+            System.out.println("our fireball hit an enemy");
+        }
     }
 
     @Override

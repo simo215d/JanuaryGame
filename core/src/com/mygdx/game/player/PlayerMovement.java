@@ -62,32 +62,6 @@ public class PlayerMovement {
         darkknight.player.getPlayerGraphics().setAnimationState("jumping");
     }
 
-    public void attack1(){
-        attacking1=true;
-        //if the player jumps and immediately presses 1, then his foot is still grounded.
-        // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
-        // therefore we need to make sure that the player is static when he attacks
-        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,0);
-        darkknight.player.getPlayerGraphics().setAnimationState("attacking1");
-        //handling the actual attack logic
-        //if sprite facing left
-        if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
-            if (CollisionDetector.currentLeftEnemies.size()>0){
-                for (String string : CollisionDetector.currentLeftEnemies){
-                    darkknight.level1.level1Enemies.attack1(string);
-                }
-            }
-        }
-        //if sprite facing right
-        if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
-            if (CollisionDetector.currentRightEnemies.size()>0){
-                for (String string : CollisionDetector.currentRightEnemies){
-                    darkknight.level1.level1Enemies.attack1(string);
-                }
-            }
-        }
-    }
-
     public void setPushingRight(boolean push){
         pushingRight=push;
     }

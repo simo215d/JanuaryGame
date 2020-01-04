@@ -5,11 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.darkknight;
 
+import java.util.ArrayList;
+
 public class DamageObject {
+    private ArrayList<Long> usedTimes = new ArrayList<>();
+    private int damage;
+    private int modFactor;
     private String name = "";
     private boolean isActive = false;
     private float positionX;
@@ -26,7 +30,10 @@ public class DamageObject {
     private float stateTime; // A variable for tracking elapsed time for the animation
     private float frameDuration;
 
-    public DamageObject(String name, String textureURL, int textureColumns, int textureRows, float frameDuration, float positionX, float positionY, float boxWidth, float boxHeight){
+    public DamageObject(String name, int damage, int modFactor, String textureURL, int textureColumns, int textureRows, float frameDuration, float positionX, float positionY, float boxWidth, float boxHeight){
+        usedTimes.add(0L);
+        this.damage=damage;
+        this.modFactor=modFactor;
         this.name=name;
         //animation
         this.FRAME_COLS=textureColumns;
@@ -60,9 +67,14 @@ public class DamageObject {
     }
 
     public void draw(Batch batch){
-        //TODO GET GAME TIME INSTEAD AND COUNT EVERY SECOND USING MOD MATH
-        if (isActive){
-            darkknight.player.getPlayerCombat().takeDamage(1);
+        //if 1 second has passed damage the player
+        if (isActive && darkknight.gameTimeCentiSeconds%modFactor==0){
+            //we render every frame, so we check every frame, but not every frame comes with a new number,
+            //sometimes the same number gets through so we check if the number has already been used using array list
+            if (darkknight.gameTimeCentiSeconds!=usedTimes.get(usedTimes.size()-1)){
+                darkknight.player.getPlayerCombat().takeDamage(damage);
+                usedTimes.add(darkknight.gameTimeCentiSeconds);
+            }
         }
         //Accumulate elapsed animation time of animation
         stateTime += Gdx.graphics.getDeltaTime();
@@ -75,8 +87,10 @@ public class DamageObject {
     public void setActive(boolean bool){
         isActive=bool;
         if (bool==true){
-            System.out.println("object set to active");
-        } else System.out.println("object set to inactive");
+        } else {
+            usedTimes.clear();
+            usedTimes.add(0L);
+        }
     }
 
     public String getName(){

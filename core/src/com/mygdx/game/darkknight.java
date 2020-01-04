@@ -7,12 +7,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.hmi.InputHandler;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 
 public class darkknight extends ApplicationAdapter {
+	//it is not in seconds because we need 2 decimals if we want a fast paced action based on time
+	public static long gameTimeCentiSeconds;
+	private long startTime;
+
 	private OrthographicCamera cam;
 	private SpriteBatch batch;
 
@@ -29,6 +34,8 @@ public class darkknight extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		gameTimeCentiSeconds =0;
+		startTime=System.currentTimeMillis();
 		//box2d stuff
 		world = new World(new Vector2(0, -10), true);
 		debugRenderer = new Box2DDebugRenderer();
@@ -57,6 +64,8 @@ public class darkknight extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		//update game time centi seconds
+		gameTimeCentiSeconds =((TimeUtils.timeSinceMillis(startTime)) / 100L);
 	    //downward fall multiplier
         player.getPlayerPhysics().fallFaster(1f);
 		//player follow circle
