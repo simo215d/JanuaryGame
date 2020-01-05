@@ -107,6 +107,11 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
+        if (contact.getFixtureA().getUserData().equals("Meteor") && contact.getFixtureB().getUserData().toString().charAt(0)=='T'|| contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().equals("Meteor")){
+            System.out.println("our meteor hit a walkable");
+            darkknight.player.getPlayerCombat().getCurrentMeteor().setDestroying(true);
+            darkknight.bodiesToDestroy.add(darkknight.player.getPlayerCombat().getCurrentMeteor().getBody());
+        }
     }
 
     @Override

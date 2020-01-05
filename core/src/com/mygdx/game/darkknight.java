@@ -118,12 +118,10 @@ public class darkknight extends ApplicationAdapter {
 	private void destroyBodies(){
 	    //make sure the world is not in the middle of a step which is what locked means
         if (bodiesToDestroy.size()>0 && !world.isLocked()){
-            //world.destroyBody(bodiesToDestroy.get(0));
 			System.out.println("we destroy a body");
 			bodiesToDestroy.get(0).setActive(false);
 			world.destroyBody(bodiesToDestroy.get(0));
             bodiesToDestroy.remove(0);
-			System.out.println("Amount of fireballs in the world: "+player.getPlayerCombat().getFireBalls().size());
         }
     }
 }

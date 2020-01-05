@@ -72,12 +72,17 @@ public class InputHandler {
                 darkknight.player.getPlayerCombat().attack1();
             }
 
-            //TODO SPELL 2
+            //fireball
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
                 darkknight.player.getPlayerCombat().attack2();
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            //meteor
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerCombat().attack3();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
                 if (darkknight.isWorldStopped) {
                     System.out.println("game un-paused");
                     darkknight.isWorldStopped = false;

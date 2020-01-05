@@ -2,6 +2,7 @@ package com.mygdx.game.player;
 
 import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.FireBall;
+import com.mygdx.game.player.PlayerEffects.Meteor;
 import com.mygdx.game.world.CollisionDetector;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class PlayerCombat {
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
     //we need this variable, because we need unique names for every fire ball because of collision detection
     private int fireBallCount = 0;
+    private Meteor currentMeteor;
 
     public PlayerCombat(){
         maxHealth = 100;
@@ -63,11 +65,22 @@ public class PlayerCombat {
         darkknight.player.getPlayerCombat().attack2FireBall();
     }
 
-    //this method is called from the animation
+    //this method can be called from the animation or directly from above method depending on when fireball should spawn
     public void attack2FireBall(){
         FireBall fireBall = new FireBall("FireBall"+fireBallCount);
         fireBallCount++;
         fireBalls.add(fireBall);
+    }
+
+    //meteor
+    public void attack3(){
+        //i only allow 1 meteor
+        if (currentMeteor==null) {
+            darkknight.player.getPlayerMovement().setAttacking1(true);
+            darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+            darkknight.player.getPlayerGraphics().setAnimationState("attacking3");
+            currentMeteor = new Meteor();
+        }
     }
 
     public int getMaxHealth() {
@@ -80,5 +93,13 @@ public class PlayerCombat {
 
     public ArrayList<FireBall> getFireBalls(){
         return fireBalls;
+    }
+
+    public Meteor getCurrentMeteor() {
+        return currentMeteor;
+    }
+
+    public void setCurrentMeteorToNull(){
+        currentMeteor=null;
     }
 }

@@ -6,14 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.darkknight;
 
-public class FireBall {
-    private String name;
+public class Meteor {
     private long spawnTime;
     private boolean flyRight = false;
     private float deathPositionX=0;
@@ -22,10 +18,10 @@ public class FireBall {
     //box2d
     private BodyDef bodyDef;
     private Body body;
-    private PolygonShape sensorShape;
+    private CircleShape sensorShape;
     private Fixture fixture;
     //animation fireball
-    private int FRAME_COLS = 3, FRAME_ROWS = 1;
+    private int FRAME_COLS = 2, FRAME_ROWS = 1;
     private Animation<TextureRegion> animation;
     private Texture sheet;
     private float stateTime; // A variable for tracking elapsed time for the animation
@@ -35,11 +31,10 @@ public class FireBall {
     private Texture sheet_EX;
     private float stateTime_EX; // A variable for tracking elapsed time for the animation
 
-    public FireBall(String name){
-        this.name=name;
-        spawnTime=darkknight.gameTimeCentiSeconds;
-        //animation fireball
-        sheet = new Texture(Gdx.files.internal("FireBall1Sheet.png"));
+    public Meteor(){
+        spawnTime= darkknight.gameTimeCentiSeconds;
+        //animation meteor
+        sheet = new Texture(Gdx.files.internal("meteor1Sheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth() / FRAME_COLS, sheet.getHeight() / FRAME_ROWS);
         TextureRegion[] animationFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
@@ -51,7 +46,7 @@ public class FireBall {
         animation = new Animation<TextureRegion>(0.1f, animationFrames);
         stateTime = 0f;
         //animation explosion
-        sheet_EX = new Texture(Gdx.files.internal("FireBallExplosionSheet1.png"));
+        sheet_EX = new Texture(Gdx.files.internal("meteor1Explosion1Sheet.png"));
         TextureRegion[][] tmp_EX = TextureRegion.split(sheet_EX, sheet_EX.getWidth() / FRAME_COLS_EX, sheet_EX.getHeight() / FRAME_ROWS_EX);
         TextureRegion[] animationFrames_EX = new TextureRegion[FRAME_COLS_EX * FRAME_ROWS_EX];
         int index_EX = 0;
@@ -69,32 +64,27 @@ public class FireBall {
         //box2d
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        if (flyRight) bodyDef.position.set(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x, darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y+5);
-        else bodyDef.position.set(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x, darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y+5);
+        if (flyRight) bodyDef.position.set(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x, darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y+50);
+        else bodyDef.position.set(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x, darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y+50);
         bodyDef.fixedRotation=true;
         body = darkknight.world.createBody(bodyDef);
         body.setGravityScale(0);
         //create triangle so we make sure fireball only hits 1 target
-        Vector2[] verticesSensor;
-        //also make sure the triangle is flipped correctly
-        if (flyRight)
-        verticesSensor = new Vector2[]{new Vector2(1,0), new Vector2(0,-1), new Vector2(0,+1)};
-        else verticesSensor = new Vector2[]{new Vector2(-1,0), new Vector2(0,-1), new Vector2(0,+1)};
-        sensorShape = new PolygonShape();
-        sensorShape.set(verticesSensor);
+        sensorShape = new CircleShape();
+        sensorShape.setRadius(8);
         fixture = body.createFixture(sensorShape,0);
-        fixture.setUserData(name);
+        fixture.setUserData("Meteor");
         fixture.setSensor(true);
         sensorShape.dispose();
         //set body position to fly forward based on what way player sprite is facing
         if (flyRight){
-            body.setLinearVelocity(30f,0);
-        } else body.setLinearVelocity(-30f,0);
+            body.setLinearVelocity(15f,-30);
+        } else body.setLinearVelocity(-15f,-30);
     }
 
     public void draw(Batch batch){
-        //after 100 deci seconds aka 10 seconds the fireball will game-end itself
-        if (darkknight.gameTimeCentiSeconds-spawnTime>100){
+        //after 50 deci seconds aka 5 seconds the fireball will game-end itself
+        if (darkknight.gameTimeCentiSeconds-spawnTime>50){
             darkknight.bodiesToDestroy.add(body);
             destroy();
         }
@@ -106,30 +96,22 @@ public class FireBall {
             //also flip sprite if it is flying left
             if (!flyRight && !currentFrame.isFlipX()) currentFrame.flip(true, false);
             //position and scale of frame
-            if (!flyRight && body.getPosition().x<(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x-5)){
-                batch.draw(currentFrame, body.getPosition().x - 1, body.getPosition().y - 2f, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
-            } else if(flyRight && body.getPosition().x>(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x+5)){
-                batch.draw(currentFrame, body.getPosition().x - 7, body.getPosition().y - 2f, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
-            }
+            batch.draw(currentFrame, body.getPosition().x-8, body.getPosition().y - 8f, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
         }
         //if fireball is in the process of exploding/destroying then render explosion
         if (isDestroying){
             if (deathPositionX==0 && deathPositionY==0){
-                if (!flyRight) deathPositionX=body.getPosition().x-1f;
-                else deathPositionX=body.getPosition().x-3;
-                deathPositionY=body.getPosition().y;
+                if (!flyRight) deathPositionX=body.getPosition().x-7;
+                else deathPositionX=body.getPosition().x-7;
+                deathPositionY=body.getPosition().y-7;
             }
             stateTime_EX += Gdx.graphics.getDeltaTime();
             TextureRegion currentFrame_EX = animation_EX.getKeyFrame(stateTime_EX, false);
-            batch.draw(currentFrame_EX, deathPositionX, deathPositionY-1.5f, (float) sheet_EX.getWidth()/FRAME_COLS_EX/2,(float) sheet_EX.getHeight()/FRAME_ROWS_EX/2);
+            batch.draw(currentFrame_EX, deathPositionX, deathPositionY, (float) sheet_EX.getWidth()/FRAME_COLS_EX/2,(float) sheet_EX.getHeight()/FRAME_ROWS_EX/2);
             if (stateTime_EX>=0.40f){
                 destroy();
             }
         }
-    }
-
-    public String getName(){
-        return name;
     }
 
     public Body getBody(){
@@ -141,6 +123,6 @@ public class FireBall {
     }
 
     public void destroy(){
-        darkknight.player.deleteAFireBall(this);
+        darkknight.player.getPlayerCombat().setCurrentMeteorToNull();
     }
 }

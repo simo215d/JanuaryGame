@@ -47,6 +47,9 @@ public class Player {
         for (FireBall fireBall : getPlayerCombat().getFireBalls()){
             fireBall.draw(batch);
         }
+        if (playerCombat.getCurrentMeteor()!=null) {
+            playerCombat.getCurrentMeteor().draw(batch);
+        }
         //check if there are any fireballs that should be deleted from our list
         FireBall fireBallToDelete = null;
         for (FireBall fireBall : fireBallsToDelete){
