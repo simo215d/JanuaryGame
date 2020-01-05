@@ -13,10 +13,15 @@ import com.mygdx.game.player.Player;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 
+import java.util.ArrayList;
+
 public class darkknight extends ApplicationAdapter {
 	//it is not in seconds because we need 2 decimals if we want a fast paced action based on time
 	public static long gameTimeCentiSeconds;
 	private long startTime;
+	//this array list stores bodies we want to get rid off, and deletes them when render/world.step is done
+    public static ArrayList<Body> bodiesToDestroy = new ArrayList<>();
+    public static boolean isWorldStopped = false;
 
 	private OrthographicCamera cam;
 	private SpriteBatch batch;
@@ -87,10 +92,14 @@ public class darkknight extends ApplicationAdapter {
 		player.draw(batch, cam);
 		batch.end();
 		//box2d
-		world.step(1/60f, 6, 2);
-		world.setContactListener(collisionDetector);
+        if (bodiesToDestroy.size()==0 && !isWorldStopped) {
+            world.step(1 / 60f, 6, 2);
+            world.setContactListener(collisionDetector);
+        }
 		//box2d collider graphics
 		debugRenderer.render(world, cam.combined);
+        //destroy unwanted bodies
+		destroyBodies();
 	}
 
 	@Override
@@ -105,4 +114,16 @@ public class darkknight extends ApplicationAdapter {
 		batch.dispose();
 		level1.level1MapGraphics.getBushTexture().dispose();
 	}
+
+	private void destroyBodies(){
+	    //make sure the world is not in the middle of a step which is what locked means
+        if (bodiesToDestroy.size()>0 && !world.isLocked()){
+            //world.destroyBody(bodiesToDestroy.get(0));
+			System.out.println("we destroy a body");
+			bodiesToDestroy.get(0).setActive(false);
+			world.destroyBody(bodiesToDestroy.get(0));
+            bodiesToDestroy.remove(0);
+			System.out.println("Amount of fireballs in the world: "+player.getPlayerCombat().getFireBalls().size());
+        }
+    }
 }

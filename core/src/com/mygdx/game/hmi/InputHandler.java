@@ -77,6 +77,17 @@ public class InputHandler {
                 darkknight.player.getPlayerCombat().attack2();
             }
 
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+                if (darkknight.isWorldStopped) {
+                    System.out.println("game un-paused");
+                    darkknight.isWorldStopped = false;
+                }
+                else {
+                    System.out.println("game paused");
+                    darkknight.isWorldStopped=true;
+                }
+            }
+
             cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 65/cam.viewportWidth);
 
             float effectiveViewportWidth = cam.viewportWidth * cam.zoom;

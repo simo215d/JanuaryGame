@@ -10,6 +10,8 @@ public class PlayerCombat {
     private int maxHealth;
     private int health;
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
+    //we need this variable, because we need unique names for every fire ball because of collision detection
+    private int fireBallCount = 0;
 
     public PlayerCombat(){
         maxHealth = 100;
@@ -58,15 +60,14 @@ public class PlayerCombat {
         darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,0);
         darkknight.player.getPlayerGraphics().setAnimationState("attacking2");
         //handling the actual attack logic
+        darkknight.player.getPlayerCombat().attack2FireBall();
     }
 
     //this method is called from the animation
     public void attack2FireBall(){
-        FireBall fireBall = new FireBall("FireBall"+fireBalls.size());
+        FireBall fireBall = new FireBall("FireBall"+fireBallCount);
+        fireBallCount++;
         fireBalls.add(fireBall);
-        for (FireBall fireBall1 : fireBalls){
-            System.out.println("we have the fireball: "+fireBall1.getName());
-        }
     }
 
     public int getMaxHealth() {

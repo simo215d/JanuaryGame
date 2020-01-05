@@ -31,7 +31,7 @@ public class Level1MapGraphics {
 
     public Level1MapGraphics(){
         treeSprite1 = new Sprite(treeTexture,0,0,32,64);
-        treeSprite1.setPosition(0,7.50f);
+        treeSprite1.setPosition(-3,7.50f);
         treeSprite1.setSize(16,32);
         bushSprite1 = new Sprite(bushTexture,0,0,32,32);
         bushSprite1.setPosition(-3,2.5f);

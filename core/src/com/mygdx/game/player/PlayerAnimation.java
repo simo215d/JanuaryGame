@@ -47,7 +47,8 @@ public class PlayerAnimation {
         if (stateTime>=frameDuration*FRAME_ROWS*FRAME_COLS){
             //action based on what animation we are playing
             switch (darkknight.player.getPlayerGraphics().getAnimationState()){
-                case "attacking2": darkknight.player.getPlayerCombat().attack2FireBall();
+                //this feels slow af because i made the fireball spawn from within the player body so this moved to playerCombat
+                //case "attacking2": darkknight.player.getPlayerCombat().attack2FireBall();
             }
             //stop the animation
             if (darkknight.player.getPlayerMovement().isAttacking1()){

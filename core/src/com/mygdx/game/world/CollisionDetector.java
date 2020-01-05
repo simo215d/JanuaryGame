@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.player.PlayerEffects.FireBall;
+import com.mygdx.game.world.targetdummy.TargetDummy;
 
 import java.util.ArrayList;
 
@@ -78,8 +80,32 @@ public class CollisionDetector implements ContactListener {
         }
         //fireBall. first make sure we only call the substring on strings that even have that amount of characters in it
         if (contact.getFixtureA().getUserData().toString().length()>=8 && contact.getFixtureB().getUserData().toString().length()>=8){
-            if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall"))
-            System.out.println("our fireball hit an enemy");
+            //then check if its a fireBall and an enemy
+            if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall")){
+                for (TargetDummy targetDummy : Level1.level1Enemies.targetDummies){
+                    if (contact.getFixtureA().getUserData().toString().equals(targetDummy.getName()) || contact.getFixtureB().getUserData().toString().equals(targetDummy.getName()))
+                    targetDummy.attack1(1);
+                }
+                //destroy the fireball
+                for (FireBall fireBall : darkknight.player.getPlayerCombat().getFireBalls()){
+                    if (contact.getFixtureA().getUserData().toString().equals(fireBall.getName()) || contact.getFixtureB().getUserData().toString().equals(fireBall.getName())){
+                        fireBall.setDestroying(true);
+                        darkknight.bodiesToDestroy.add(fireBall.getBody());
+                    }
+                }
+            } else {
+                //check if fireBall hits a contact whose body is not sensor and does not belong to player
+                if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)!='T' && !contact.getFixtureB().getUserData().equals("PlayerBody") && !contact.getFixtureB().isSensor() || contact.getFixtureA().getUserData().toString().charAt(2)!='T' && !contact.getFixtureA().getUserData().equals("PlayerBody") && !contact.getFixtureA().isSensor() && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall")){
+                    //destroy the fireball
+                    System.out.println("we destroy fireball because it hit a non sensor and non attackable");
+                    for (FireBall fireBall : darkknight.player.getPlayerCombat().getFireBalls()){
+                        if (contact.getFixtureA().getUserData().toString().equals(fireBall.getName()) || contact.getFixtureB().getUserData().toString().equals(fireBall.getName())){
+                            fireBall.setDestroying(true);
+                            darkknight.bodiesToDestroy.add(fireBall.getBody());
+                        }
+                    }
+                }
+            }
         }
     }
 
