@@ -5,11 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.player.PlayerCombat;
+import com.mygdx.game.world.targetdummy.TargetDummy;
+
+import java.util.ArrayList;
 
 public class Meteor {
+    public static ArrayList<TargetDummy> targetDummies = new ArrayList();
     private long spawnTime;
     private boolean flyRight = false;
     private float deathPositionX=0;
@@ -32,6 +36,7 @@ public class Meteor {
     private float stateTime_EX; // A variable for tracking elapsed time for the animation
 
     public Meteor(){
+        targetDummies.clear();
         spawnTime= darkknight.gameTimeCentiSeconds;
         //animation meteor
         sheet = new Texture(Gdx.files.internal("meteor1Sheet.png"));
@@ -98,12 +103,16 @@ public class Meteor {
             //position and scale of frame
             batch.draw(currentFrame, body.getPosition().x-8, body.getPosition().y - 8f, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
         }
-        //if fireball is in the process of exploding/destroying then render explosion
+        //if meteor is in the process of exploding/destroying then render explosion
         if (isDestroying){
             if (deathPositionX==0 && deathPositionY==0){
                 if (!flyRight) deathPositionX=body.getPosition().x-7;
                 else deathPositionX=body.getPosition().x-7;
-                deathPositionY=body.getPosition().y-7;
+                deathPositionY=body.getPosition().y-8;
+                //deal damage to targetDummies
+                for (TargetDummy targetDummy : targetDummies){
+                    targetDummy.takeDamage(PlayerCombat.attack3Damage);
+                }
             }
             stateTime_EX += Gdx.graphics.getDeltaTime();
             TextureRegion currentFrame_EX = animation_EX.getKeyFrame(stateTime_EX, false);

@@ -4,12 +4,17 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Meteor;
 import com.mygdx.game.world.CollisionDetector;
+import com.mygdx.game.world.Level1;
 
 import java.util.ArrayList;
 
 public class PlayerCombat {
     private int maxHealth;
     private int health;
+    //attack damage
+    private int attack1Damage = 2;
+    public static int attack2Damage = 4;
+    public static int attack3Damage = 8;
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
     //we need this variable, because we need unique names for every fire ball because of collision detection
     private int fireBallCount = 0;
@@ -40,7 +45,8 @@ public class PlayerCombat {
         if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentLeftEnemies.size()>0){
                 for (String string : CollisionDetector.currentLeftEnemies){
-                    darkknight.level1.level1Enemies.attack1(string);
+                    System.out.println("we attack to the left: "+string);
+                    Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
                 }
             }
         }
@@ -48,7 +54,8 @@ public class PlayerCombat {
         if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
             if (CollisionDetector.currentRightEnemies.size()>0){
                 for (String string : CollisionDetector.currentRightEnemies){
-                    darkknight.level1.level1Enemies.attack1(string);
+                    System.out.println("we attack to the right: "+string);
+                    Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
                 }
             }
         }

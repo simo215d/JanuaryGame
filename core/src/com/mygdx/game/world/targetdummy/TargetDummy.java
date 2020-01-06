@@ -13,11 +13,9 @@ public class TargetDummy {
         physics = new TargetDummyPhysics(name, x, y);
     }
 
-    public void attack1(int damage){
-        //TODO THIS SEQUENCE FROM PLAYER ACTIONS SEND THIS INTO ACTIONS
-        System.out.println("i recieved attack1 my name is: "+getName());
+    public void takeDamage(int damage){
         graphics.isAttacked=true;
-        actions.takeDamage(1);
+        actions.takeDamage(damage);
     }
 
     public void draw(Batch batch){

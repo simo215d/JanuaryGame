@@ -7,7 +7,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
+import com.mygdx.game.player.PlayerEffects.Meteor;
 import com.mygdx.game.world.targetdummy.TargetDummy;
 
 import java.util.ArrayList;
@@ -62,12 +64,10 @@ public class CollisionDetector implements ContactListener {
         }
         //player right combat sensor
         if (contact.getFixtureA().getUserData().equals("RightCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("RightCombatSensor")){
-            System.out.println("Enemy right ENTER");
             addToCurrentEnemies(contact,currentRightEnemies,"RightCombatSensor");
         }
         //player left combat sensor
         if (contact.getFixtureA().getUserData().equals("LeftCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T'|| contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("LeftCombatSensor")){
-            System.out.println("Enemy left ENTER");
             addToCurrentEnemies(contact,currentLeftEnemies,"LeftCombatSensor");
         }
         //damage object
@@ -84,7 +84,7 @@ public class CollisionDetector implements ContactListener {
             if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall")){
                 for (TargetDummy targetDummy : Level1.level1Enemies.targetDummies){
                     if (contact.getFixtureA().getUserData().toString().equals(targetDummy.getName()) || contact.getFixtureB().getUserData().toString().equals(targetDummy.getName()))
-                    targetDummy.attack1(1);
+                    targetDummy.takeDamage(PlayerCombat.attack2Damage);
                 }
                 //destroy the fireball
                 for (FireBall fireBall : darkknight.player.getPlayerCombat().getFireBalls()){
@@ -107,10 +107,26 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
-        if (contact.getFixtureA().getUserData().equals("Meteor") && contact.getFixtureB().getUserData().toString().charAt(0)=='T'|| contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().equals("Meteor")){
-            System.out.println("our meteor hit a walkable");
+        //meteor. only fixtures where they are walkable and not enemies
+        if (contact.getFixtureA().getUserData().equals("Meteor") && contact.getFixtureB().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().toString().charAt(2)=='F' || contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureA().getUserData().toString().charAt(2)=='F' && contact.getFixtureB().getUserData().equals("Meteor")){
             darkknight.player.getPlayerCombat().getCurrentMeteor().setDestroying(true);
             darkknight.bodiesToDestroy.add(darkknight.player.getPlayerCombat().getCurrentMeteor().getBody());
+        }
+        //meteor if it hits an enemy
+        //find any targetDummies
+        if (contact.getFixtureB().getUserData().equals("Meteor") && contact.getFixtureA().getUserData().toString().length()>8 && contact.getFixtureA().getUserData().toString().substring(0,9).equals("TTTFDummy")){
+            for (TargetDummy targetDummy : darkknight.level1.level1Enemies.targetDummies){
+                if (targetDummy.getName().equals(contact.getFixtureA().getUserData().toString())){
+                    Meteor.targetDummies.add(targetDummy);
+                }
+            }
+        }
+        if (contact.getFixtureA().getUserData().equals("Meteor") && contact.getFixtureB().getUserData().toString().length()>8 && contact.getFixtureB().getUserData().toString().substring(0,9).equals("TTTFDummy")){
+            for (TargetDummy targetDummy : darkknight.level1.level1Enemies.targetDummies){
+                if (targetDummy.getName().equals(contact.getFixtureB().getUserData().toString())){
+                    Meteor.targetDummies.add(targetDummy);
+                }
+            }
         }
     }
 

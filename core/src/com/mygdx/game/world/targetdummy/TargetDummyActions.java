@@ -11,7 +11,7 @@ public class TargetDummyActions {
         if (health<=0){
             health=maxHealth;
         }
-        System.out.println("i took damage: "+damage+" any my health is: "+health+".");
+        //System.out.println("i took damage: "+damage+" any my health is: "+health+".");
     }
 
     public int getHealth() {
