@@ -10,6 +10,7 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Meteor;
+import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.targetdummy.TargetDummy;
 
 import java.util.ArrayList;
@@ -128,6 +129,38 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
+        //orb collision
+        if (contact.getFixtureA().getUserData().toString().length()>=9 && contact.getFixtureB().getUserData().toString().length()>=9){
+            //then check if its a fireBall and an enemy
+            if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("playerOrb") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,9).equals("playerOrb")){
+                //TODO remember to add more enemy lists here later or do this smarter
+                for (TargetDummy targetDummy : Level1.level1Enemies.targetDummies){
+                    if (contact.getFixtureA().getUserData().toString().equals(targetDummy.getName()) || contact.getFixtureB().getUserData().toString().equals(targetDummy.getName()))
+                        targetDummy.takeDamage(PlayerCombat.attack4Damage);
+                }
+                //destroy the orb body
+                for (Orb orb : darkknight.player.getPlayerCombat().getOrbs()){
+                    if (contact.getFixtureA().getUserData().toString().equals(orb.getName()) || contact.getFixtureB().getUserData().toString().equals(orb.getName())){
+                        orb.setAnimationState("Exploding");
+                        System.out.println("we destroy "+orb.getName()+" because it hits an enemy");
+                        darkknight.bodiesToDestroy.add(orb.getBody());
+                    }
+                }
+            } else {
+                //check if orb hits a contact whose body is not sensor and does not belong to player
+                if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("playerOrb") && contact.getFixtureB().getUserData().toString().charAt(2)!='T' && !contact.getFixtureB().getUserData().equals("PlayerBody") && !contact.getFixtureB().isSensor() || contact.getFixtureA().getUserData().toString().charAt(2)!='T' && !contact.getFixtureA().getUserData().equals("PlayerBody") && !contact.getFixtureA().isSensor() && contact.getFixtureB().getUserData().toString().substring(0,9).equals("playerOrb")){
+                    //destroy the orb
+                    System.out.println("we destroy orb because it hit a non sensor and non attackable");
+                    for (Orb orb : darkknight.player.getPlayerCombat().getOrbs()){
+                        if (contact.getFixtureA().getUserData().toString().equals(orb.getName()) || contact.getFixtureB().getUserData().toString().equals(orb.getName())){
+                            orb.setAnimationState("Exploding");
+                            System.out.println("we destroy "+orb.getName()+" because it hits an object");
+                            darkknight.bodiesToDestroy.add(orb.getBody());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -158,12 +191,10 @@ public class CollisionDetector implements ContactListener {
         }
         //player right combat sensor
         if (contact.getFixtureA().getUserData().equals("RightCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("RightCombatSensor")){
-            System.out.println("Enemy right EXIT");
             removeFromCurrentEnemies(contact,currentRightEnemies);
         }
         //player left combat sensor
         if (contact.getFixtureA().getUserData().equals("LeftCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T'|| contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("LeftCombatSensor")){
-            System.out.println("Enemy left EXIT");
             removeFromCurrentEnemies(contact,currentLeftEnemies);
         }
         //damage object

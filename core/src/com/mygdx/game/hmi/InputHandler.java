@@ -82,7 +82,12 @@ public class InputHandler {
                 darkknight.player.getPlayerCombat().attack3();
             }
 
+            //orbs
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
+                darkknight.player.getPlayerCombat().attack4();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)){
                 if (darkknight.isWorldStopped) {
                     System.out.println("game un-paused");
                     darkknight.isWorldStopped = false;

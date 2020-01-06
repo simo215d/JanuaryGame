@@ -13,7 +13,7 @@ import com.mygdx.game.world.targetdummy.TargetDummy;
 import java.util.ArrayList;
 
 public class Meteor {
-    public static ArrayList<TargetDummy> targetDummies = new ArrayList();
+    public static ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     private long spawnTime;
     private boolean flyRight = false;
     private float deathPositionX=0;
@@ -74,7 +74,6 @@ public class Meteor {
         bodyDef.fixedRotation=true;
         body = darkknight.world.createBody(bodyDef);
         body.setGravityScale(0);
-        //create triangle so we make sure fireball only hits 1 target
         sensorShape = new CircleShape();
         sensorShape.setRadius(8);
         fixture = body.createFixture(sensorShape,0);
@@ -83,8 +82,8 @@ public class Meteor {
         sensorShape.dispose();
         //set body position to fly forward based on what way player sprite is facing
         if (flyRight){
-            body.setLinearVelocity(15f,-30);
-        } else body.setLinearVelocity(-15f,-30);
+            body.setLinearVelocity(20f,-40);
+        } else body.setLinearVelocity(-20f,-40);
     }
 
     public void draw(Batch batch){

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Level1Enemies {
     ArrayList<ArrayList> enemies = new ArrayList<>();
     //targetDummies
-    private TargetDummy targetDummy2 = new TargetDummy("TTTFDummyBody2",35, 60);
-    private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 35, 50);
+    private TargetDummy targetDummy2 = new TargetDummy("TTTFDummyBody2",20, 60);
+    private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 20, 50);
     ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
@@ -37,7 +37,6 @@ public class Level1Enemies {
     public void attackAnEnemy(String name, int damage){
         for (TargetDummy targetDummy : targetDummies){
             if (targetDummy.getName().equals(name)){
-                System.out.println(damage+" damage was sent to: "+name);
                 targetDummy.takeDamage(damage);
             }
         }
