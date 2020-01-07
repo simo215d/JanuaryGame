@@ -86,10 +86,8 @@ public class darkknight extends ApplicationAdapter {
 
 		//render sprites
 		batch.begin();
-		//render map sprites
-		level1.level1MapGraphics.draw(batch);
-		//render enemies
-		level1.level1Enemies.draw(batch);
+		//render level 1
+		level1.draw(batch);
 		//player.getPlayerGraphics().draw(batch);
 		player.draw(batch, cam);
 		batch.end();

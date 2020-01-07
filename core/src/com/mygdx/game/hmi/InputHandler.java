@@ -13,10 +13,12 @@ public class InputHandler {
     public void handleInput(OrthographicCamera cam, Sprite sprite3){
         {
             if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-                cam.zoom += 0.02;
+                //cam.zoom += 0.02;
+                System.out.println("to zoom out, pls edit the input event then");
             }
             if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-                cam.zoom -= 0.02;
+                //cam.zoom -= 0.02;
+                System.out.println("to zoom in, pls edit the input event then");
             }
             //idle
             if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerMovement().getIsAirBorne() && !darkknight.player.getPlayerMovement().getPushingRight() && !darkknight.player.getPlayerMovement().getPushingLeft() && !darkknight.player.getPlayerMovement().isAttacking1()){

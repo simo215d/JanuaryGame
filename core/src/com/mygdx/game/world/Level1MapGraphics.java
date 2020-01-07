@@ -2,6 +2,7 @@ package com.mygdx.game.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.darkknight;
@@ -59,7 +60,7 @@ public class Level1MapGraphics {
         }
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(Batch batch){
         for (Sprite sprite : earthSprites){
             sprite.draw(batch);
         }

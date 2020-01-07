@@ -161,10 +161,15 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
+        //fire breath
         if (contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().equals("playerFireBreath") || contact.getFixtureA().getUserData().toString().equals("playerFireBreath") && contact.getFixtureB().getUserData().toString().charAt(2)=='T'){
             if (contact.getFixtureA().getUserData().toString().charAt(2)=='T')
             darkknight.player.getPlayerCombat().getFireBreath().pushBackEnemy(contact.getFixtureA().getBody());
             else darkknight.player.getPlayerCombat().getFireBreath().pushBackEnemy(contact.getFixtureB().getBody());
+        }
+        //forest guard text enable
+        if (contact.getFixtureA().getUserData().toString().equals("AllyForestGuard") && contact.getFixtureB().getUserData().toString().equals("PlayerBody") ||  contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("AllyForestGuard")){
+            Level1.level1Allies.getGuard1().setTalking(true);
         }
     }
 
@@ -209,6 +214,10 @@ public class CollisionDetector implements ContactListener {
                     object.setActive(false);
                 }
             }
+        }
+        //forest guard text disable
+        if (contact.getFixtureA().getUserData().toString().equals("AllyForestGuard") && contact.getFixtureB().getUserData().toString().equals("PlayerBody") ||  contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("AllyForestGuard")){
+            Level1.level1Allies.getGuard1().setTalking(false);
         }
     }
 
