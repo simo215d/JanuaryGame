@@ -2,6 +2,7 @@ package com.mygdx.game.player;
 
 import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.FireBall;
+import com.mygdx.game.player.PlayerEffects.FireShield;
 import com.mygdx.game.player.PlayerEffects.Meteor;
 import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.CollisionDetector;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class PlayerCombat {
     private int maxHealth;
     private int health;
+    private boolean isImmuneToDamage = false;
     //attack damage
     private int attack1Damage = 2;
     public static int attack2Damage = 4;
@@ -22,6 +24,7 @@ public class PlayerCombat {
     private int fireBallCount = 0;
     private Meteor currentMeteor;
     private ArrayList<Orb> orbs = new ArrayList<>();
+    private FireShield fireShield = null;
 
     public PlayerCombat(){
         maxHealth = 100;
@@ -29,11 +32,13 @@ public class PlayerCombat {
     }
 
     public void takeDamage(int damage){
-        health-=damage;
-        if (health<=0){
-            health=maxHealth;
-        }
-        System.out.println("im player and i took: "+damage+" damage.");
+        if (!isImmuneToDamage) {
+            health -= damage;
+            if (health <= 0) {
+                health = maxHealth;
+            }
+            System.out.println("im player and i took: " + damage + " damage.");
+        } else System.out.println("im immune bitch!");
     }
 
     public void attack1(){
@@ -108,6 +113,15 @@ public class PlayerCombat {
         }
     }
 
+    public void attack5(){
+        if (fireShield==null){
+            fireShield = new FireShield();
+            //sets player to be immune
+            setImmuneToDamage(true);
+            //in the fireShield class this is set to false when it dies
+        }
+    }
+
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -130,5 +144,21 @@ public class PlayerCombat {
 
     public ArrayList<Orb> getOrbs(){
         return orbs;
+    }
+
+    public FireShield getFireShield(){
+        return fireShield;
+    }
+
+    public void setFireShieldToNull(){
+        fireShield=null;
+    }
+
+    public void setImmuneToDamage(boolean bool){
+        isImmuneToDamage=bool;
+    }
+
+    public boolean getIsImmuneToDamage(){
+        return isImmuneToDamage;
     }
 }
