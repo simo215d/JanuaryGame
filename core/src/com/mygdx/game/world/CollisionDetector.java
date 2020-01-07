@@ -161,6 +161,11 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
+        if (contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().equals("playerFireBreath") || contact.getFixtureA().getUserData().toString().equals("playerFireBreath") && contact.getFixtureB().getUserData().toString().charAt(2)=='T'){
+            if (contact.getFixtureA().getUserData().toString().charAt(2)=='T')
+            darkknight.player.getPlayerCombat().getFireBreath().pushBackEnemy(contact.getFixtureA().getBody());
+            else darkknight.player.getPlayerCombat().getFireBreath().pushBackEnemy(contact.getFixtureB().getBody());
+        }
     }
 
     @Override

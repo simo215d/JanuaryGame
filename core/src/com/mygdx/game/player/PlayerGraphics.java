@@ -23,6 +23,7 @@ public class PlayerGraphics {
     private PlayerAnimation attack1Animation = new PlayerAnimation(4,1,"knightAttack1Sheet.png",0.075f, false);
     private PlayerAnimation attack2Animation = new PlayerAnimation(3,1,"knightAttack1FireSheet.png",0.1f, false);
     private PlayerAnimation attack3Animation = new PlayerAnimation(7,1,"knightAttackMeteorSheet.png",0.1f, false);
+    private PlayerAnimation attack6Animation = new PlayerAnimation(7,1,"knightFireBreathSheet.png",0.1f, false);
 
     public PlayerGraphics(){
         //sprite
@@ -36,6 +37,7 @@ public class PlayerGraphics {
         animations.add(attack1Animation);
         animations.add(attack2Animation);
         animations.add(attack3Animation);
+        animations.add(attack6Animation);
     }
 
     public Sprite getSpritePlayer(){
@@ -45,7 +47,7 @@ public class PlayerGraphics {
     public void setAnimationState(String state){
         //in some weird interaction with bodies that are walkable we might accidentaly be able to hit while we are sliding down
         //which means hitting is illegal //TODO FIX FOOT SENSOR BECAUSE OF THIS?
-        if (!state.equals("attacking1") && !state.equals("attacking2") && !state.equals("attacking3")){
+        if (!state.equals("attacking1") && !state.equals("attacking2") && !state.equals("attacking3") && !state.equals("attacking6")){
             darkknight.player.getPlayerMovement().setAttacking1(false);
         }
         animationState=state;
@@ -65,6 +67,7 @@ public class PlayerGraphics {
             case "attacking1": attack1Animation.animate(spritePlayer,batch); break;
             case "attacking2": attack2Animation.animate(spritePlayer,batch); break;
             case "attacking3": attack3Animation.animate(spritePlayer,batch); break;
+            case "attacking6": attack6Animation.animate(spritePlayer,batch); break;
             default: spritePlayer.draw(batch); break;
         }
     }

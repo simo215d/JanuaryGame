@@ -92,7 +92,12 @@ public class InputHandler {
                 darkknight.player.getPlayerCombat().attack5();
             }
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)){
+            //fire breath
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_6) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerCombat().attack6();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)){
                 if (darkknight.isWorldStopped) {
                     System.out.println("game un-paused");
                     darkknight.isWorldStopped = false;

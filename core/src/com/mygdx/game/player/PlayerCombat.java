@@ -1,10 +1,7 @@
 package com.mygdx.game.player;
 
 import com.mygdx.game.darkknight;
-import com.mygdx.game.player.PlayerEffects.FireBall;
-import com.mygdx.game.player.PlayerEffects.FireShield;
-import com.mygdx.game.player.PlayerEffects.Meteor;
-import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.player.PlayerEffects.*;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 
@@ -19,12 +16,14 @@ public class PlayerCombat {
     public static int attack2Damage = 4;
     public static int attack3Damage = 8;
     public static int attack4Damage = 1;
+    public static int attack6Damage = 3;
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
     //we need this variable, because we need unique names for every fire ball because of collision detection
     private int fireBallCount = 0;
     private Meteor currentMeteor;
     private ArrayList<Orb> orbs = new ArrayList<>();
     private FireShield fireShield = null;
+    private FireBreath fireBreath = null;
 
     public PlayerCombat(){
         maxHealth = 100;
@@ -122,6 +121,15 @@ public class PlayerCombat {
         }
     }
 
+    public void attack6(){
+        darkknight.player.getPlayerMovement().setAttacking1(true);
+        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+        darkknight.player.getPlayerGraphics().setAnimationState("attacking6");
+        if (fireBreath==null){
+            fireBreath = new FireBreath();
+        }
+    }
+
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -160,5 +168,13 @@ public class PlayerCombat {
 
     public boolean getIsImmuneToDamage(){
         return isImmuneToDamage;
+    }
+
+    public void setFireBreathToNull(){
+        fireBreath=null;
+    }
+
+    public FireBreath getFireBreath(){
+        return fireBreath;
     }
 }

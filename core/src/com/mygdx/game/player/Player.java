@@ -58,6 +58,9 @@ public class Player {
         if (playerCombat.getFireShield()!=null){
             playerCombat.getFireShield().draw(batch);
         }
+        if (playerCombat.getFireBreath()!=null){
+            playerCombat.getFireBreath().draw(batch);
+        }
         //check if there are any fireballs that should be deleted from our list
         FireBall fireBallToDelete = null;
         for (FireBall fireBall : fireBallsToDelete){
