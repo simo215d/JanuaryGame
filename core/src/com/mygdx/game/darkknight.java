@@ -61,7 +61,9 @@ public class darkknight extends ApplicationAdapter {
 		// Constructs a new OrthographicCamera, using the given viewport width and height
 		// Height is multiplied by aspect ratio.
 		cam = new OrthographicCamera(30, 30 * (h / w));
-		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
+		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f+13.1f, 0);
+		//set zoom
+		cam.zoom = 85/cam.viewportWidth;
 		cam.update();
 
 		batch = new SpriteBatch();
@@ -122,6 +124,7 @@ public class darkknight extends ApplicationAdapter {
 			bodiesToDestroy.get(0).setActive(false);
 			world.destroyBody(bodiesToDestroy.get(0));
             bodiesToDestroy.remove(0);
+			System.out.println("bodies in the world: "+world.getBodyCount());
         }
     }
 }

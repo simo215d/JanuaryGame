@@ -67,7 +67,7 @@ public class InputHandler {
                 darkknight.player.getPlayerMovement().jump();
             }
 
-            //TODO RESPECT THE COOLDOWN/MANA
+            //sword
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
                 darkknight.player.getPlayerCombat().attack1();
             }
@@ -97,6 +97,7 @@ public class InputHandler {
                 darkknight.player.getPlayerCombat().attack6();
             }
 
+            //only use this button if you know what it does...
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)){
                 if (darkknight.isWorldStopped) {
                     System.out.println("game un-paused");
@@ -108,13 +109,29 @@ public class InputHandler {
                 }
             }
 
+            /*this is no longer needed
             cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 65/cam.viewportWidth);
-
             float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
             float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
             cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
             cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+            */
+            int distance = (int) (darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x-cam.position.x);
+            if (distance<2 && distance>-2){
+                cam.translate(0,0);
+            }
+            if (distance>=2 && distance<6){
+                cam.translate(0.1f,0);
+            }
+            if (distance>=6){
+                cam.translate(0.2f,0);
+            }
+            if (distance<=-2 && distance>-6){
+                cam.translate(-0.1f,0);
+            }
+            if (distance<=-6){
+                cam.translate(-0.2f,0);
+            }
         }
     }
 }

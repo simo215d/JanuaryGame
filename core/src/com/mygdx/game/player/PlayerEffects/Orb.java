@@ -12,6 +12,7 @@ public class Orb {
     private String name;
     private long spawnTime;
     private boolean flyRight = false;
+    private boolean isGameEnding = false;
     private float deathPositionX=0;
     private float deathPositionY=0;
     private boolean hasBeenLaunched = false;
@@ -118,10 +119,13 @@ public class Orb {
     }
 
     public void draw(Batch batch){
-        //after 200 deci seconds aka 20 seconds the fireball will game-end itself
-        if (darkknight.gameTimeCentiSeconds-spawnTime>200){
-            //setAnimationState("Exploding");
-            //darkknight.bodiesToDestroy.add(body);
+        //after 50 deci seconds aka 5 seconds the orb will game-end itself.
+        //to make sure it only game-ends itself once we need a boolean to insure this.
+        if (darkknight.gameTimeCentiSeconds-spawnTime>50 && !isGameEnding){
+            darkknight.player.deleteAnOrb(this);
+            darkknight.bodiesToDestroy.add(body);
+            System.out.println("mf's time ran out");
+            isGameEnding=true;
         }
         switch (animationState){
             case "Stationary":
