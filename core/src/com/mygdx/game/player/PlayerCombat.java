@@ -13,6 +13,8 @@ public class PlayerCombat {
     private boolean isImmuneToDamage = false;
     private int maxMana;
     private int mana;
+    private int manaGenerationRate = 5;
+    private int previousManaTime = 0;
     //attack damage
     private int attack1Damage = 2;
     public static int attack2Damage = 4;
@@ -59,6 +61,15 @@ public class PlayerCombat {
             case 4: mana-=attack4Mana; break;
             case 5: mana-=attack5Mana; break;
             case 6: mana-=attack6Mana; break;
+        }
+    }
+
+    public void generateMana(){
+        if ((int)darkknight.gameTimeCentiSeconds/10>previousManaTime){
+            previousManaTime=(int)darkknight.gameTimeCentiSeconds/10;
+            if (mana<=100-manaGenerationRate){
+                mana+=manaGenerationRate;
+            } else mana=maxMana;
         }
     }
 
