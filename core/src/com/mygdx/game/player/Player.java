@@ -45,7 +45,7 @@ public class Player {
 
     public void draw(Batch batch, OrthographicCamera camera){
         playerGraphics.draw(batch);
-        playerUI.draw(batch, camera, playerCombat.getHealth(), playerCombat.getMaxHealth());
+        playerUI.draw(batch, camera, playerCombat.getHealth(), playerCombat.getMaxHealth(), playerCombat.getMana(), playerCombat.getMaxMana());
         for (FireBall fireBall : getPlayerCombat().getFireBalls()){
             fireBall.draw(batch);
         }

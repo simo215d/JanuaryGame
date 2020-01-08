@@ -80,17 +80,17 @@ public class InputHandler {
             }
 
             //meteor
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_5) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
                 darkknight.player.getPlayerCombat().attack3();
             }
 
             //orbs
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)){
                 darkknight.player.getPlayerCombat().attack4();
             }
 
             //fire shield
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_5)){
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_4)){
                 darkknight.player.getPlayerCombat().attack5();
             }
 

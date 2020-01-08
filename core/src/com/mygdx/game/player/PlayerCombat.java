@@ -11,12 +11,21 @@ public class PlayerCombat {
     private int maxHealth;
     private int health;
     private boolean isImmuneToDamage = false;
+    private int maxMana;
+    private int mana;
     //attack damage
     private int attack1Damage = 2;
     public static int attack2Damage = 4;
     public static int attack3Damage = 8;
     public static int attack4Damage = 1;
-    public static int attack6Damage = 3;
+    //mana costs
+    public static int attack1Mana=0;
+    public static int attack2Mana=12;
+    public static int attack3Mana=3;
+    public static int attack4Mana=25;
+    public static int attack5Mana=42;
+    public static int attack6Mana=23;
+    //spell keepers
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
     //we need this variable, because we need unique names for every fire ball because of collision detection
     private int fireBallCount = 0;
@@ -28,6 +37,8 @@ public class PlayerCombat {
     public PlayerCombat(){
         maxHealth = 100;
         health=maxHealth;
+        maxMana = 100;
+        mana=maxMana;
     }
 
     public void takeDamage(int damage){
@@ -40,41 +51,60 @@ public class PlayerCombat {
         } else System.out.println("im immune bitch!");
     }
 
+    public void drainMana(int spellNumber){
+        switch (spellNumber){
+            case 1: mana-=attack1Mana; break;
+            case 2: mana-=attack2Mana; break;
+            case 3: mana-=attack3Mana; break;
+            case 4: mana-=attack4Mana; break;
+            case 5: mana-=attack5Mana; break;
+            case 6: mana-=attack6Mana; break;
+        }
+    }
+
+    //sword is 1
     public void attack1(){
-        darkknight.player.getPlayerMovement().setAttacking1(true);
-        //if the player jumps and immediately presses 1, then his foot is still grounded.
-        // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
-        // therefore we need to make sure that the player is static when he attacks
-        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,0);
-        darkknight.player.getPlayerGraphics().setAnimationState("attacking1");
-        //handling the actual attack logic
-        //if sprite facing left
-        if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
-            if (CollisionDetector.currentLeftEnemies.size()>0){
-                for (String string : CollisionDetector.currentLeftEnemies){
-                    Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+        if (mana>=attack1Mana) {
+            drainMana(1);
+            darkknight.player.getPlayerMovement().setAttacking1(true);
+            //if the player jumps and immediately presses 1, then his foot is still grounded.
+            // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
+            // therefore we need to make sure that the player is static when he attacks
+            darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+            darkknight.player.getPlayerGraphics().setAnimationState("attacking1");
+            //handling the actual attack logic
+            //if sprite facing left
+            if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
+                if (CollisionDetector.currentLeftEnemies.size() > 0) {
+                    for (String string : CollisionDetector.currentLeftEnemies) {
+                        Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+                    }
                 }
             }
-        }
-        //if sprite facing right
-        if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
-            if (CollisionDetector.currentRightEnemies.size()>0){
-                for (String string : CollisionDetector.currentRightEnemies){
-                    Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+            //if sprite facing right
+            if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
+                if (CollisionDetector.currentRightEnemies.size() > 0) {
+                    for (String string : CollisionDetector.currentRightEnemies) {
+                        Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+                    }
                 }
             }
         }
     }
 
+    //fireball is 2
     public void attack2(){
-        darkknight.player.getPlayerMovement().setAttacking1(true);
-        //if the player jumps and immediately presses 1, then his foot is still grounded.
-        // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
-        // therefore we need to make sure that the player is static when he attacks
-        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0,0);
-        darkknight.player.getPlayerGraphics().setAnimationState("attacking2");
-        //handling the actual attack logic
-        darkknight.player.getPlayerCombat().attack2FireBall();
+        if (mana>=attack2Mana) {
+            drainMana(2);
+            darkknight.player.getPlayerMovement().setAttacking1(true);
+            //if the player jumps and immediately presses 1, then his foot is still grounded.
+            // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
+            // therefore we need to make sure that the player is static when he attacks
+            darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+            darkknight.player.getPlayerGraphics().setAnimationState("attacking2");
+            //handling the actual attack logic
+            darkknight.player.getPlayerCombat().attack2FireBall();
+        }
     }
 
     //this method can be called from the animation or directly from above method depending on when fireball should spawn
@@ -84,10 +114,11 @@ public class PlayerCombat {
         fireBalls.add(fireBall);
     }
 
-    //meteor
+    //meteor is 5
     public void attack3(){
         //i only allow 1 meteor
-        if (currentMeteor==null) {
+        if (currentMeteor==null && mana>=attack5Mana) {
+            drainMana(5);
             darkknight.player.getPlayerMovement().setAttacking1(true);
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
             darkknight.player.getPlayerGraphics().setAnimationState("attacking3");
@@ -95,6 +126,7 @@ public class PlayerCombat {
         }
     }
 
+    //orbs are 3
     public void attack4(){
         if (orbs.size()>0){
             for (Orb orb : orbs){
@@ -104,7 +136,8 @@ public class PlayerCombat {
                 }
             }
         }
-        if (orbs.size()==0){
+        if (orbs.size()==0 && mana>=attack3Mana){
+            drainMana(3);
             Player.orbsToDelete.clear();
             for (int i = 1; i <= 3; i++) {
                 orbs.add(new Orb("playerOrb"+i));
@@ -112,8 +145,10 @@ public class PlayerCombat {
         }
     }
 
+    //fireShield is 4
     public void attack5(){
-        if (fireShield==null){
+        if (fireShield==null && mana>=attack4Mana){
+            drainMana(4);
             fireShield = new FireShield();
             //sets player to be immune
             setImmuneToDamage(true);
@@ -122,10 +157,11 @@ public class PlayerCombat {
     }
 
     public void attack6(){
-        darkknight.player.getPlayerMovement().setAttacking1(true);
-        darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
-        darkknight.player.getPlayerGraphics().setAnimationState("attacking6");
-        if (fireBreath==null){
+        if (fireBreath==null && mana>=attack6Mana){
+            drainMana(6);
+            darkknight.player.getPlayerMovement().setAttacking1(true);
+            darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+            darkknight.player.getPlayerGraphics().setAnimationState("attacking6");
             fireBreath = new FireBreath();
         }
     }
@@ -176,5 +212,13 @@ public class PlayerCombat {
 
     public FireBreath getFireBreath(){
         return fireBreath;
+    }
+
+    public int getMaxMana(){
+        return maxMana;
+    }
+
+    public int getMana(){
+        return mana;
     }
 }
