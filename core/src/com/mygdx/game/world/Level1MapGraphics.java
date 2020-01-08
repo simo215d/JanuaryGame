@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.darkknight;
 
 import java.util.ArrayList;
 
 public class Level1MapGraphics {
     private ArrayList<Sprite> earthSprites = new ArrayList<>();
+    private ArrayList<Sprite> level0EarthSprites = new ArrayList<>();
+    private ArrayList<Sprite> level1EarthSprites = new ArrayList<>();
     private ArrayList<Sprite> bushSprites = new ArrayList<>();
     private ArrayList<Sprite> treeSprites = new ArrayList<>();
     private ArrayList<Sprite> shroomSprites = new ArrayList<>();
@@ -18,12 +19,15 @@ public class Level1MapGraphics {
     private Texture bushTexture = new Texture(Gdx.files.internal("bush1.png"));
     private Texture treeTexture = new Texture(Gdx.files.internal("tree1.png"));
     private Texture joyTexture = new Texture(Gdx.files.internal("joyemoji.png"));
-    private EarthTile earthTile1 = new EarthTile(0,0,true);
-    private EarthTile earthTile2 = new EarthTile(16,0,true);
-    private EarthTile earthTile3 = new EarthTile(32,0,false);
-    private EarthTile earthTile4 = new EarthTile(32,8,true);
-    private EarthTile earthTile5 = new EarthTile(48,0,false);
-    private EarthTile earthTile6 = new EarthTile(48,8,true);
+    //top level earthSprites are always made this way
+    private EarthTile earthTile1 = new EarthTile(0,0,1);
+    private EarthTile earthTile2 = new EarthTile(16,0,1);
+    private EarthTile earthTile3 = new EarthTile(32,8,1);
+    private EarthTile earthTile4 = new EarthTile(48,8,1);
+    private EarthTile earthTile5 = new EarthTile(64,8,1);
+    private EarthTile earthTile6 = new EarthTile(80,8,3);
+    private EarthTile earthTile7 = new EarthTile(96,8,4);
+    private EarthTile earthTile8 = new EarthTile(112,8,4);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
     private Sprite joySprite1;
@@ -40,12 +44,25 @@ public class Level1MapGraphics {
         joySprite1 = new Sprite(joyTexture,0,0,16,16);
         joySprite1.setPosition(2f,10f);
         joySprite1.setSize(8f,8f);
+        //create bottom/level0 earthTiles
+        for (int i = -3; i < 8; i++) {
+            level0EarthSprites.add(new EarthTile(16*i,-8,2).getSprite());
+            if (i<0){
+                level0EarthSprites.add(new EarthTile(16*i,0,1).getSprite());
+            }
+        }
+        //create level1 earthTiles
+        for (int i = 2; i < 8; i++) {
+            level1EarthSprites.add(new EarthTile(16*i,0,2).getSprite());
+        }
         earthSprites.add(earthTile1.getSprite());
         earthSprites.add(earthTile2.getSprite());
         earthSprites.add(earthTile3.getSprite());
         earthSprites.add(earthTile4.getSprite());
         earthSprites.add(earthTile5.getSprite());
         earthSprites.add(earthTile6.getSprite());
+        earthSprites.add(earthTile7.getSprite());
+        earthSprites.add(earthTile8.getSprite());
         bushSprites.add(bushSprite1);
         treeSprites.add(treeSprite1);
         shroomSprites.add(shroom1.getShroomSprite());
@@ -62,6 +79,12 @@ public class Level1MapGraphics {
 
     public void draw(Batch batch){
         for (Sprite sprite : earthSprites){
+            sprite.draw(batch);
+        }
+        for (Sprite sprite : level0EarthSprites){
+            sprite.draw(batch);
+        }
+        for (Sprite sprite : level1EarthSprites){
             sprite.draw(batch);
         }
         for (Sprite sprite : treeSprites){

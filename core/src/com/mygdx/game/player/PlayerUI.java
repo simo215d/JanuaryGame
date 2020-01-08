@@ -87,8 +87,16 @@ public class PlayerUI {
     }
 
     public void draw(Batch batch, OrthographicCamera camera, int health, int maxHealth, int mana, int maxMana){
-        spellFrameSprite.setPosition(camera.position.x-spellFrameSprite.getWidth()/2,camera.position.y-24.5f);
+        spellFrameSprite.setPosition(camera.position.x-spellFrameSprite.getWidth()/2,camera.position.y-24.6f);
         spellFrameSprite.draw(batch);
+        //render player health bar
+        greenHealthBarSprite.setSize(31.5f*((float) health/(float) maxHealth),1);
+        greenHealthBarSprite.setPosition(spellFrameSprite.getX()+0.5f,spellFrameSprite.getY()+6.5f);
+        greenHealthBarSprite.draw(batch);
+        //render player mana bar
+        manaBarSprite.setSize(31.5f*((float) mana/(float) maxMana),1);
+        manaBarSprite.setPosition(spellFrameSprite.getX()+0.5f,spellFrameSprite.getY()+5f);
+        manaBarSprite.draw(batch);
         //render spell icons so they are within the frame
         for (int i = 0; i < spellIcons.size(); i++) {
             switch (i){
@@ -124,13 +132,5 @@ public class PlayerUI {
                 } break;
             }
         }
-        //render player health bar
-        greenHealthBarSprite.setSize(31.5f*((float) health/(float) maxHealth),1);
-        greenHealthBarSprite.setPosition(spellFrameSprite.getX()+0.5f,spellFrameSprite.getY()+6.51f);
-        greenHealthBarSprite.draw(batch);
-        //render player mana bar
-        manaBarSprite.setSize(31.5f*((float) mana/(float) maxMana),1);
-        manaBarSprite.setPosition(spellFrameSprite.getX()+0.5f,spellFrameSprite.getY()+5.01f);
-        manaBarSprite.draw(batch);
     }
 }

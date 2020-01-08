@@ -12,6 +12,7 @@ import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Meteor;
 import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.targetdummy.TargetDummy;
+import com.mygdx.game.world.undead1.Undead1;
 
 import java.util.ArrayList;
 
@@ -83,9 +84,15 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().toString().length()>=8 && contact.getFixtureB().getUserData().toString().length()>=8){
             //then check if its a fireBall and an enemy
             if (contact.getFixtureA().getUserData().toString().substring(0,8).equals("FireBall") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().substring(0,8).equals("FireBall")){
+                //check for targetDummies
                 for (TargetDummy targetDummy : Level1.level1Enemies.targetDummies){
                     if (contact.getFixtureA().getUserData().toString().equals(targetDummy.getName()) || contact.getFixtureB().getUserData().toString().equals(targetDummy.getName()))
                     targetDummy.takeDamage(PlayerCombat.attack2Damage);
+                }
+                //check for undead1s
+                for (Undead1 undead1 : Level1.level1Enemies.undead1s){
+                    if (contact.getFixtureA().getUserData().toString().equals(undead1.getName()) || contact.getFixtureB().getUserData().toString().equals(undead1.getName()))
+                        undead1.takeDamage(PlayerCombat.attack2Damage);
                 }
                 //destroy the fireball
                 for (FireBall fireBall : darkknight.player.getPlayerCombat().getFireBalls()){

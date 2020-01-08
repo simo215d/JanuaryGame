@@ -125,14 +125,20 @@ public class InputHandler {
             if (distance>=2 && distance<6){
                 cam.translate(0.1f,0);
             }
-            if (distance>=6){
+            if (distance>=6 && distance<10){
                 cam.translate(0.2f,0);
+            }
+            if (distance>=10){
+                cam.translate(0.4f,0);
             }
             if (distance<=-2 && distance>-6){
                 cam.translate(-0.1f,0);
             }
-            if (distance<=-6){
+            if (distance<=-6 && distance>-10){
                 cam.translate(-0.2f,0);
+            }
+            if (distance<=-10){
+                cam.translate(-0.4f,0);
             }
         }
     }
