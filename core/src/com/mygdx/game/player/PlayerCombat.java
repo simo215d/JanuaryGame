@@ -13,13 +13,13 @@ public class PlayerCombat {
     private boolean isImmuneToDamage = false;
     private int maxMana;
     private int mana;
-    private int manaGenerationRate = 5;
+    private int manaGenerationRate = 1;
     private int previousManaTime = 0;
     //attack damage
-    private int attack1Damage = 2;
-    public static int attack2Damage = 4;
-    public static int attack3Damage = 8;
-    public static int attack4Damage = 1;
+    private int attackSwordDamage = 2;
+    public static int attackFireballDamage = 4;
+    public static int attackOrbDamage = 2;
+    public static int attackMeteorDamage = 8;
     //mana costs
     public static int attack1Mana=0;
     public static int attack2Mana=12;
@@ -88,7 +88,7 @@ public class PlayerCombat {
             if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
                 if (CollisionDetector.currentLeftEnemies.size() > 0) {
                     for (String string : CollisionDetector.currentLeftEnemies) {
-                        Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+                        Level1.level1Enemies.attackAnEnemy(string, attackSwordDamage);
                     }
                 }
             }
@@ -96,7 +96,7 @@ public class PlayerCombat {
             if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
                 if (CollisionDetector.currentRightEnemies.size() > 0) {
                     for (String string : CollisionDetector.currentRightEnemies) {
-                        Level1.level1Enemies.attackAnEnemy(string, attack1Damage);
+                        Level1.level1Enemies.attackAnEnemy(string, attackSwordDamage);
                     }
                 }
             }

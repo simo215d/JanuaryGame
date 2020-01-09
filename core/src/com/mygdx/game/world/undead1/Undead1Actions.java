@@ -2,18 +2,21 @@ package com.mygdx.game.world.undead1;
 
 public class Undead1Actions {
     private String actionState = "idle";
-    public boolean isAttacked = false;
     private int health;
     private int maxHealth;
 
     public Undead1Actions(){
-        maxHealth=100;
+        maxHealth=20;
         health=maxHealth;
     }
 
     public void takeDamage(int damage){
-        health-=damage;
-        System.out.println("undead took "+damage+" damage...");
+        if(health-damage<=0){
+            health=maxHealth;
+        } else{
+            health-=damage;
+            System.out.println("undead took "+damage+" damage...");
+        }
     }
 
     public String getActionState() {

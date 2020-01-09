@@ -110,7 +110,7 @@ public class Meteor {
                 deathPositionY=body.getPosition().y-8;
                 //deal damage to targetDummies
                 for (TargetDummy targetDummy : targetDummies){
-                    targetDummy.takeDamage(PlayerCombat.attack3Damage);
+                    targetDummy.takeDamage(PlayerCombat.attackOrbDamage);
                 }
             }
             stateTime_EX += Gdx.graphics.getDeltaTime();

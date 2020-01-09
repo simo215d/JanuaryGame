@@ -44,6 +44,7 @@ public class Level1Enemies {
     }
 
     public void attackAnEnemy(String name, int damage){
+        //run through all enemy lists and find the chosen one!
         for (TargetDummy targetDummy : targetDummies){
             if (targetDummy.getName().equals(name)){
                 targetDummy.takeDamage(damage);

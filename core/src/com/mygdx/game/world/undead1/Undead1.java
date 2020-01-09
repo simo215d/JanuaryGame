@@ -14,7 +14,6 @@ public class Undead1 {
     }
 
     public void takeDamage(int damage){
-        actions.isAttacked=true;
         actions.takeDamage(damage);
     }
 
