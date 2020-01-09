@@ -18,6 +18,7 @@ public class Undead1 {
     }
 
     public void draw(Batch batch){
+        actions.update(physics);
         graphics.draw(batch, actions.getActionState(), physics.getBody().getPosition().x, physics.getBody().getPosition().y, actions.getHealth(), actions.getMaxHealth());
     }
 
@@ -27,5 +28,9 @@ public class Undead1 {
 
     public String getName(){
         return name;
+    }
+
+    public void setInCombat(boolean bool) {
+        actions.setInCombat(bool);
     }
 }

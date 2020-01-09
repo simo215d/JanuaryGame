@@ -1,19 +1,22 @@
 package com.mygdx.game.world.undead1;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.darkknight;
 
 public class Undead1Physics {
+    //physical collider
     private BodyDef bodyDef;
     private Body body;
     private PolygonShape bodyShape;
     private Fixture bodyFixture;
+    //enter combat sensor
+    private PolygonShape sensorShapeCombat;
+    private FixtureDef fixtureDefCombat;
+    private Fixture fixtureCombat;
 
     public Undead1Physics(String userdata, float x, float y){
+        //physical collider
         bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(x, y));
         body = darkknight.world.createBody(bodyDef);
@@ -25,6 +28,15 @@ public class Undead1Physics {
         bodyFixture.setFriction(0.5f);
         bodyFixture.setUserData(userdata);
         bodyShape.dispose();
+        //enter combat sensor
+        sensorShapeCombat = new PolygonShape();
+        sensorShapeCombat.setAsBox(20,10);
+        fixtureDefCombat = new FixtureDef();
+        fixtureDefCombat.shape = sensorShapeCombat;
+        fixtureDefCombat.isSensor=true;
+        fixtureCombat = body.createFixture(fixtureDefCombat);
+        fixtureCombat.setUserData("CombatSensor_"+userdata);
+        sensorShapeCombat.dispose();
     }
 
     public Body getBody(){

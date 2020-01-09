@@ -171,6 +171,17 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().toString().equals("AllyForestGuard") && contact.getFixtureB().getUserData().toString().equals("PlayerBody") ||  contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("AllyForestGuard")){
             Level1.level1Allies.getGuard1().setTalking(true);
         }
+        //check for combatSensors
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().length()>13 || contact.getFixtureA().getUserData().toString().length()>13 && contact.getFixtureB().getUserData().toString().equals("PlayerBody")){
+            if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().substring(0, 13).equals("CombatSensor_")) {
+                System.out.println("we found a combatSensor that belongs to: "+contact.getFixtureB().getUserData().toString().substring(13));
+                Level1.level1Enemies.enterCombatWith(contact.getFixtureB().getUserData().toString().substring(13));
+            }
+            if (contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().substring(0, 13).equals("CombatSensor_")) {
+                System.out.println("we found a combatSensor that belongs to: "+contact.getFixtureA().getUserData().toString().substring(13));
+                Level1.level1Enemies.enterCombatWith(contact.getFixtureA().getUserData().toString().substring(13));
+            }
+        }
     }
 
     @Override

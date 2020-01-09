@@ -56,4 +56,13 @@ public class Level1Enemies {
             }
         }
     }
+
+    public void enterCombatWith(String name){
+        //run through all enemy lists and find the chosen one!
+        for (Undead1 undead1 : undead1s){
+            if (undead1.getName().equals(name)){
+                undead1.setInCombat(true);
+            }
+        }
+    }
 }
