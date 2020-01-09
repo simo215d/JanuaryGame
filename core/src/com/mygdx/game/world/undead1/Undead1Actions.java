@@ -9,6 +9,7 @@ public class Undead1Actions {
     private boolean inCombat = false;
     //this is used to make sure he doesnt jump when he first starts running because his velocity is 0 when he starts
     private boolean hasMoved = false;
+    private boolean isAttacking = false;
 
     public Undead1Actions(){
         maxHealth=20;
@@ -28,19 +29,17 @@ public class Undead1Actions {
     public void update(Undead1Physics physics){
         float distanceToPlayer = physics.getBody().getPosition().x-darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x;
         //run
-        if (inCombat && distanceToPlayer>15 || inCombat && distanceToPlayer<-15){
-            System.out.println("run");
+        if (inCombat && distanceToPlayer>15 && !isAttacking|| inCombat && distanceToPlayer<-15 && !isAttacking){
+            actionState="running";
             //jump if stuck
             if (physics.getBody().getLinearVelocity().x==0.0f && hasMoved){
                 //jump right
                 if (distanceToPlayer<0){
                     physics.getBody().setLinearVelocity(physics.getBody().getLinearVelocity().x,10);
-                    System.out.println("JUMP");
                 }
                 //jump left
                 if (distanceToPlayer>0){
                     physics.getBody().setLinearVelocity(physics.getBody().getLinearVelocity().x,10);
-                    System.out.println("JUMP");
                 }
             }
             //run left else right
@@ -51,7 +50,8 @@ public class Undead1Actions {
         } else hasMoved=false;
         //fight
         if (inCombat && distanceToPlayer<=15 && distanceToPlayer>=-15){
-            System.out.println("fight");
+            //TODO animation and fight pattern
+            actionState="slamming";
             physics.getBody().setLinearVelocity(0,physics.getBody().getLinearVelocity().y);
         }
     }

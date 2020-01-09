@@ -25,6 +25,11 @@ public class Undead1Graphics {
     private Animation<TextureRegion> animation_run;
     private Texture sheet_run;
     private float stateTime_run;
+    //animation slam
+    private static final int FRAME_COLS_slam = 5, FRAME_ROWS_slam = 1;
+    private Animation<TextureRegion> animation_slam;
+    private Texture sheet_slam;
+    private float stateTime_slam;
 
     public Undead1Graphics(){
         //health bar sprite green
@@ -57,8 +62,20 @@ public class Undead1Graphics {
                 frames_run[index_run++] = tmp_run[i][j];
             }
         }
-        animation_run = new Animation<TextureRegion>(0.15f, frames_run);
+        animation_run = new Animation<TextureRegion>(0.4f, frames_run);
         stateTime_run = 0f;
+        //animation slam
+        sheet_slam = new Texture(Gdx.files.internal("undead1SlamSheet.png"));
+        TextureRegion[][] tmp_slam = TextureRegion.split(sheet_slam, sheet_slam.getWidth() / FRAME_COLS_slam, sheet_slam.getHeight() / FRAME_ROWS_slam);
+        TextureRegion[] frames_slam = new TextureRegion[FRAME_COLS_slam * FRAME_ROWS_slam];
+        int index_slam = 0;
+        for (int i = 0; i < FRAME_ROWS_slam; i++) {
+            for (int j = 0; j < FRAME_COLS_slam; j++) {
+                frames_slam[index_slam++] = tmp_slam[i][j];
+            }
+        }
+        animation_slam = new Animation<TextureRegion>(0.3f, frames_slam);
+        stateTime_slam = 0f;
     }
 
     public void draw(Batch batch, String actionState, float physicsX, float physicsY, int health, int maxHealth){
@@ -93,7 +110,24 @@ public class Undead1Graphics {
                     }
                 }
                 //position and scale of frame
-                batch.draw(currentFrame_run, physicsX, physicsY,32,32);
+                batch.draw(currentFrame_run, physicsX-16, physicsY-7.5f,32,32);
+                break;
+            case "slamming":
+                //Accumulate elapsed animation time of animation
+                stateTime_slam += Gdx.graphics.getDeltaTime();
+                // Get current frame of animation for the current stateTime
+                TextureRegion currentFrame_slam = animation_slam.getKeyFrame(stateTime_slam, true);
+                //flip frame based on player pos in relation to this pos
+                if (physicsX> darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
+                    currentFrame_slam.flip(false,false);
+                }else {
+                    if (!currentFrame_slam.isFlipX()) {
+                        currentFrame_slam.flip(true, false);
+                    }
+                }
+                //position and scale of frame
+                batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
+                //TODO end of animation starts swing attack
                 break;
         }
         //render the healthBar
