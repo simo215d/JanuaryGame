@@ -144,6 +144,11 @@ public class Undead1Graphics {
                 }
                 //position and scale of frame
                 batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
+                //even upon animation halfway: attack player
+                if (stateTime_slam>=0.3f*FRAME_COLS_slam*FRAME_ROWS_slam/2){
+                    actions.damagePlayerIfInRange("slamming");
+                }
+                //event upon animation end
                 if (stateTime_slam>=0.3f*FRAME_COLS_slam*FRAME_ROWS_slam){
                     actions.endAnAttack("slamming");
                     stateTime_slam=0;
@@ -164,6 +169,11 @@ public class Undead1Graphics {
                 }
                 //position and scale of frame
                 batch.draw(currentFrame_swing, physicsX-16, physicsY-7.5f,32,32);
+                //animation half way attack
+                if (stateTime_swing>=0.3f*FRAME_COLS_swing*FRAME_ROWS_swing/2){
+                    actions.damagePlayerIfInRange("swinging");
+                }
+                //animation end
                 if (stateTime_swing>=0.3f*FRAME_COLS_swing*FRAME_ROWS_swing){
                     actions.endAnAttack("swinging");
                     stateTime_swing=0;

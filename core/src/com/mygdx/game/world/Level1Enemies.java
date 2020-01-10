@@ -13,7 +13,7 @@ public class Level1Enemies {
     private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 20, 50);
     public ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //undead1s
-    private Undead1 undead11 = new Undead1("TTTFUndead1",80,60);
+    private Undead1 undead11 = new Undead1("TTTFUndead1",95,60);
     public ArrayList<Undead1> undead1s = new ArrayList<>();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);

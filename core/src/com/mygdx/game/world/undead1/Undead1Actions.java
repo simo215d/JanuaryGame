@@ -6,7 +6,7 @@ public class Undead1Actions {
     private String actionState = "idle";
     private int health;
     private int maxHealth;
-    private float combatRange = 13;
+    private float combatRange = 10;
     //this boolean is used to see if player has entered the sensor
     private boolean inCombat = false;
     //this is used to make sure he doesnt jump when he first starts running because his velocity is 0 when he starts
@@ -17,6 +17,10 @@ public class Undead1Actions {
     private int pauseTime;
     //this is used to see if enough time has passed since pauseTime
     private int attackCoolDownDeciSeconds = 50;
+    private float distanceToPlayer;
+    //to make sure only take damage once, since fps updates in graphics yadaydayda
+    private boolean recentlyAttackedWithSlam = false;
+    private boolean recentlyAttackedWithSwing = false;
 
     public Undead1Actions(){
         maxHealth=20;
@@ -34,7 +38,7 @@ public class Undead1Actions {
     }
 
     public void update(Undead1Physics physics){
-        float distanceToPlayer = physics.getBody().getPosition().x-darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x;
+        distanceToPlayer = physics.getBody().getPosition().x-darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x;
         //run
         if (inCombat && distanceToPlayer>combatRange && !isAttacking|| inCombat && distanceToPlayer<-combatRange && !isAttacking){
             actionState="running";
@@ -71,6 +75,7 @@ public class Undead1Actions {
     private void fight(Undead1Physics physics){
         if (numberOfAttacks==0){
             numberOfAttacks=(int)(Math.random()*2)+2;
+            numberOfAttacks=10;
             System.out.println("fight sequence has been reset with new number of attacks: "+numberOfAttacks);
         }
         isAttacking=true;
@@ -87,10 +92,6 @@ public class Undead1Actions {
 
     //this method is called from graphics upon animation ending
     public void endAnAttack(String attack){
-        //start the slam animation to begin the sequence if not already in battle actionState
-        if (!actionState.equals("slamming") && !actionState.equals("swinging")){
-            actionState="slamming";
-        }
         if (attack.equals("slamming")){
             if (numberOfAttacks>0){
                 actionState="swinging";
@@ -106,9 +107,26 @@ public class Undead1Actions {
         if (numberOfAttacks==0){
             setAttacking(false);
             actionState="idle";
-            //TODO idle counter = 0. wait for 5 idles then set boolean canStartNewAttackSequence to true
             pauseTime=(int)darkknight.gameTimeCentiSeconds;
             System.out.println("pause time: "+pauseTime);
+        }
+    }
+
+    public void damagePlayerIfInRange(String attack){
+        //TODO check if left of right
+        if (attack.equals("slamming") && !recentlyAttackedWithSlam){
+            if (distanceToPlayer<=combatRange)
+                darkknight.player.getPlayerCombat().takeDamage(20);
+            System.out.println("distance: "+distanceToPlayer);
+            recentlyAttackedWithSlam=true;
+            recentlyAttackedWithSwing=false;
+        }
+        if (attack.equals("swinging") && !recentlyAttackedWithSwing){
+            if (distanceToPlayer<=combatRange)
+                darkknight.player.getPlayerCombat().takeDamage(20);
+            System.out.println("distance: "+distanceToPlayer);
+            recentlyAttackedWithSwing=true;
+            recentlyAttackedWithSlam=false;
         }
     }
 
