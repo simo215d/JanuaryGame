@@ -19,7 +19,7 @@ public class Undead1 {
 
     public void draw(Batch batch){
         actions.update(physics);
-        graphics.draw(batch, actions.getActionState(), physics.getBody().getPosition().x, physics.getBody().getPosition().y, actions.getHealth(), actions.getMaxHealth());
+        graphics.draw(batch, actions, physics.getBody().getPosition().x, physics.getBody().getPosition().y, actions.getHealth(), actions.getMaxHealth());
     }
 
     public Undead1Physics getPhysics(){

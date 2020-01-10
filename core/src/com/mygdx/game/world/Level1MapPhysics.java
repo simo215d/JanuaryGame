@@ -22,7 +22,7 @@ public class Level1MapPhysics {
     public Level1MapPhysics(){
         //joy testing
         joyBodyDef = new BodyDef();
-        joyBodyDef.position.set(new Vector2(95, 45f));
+        joyBodyDef.position.set(new Vector2(110, 45f));
         joyBody = darkknight.world.createBody(joyBodyDef);
         joyBody.setType(BodyDef.BodyType.DynamicBody);
         joyBody.setAngularDamping(1f);

@@ -30,6 +30,11 @@ public class Undead1Graphics {
     private Animation<TextureRegion> animation_slam;
     private Texture sheet_slam;
     private float stateTime_slam;
+    //animation swing
+    private static final int FRAME_COLS_swing = 8, FRAME_ROWS_swing = 1;
+    private Animation<TextureRegion> animation_swing;
+    private Texture sheet_swing;
+    private float stateTime_swing;
 
     public Undead1Graphics(){
         //health bar sprite green
@@ -76,10 +81,22 @@ public class Undead1Graphics {
         }
         animation_slam = new Animation<TextureRegion>(0.3f, frames_slam);
         stateTime_slam = 0f;
+        //animation swing
+        sheet_swing = new Texture(Gdx.files.internal("undead1SwingSheet.png"));
+        TextureRegion[][] tmp_swing = TextureRegion.split(sheet_swing, sheet_swing.getWidth() / FRAME_COLS_swing, sheet_swing.getHeight() / FRAME_ROWS_swing);
+        TextureRegion[] frames_swing = new TextureRegion[FRAME_COLS_swing * FRAME_ROWS_swing];
+        int index_swing = 0;
+        for (int i = 0; i < FRAME_ROWS_swing; i++) {
+            for (int j = 0; j < FRAME_COLS_swing; j++) {
+                frames_swing[index_swing++] = tmp_swing[i][j];
+            }
+        }
+        animation_swing = new Animation<TextureRegion>(0.3f, frames_swing);
+        stateTime_swing = 0f;
     }
 
-    public void draw(Batch batch, String actionState, float physicsX, float physicsY, int health, int maxHealth){
-        switch (actionState){
+    public void draw(Batch batch, Undead1Actions actions, float physicsX, float physicsY, int health, int maxHealth){
+        switch (actions.getActionState()){
             case "idle":
                 //Accumulate elapsed animation time of animation
                 stateTime_idle += Gdx.graphics.getDeltaTime();
@@ -116,7 +133,7 @@ public class Undead1Graphics {
                 //Accumulate elapsed animation time of animation
                 stateTime_slam += Gdx.graphics.getDeltaTime();
                 // Get current frame of animation for the current stateTime
-                TextureRegion currentFrame_slam = animation_slam.getKeyFrame(stateTime_slam, true);
+                TextureRegion currentFrame_slam = animation_slam.getKeyFrame(stateTime_slam, false);
                 //flip frame based on player pos in relation to this pos
                 if (physicsX> darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
                     currentFrame_slam.flip(false,false);
@@ -127,7 +144,30 @@ public class Undead1Graphics {
                 }
                 //position and scale of frame
                 batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
-                //TODO end of animation starts swing attack
+                if (stateTime_slam>=0.3f*FRAME_COLS_slam*FRAME_ROWS_slam){
+                    actions.endAnAttack("slamming");
+                    stateTime_slam=0;
+                }
+                break;
+            case "swinging":
+                //Accumulate elapsed animation time of animation
+                stateTime_swing += Gdx.graphics.getDeltaTime();
+                // Get current frame of animation for the current stateTime
+                TextureRegion currentFrame_swing = animation_swing.getKeyFrame(stateTime_swing, false);
+                //flip frame based on player pos in relation to this pos
+                if (physicsX> darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
+                    currentFrame_swing.flip(false,false);
+                }else {
+                    if (!currentFrame_swing.isFlipX()) {
+                        currentFrame_swing.flip(true, false);
+                    }
+                }
+                //position and scale of frame
+                batch.draw(currentFrame_swing, physicsX-16, physicsY-7.5f,32,32);
+                if (stateTime_swing>=0.3f*FRAME_COLS_swing*FRAME_ROWS_swing){
+                    actions.endAnAttack("swinging");
+                    stateTime_swing=0;
+                }
                 break;
         }
         //render the healthBar
