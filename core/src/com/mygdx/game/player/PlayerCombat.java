@@ -49,7 +49,6 @@ public class PlayerCombat {
             if (health <= 0) {
                 health = maxHealth;
             }
-            System.out.println("im player and i took: " + damage + " damage.");
         } else System.out.println("im immune bitch!");
     }
 

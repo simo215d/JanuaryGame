@@ -1,6 +1,7 @@
 package com.mygdx.game.world.undead1;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -30,11 +31,13 @@ public class Undead1Graphics {
     private Animation<TextureRegion> animation_slam;
     private Texture sheet_slam;
     private float stateTime_slam;
+    private float frameDuration_slam = 0.3f;
     //animation swing
     private static final int FRAME_COLS_swing = 8, FRAME_ROWS_swing = 1;
     private Animation<TextureRegion> animation_swing;
     private Texture sheet_swing;
     private float stateTime_swing;
+    private float frameDuration_swing = 0.3f;
 
     public Undead1Graphics(){
         //health bar sprite green
@@ -79,7 +82,7 @@ public class Undead1Graphics {
                 frames_slam[index_slam++] = tmp_slam[i][j];
             }
         }
-        animation_slam = new Animation<TextureRegion>(0.3f, frames_slam);
+        animation_slam = new Animation<TextureRegion>(frameDuration_slam, frames_slam);
         stateTime_slam = 0f;
         //animation swing
         sheet_swing = new Texture(Gdx.files.internal("undead1SwingSheet.png"));
@@ -91,7 +94,7 @@ public class Undead1Graphics {
                 frames_swing[index_swing++] = tmp_swing[i][j];
             }
         }
-        animation_swing = new Animation<TextureRegion>(0.3f, frames_swing);
+        animation_swing = new Animation<TextureRegion>(frameDuration_swing, frames_swing);
         stateTime_swing = 0f;
     }
 
@@ -111,7 +114,12 @@ public class Undead1Graphics {
                     }
                 }
                 //position and scale of frame
-                batch.draw(currentFrame_idle, physicsX-16, physicsY-7.5f,32,32);
+                //if we should render red because of damage taken
+                if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_idle, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_idle, physicsX-16, physicsY-7.5f,32,32);
                 break;
             case "running":
                 //Accumulate elapsed animation time of animation
@@ -126,8 +134,12 @@ public class Undead1Graphics {
                         currentFrame_run.flip(true, false);
                     }
                 }
-                //position and scale of frame
-                batch.draw(currentFrame_run, physicsX-16, physicsY-7.5f,32,32);
+                //if we should render red because of damage taken
+                if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_run, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_run, physicsX-16, physicsY-7.5f,32,32);
                 break;
             case "slamming":
                 //Accumulate elapsed animation time of animation
@@ -142,14 +154,18 @@ public class Undead1Graphics {
                         currentFrame_slam.flip(true, false);
                     }
                 }
-                //position and scale of frame
-                batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
-                //even upon animation halfway: attack player
-                if (stateTime_slam>=0.3f*FRAME_COLS_slam*FRAME_ROWS_slam/2){
+                //if we should render red because of damage taken
+                if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_slam, physicsX-16, physicsY-7.5f,32,32);
+                //check if attack if 2/4 done to 4/4 done
+                if (stateTime_slam>=frameDuration_slam*FRAME_COLS_slam*FRAME_ROWS_slam/2){
                     actions.damagePlayerIfInRange("slamming");
                 }
                 //event upon animation end
-                if (stateTime_slam>=0.3f*FRAME_COLS_slam*FRAME_ROWS_slam){
+                if (stateTime_slam>=frameDuration_slam*FRAME_COLS_slam*FRAME_ROWS_slam){
                     actions.endAnAttack("slamming");
                     stateTime_slam=0;
                 }
@@ -168,13 +184,18 @@ public class Undead1Graphics {
                     }
                 }
                 //position and scale of frame
-                batch.draw(currentFrame_swing, physicsX-16, physicsY-7.5f,32,32);
-                //animation half way attack
-                if (stateTime_swing>=0.3f*FRAME_COLS_swing*FRAME_ROWS_swing/2){
+                //if we should render red because of damage taken
+                if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_swing, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_swing, physicsX-16, physicsY-7.5f,32,32);
+                //check if attack if 2/4 done to 3/4 done
+                if (stateTime_swing>=frameDuration_swing*FRAME_COLS_swing*FRAME_ROWS_swing/2 && stateTime_swing<frameDuration_swing*FRAME_COLS_swing*FRAME_ROWS_swing-frameDuration_swing*FRAME_COLS_swing*FRAME_ROWS_swing/4){
                     actions.damagePlayerIfInRange("swinging");
                 }
                 //animation end
-                if (stateTime_swing>=0.3f*FRAME_COLS_swing*FRAME_ROWS_swing){
+                if (stateTime_swing>=frameDuration_swing*FRAME_COLS_swing*FRAME_ROWS_swing){
                     actions.endAnAttack("swinging");
                     stateTime_swing=0;
                 }
