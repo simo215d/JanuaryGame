@@ -3,13 +3,12 @@ package com.mygdx.game.world.undead1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.game.darkknight;
 
 public class Undead1Graphics {
+    //to make sure we only call die once and dont delete same body multiple times
+    private boolean hasCalledDie = false;
     //health bar sprite green
     private Texture greenHealthBarTexture;
     private Sprite greenHealthBarSprite;
@@ -38,6 +37,12 @@ public class Undead1Graphics {
     private Texture sheet_swing;
     private float stateTime_swing;
     private float frameDuration_swing = 0.3f;
+    //animation death
+    private static final int FRAME_COLS_death = 5, FRAME_ROWS_death = 1;
+    private Animation<TextureRegion> animation_death;
+    private Texture sheet_death;
+    private float stateTime_death;
+    private float frameDuration_death = 0.5f;
 
     public Undead1Graphics(){
         //health bar sprite green
@@ -96,9 +101,21 @@ public class Undead1Graphics {
         }
         animation_swing = new Animation<TextureRegion>(frameDuration_swing, frames_swing);
         stateTime_swing = 0f;
+        //animation death
+        sheet_death = new Texture(Gdx.files.internal("undead1DeathSheet.png"));
+        TextureRegion[][] tmp_death = TextureRegion.split(sheet_death, sheet_death.getWidth() / FRAME_COLS_death, sheet_death.getHeight() / FRAME_ROWS_death);
+        TextureRegion[] frames_death = new TextureRegion[FRAME_COLS_death * FRAME_ROWS_death];
+        int index_death = 0;
+        for (int i = 0; i < FRAME_ROWS_death; i++) {
+            for (int j = 0; j < FRAME_COLS_death; j++) {
+                frames_death[index_death++] = tmp_death[i][j];
+            }
+        }
+        animation_death = new Animation<TextureRegion>(frameDuration_death, frames_death);
+        stateTime_death = 0f;
     }
 
-    public void draw(Batch batch, Undead1Actions actions, float physicsX, float physicsY, int health, int maxHealth){
+    public void draw(Batch batch, Undead1Actions actions, float physicsX, float physicsY, int health, int maxHealth, Undead1 undead1){
         switch (actions.getActionState()){
             case "idle":
                 //Accumulate elapsed animation time of animation
@@ -198,6 +215,34 @@ public class Undead1Graphics {
                 if (stateTime_swing>=frameDuration_swing*FRAME_COLS_swing*FRAME_ROWS_swing){
                     actions.endAnAttack("swinging");
                     stateTime_swing=0;
+                }
+                break;
+            case "dying":
+                //Accumulate elapsed animation time of animation
+                stateTime_death += Gdx.graphics.getDeltaTime();
+                // Get current frame of animation for the current stateTime
+                TextureRegion currentFrame_death = animation_death.getKeyFrame(stateTime_death, false);
+                //flip frame based on player pos in relation to this pos
+                if (physicsX> darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x){
+                    currentFrame_death.flip(false,false);
+                }else {
+                    if (!currentFrame_death.isFlipX()) {
+                        currentFrame_death.flip(true, false);
+                    }
+                }
+                //position and scale of frame
+                //if we should render red because of damage taken
+                if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
+                //animation end
+                if (stateTime_death>=frameDuration_death*FRAME_COLS_death*FRAME_ROWS_death){
+                    if (!hasCalledDie) {
+                        undead1.die();
+                        hasCalledDie=true;
+                    }
                 }
                 break;
         }

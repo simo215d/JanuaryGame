@@ -30,6 +30,7 @@ public class Level1Enemies {
     }
 
     public void draw(Batch batch){
+        int undeadIndexToDelete = -1;
         for (ArrayList list : enemies){
             for (TargetDummy targetDummy : targetDummies){
                 targetDummy.draw(batch);
@@ -39,7 +40,13 @@ public class Level1Enemies {
             }
             for (Undead1 undead1 : undead1s){
                 undead1.draw(batch);
+                if (undead1.isShouldBeDeleted()){
+                    undeadIndexToDelete=undead1s.indexOf(undead1);
+                }
             }
+        }
+        if (undeadIndexToDelete!=-1){
+            undead1s.remove(undeadIndexToDelete);
         }
     }
 
