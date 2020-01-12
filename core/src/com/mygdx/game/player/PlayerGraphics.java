@@ -20,10 +20,11 @@ public class PlayerGraphics {
     private ArrayList<PlayerAnimation> animations = new ArrayList<>();
     private PlayerAnimation jumpAnimation = new PlayerAnimation(3,1,"knightJumpSheet.png",0.1f, false);
     private PlayerAnimation runAnimation = new PlayerAnimation(5,1,"knightRunSheet.png",0.1f, true);
-    private PlayerAnimation attack1Animation = new PlayerAnimation(4,1,"knightAttack1Sheet.png",0.075f, false);
-    private PlayerAnimation attack2Animation = new PlayerAnimation(3,1,"knightAttack1FireSheet.png",0.1f, false);
-    private PlayerAnimation attack3Animation = new PlayerAnimation(7,1,"knightAttackMeteorSheet.png",0.1f, false);
-    private PlayerAnimation attack6Animation = new PlayerAnimation(7,1,"knightFireBreathSheet.png",0.1f, false);
+    private PlayerAnimation attackSwordAnimation = new PlayerAnimation(4,1,"knightAttack1Sheet.png",0.075f, false);
+    private PlayerAnimation attackFireballAnimation = new PlayerAnimation(3,1,"knightAttack1FireSheet.png",0.1f, false);
+    private PlayerAnimation attackMeteorAnimation = new PlayerAnimation(7,1,"knightAttackMeteorSheet.png",0.1f, false);
+    private PlayerAnimation attackFireBreathAnimation = new PlayerAnimation(7,1,"knightFireBreathSheet.png",0.1f, false);
+    private PlayerAnimation attackShieldAnimation = new PlayerAnimation(3,1,"knightShieldSheet.png",0.05f, false);
 
     public PlayerGraphics(){
         //sprite
@@ -34,10 +35,11 @@ public class PlayerGraphics {
         //animation
         animations.add(jumpAnimation);
         animations.add(runAnimation);
-        animations.add(attack1Animation);
-        animations.add(attack2Animation);
-        animations.add(attack3Animation);
-        animations.add(attack6Animation);
+        animations.add(attackSwordAnimation);
+        animations.add(attackShieldAnimation);
+        animations.add(attackFireballAnimation);
+        animations.add(attackMeteorAnimation);
+        animations.add(attackFireBreathAnimation);
     }
 
     public Sprite getSpritePlayer(){
@@ -47,7 +49,7 @@ public class PlayerGraphics {
     public void setAnimationState(String state){
         //in some weird interaction with bodies that are walkable we might accidentaly be able to hit while we are sliding down
         //which means hitting is illegal //TODO FIX FOOT SENSOR BECAUSE OF THIS?
-        if (!state.equals("attacking1") && !state.equals("attacking2") && !state.equals("attacking3") && !state.equals("attacking6")){
+        if (!state.equals("attackingSword") && !state.equals("attackingFireball") && !state.equals("attackingMeteor") && !state.equals("attackingFireBreath") && !state.equals("attackingShield")){
             darkknight.player.getPlayerMovement().setAttacking1(false);
         }
         animationState=state;
@@ -64,10 +66,11 @@ public class PlayerGraphics {
         switch (animationState){
             case "jumping": jumpAnimation.animate(spritePlayer,batch); break;
             case "running": runAnimation.animate(spritePlayer,batch); break;
-            case "attacking1": attack1Animation.animate(spritePlayer,batch); break;
-            case "attacking2": attack2Animation.animate(spritePlayer,batch); break;
-            case "attacking3": attack3Animation.animate(spritePlayer,batch); break;
-            case "attacking6": attack6Animation.animate(spritePlayer,batch); break;
+            case "attackingSword": attackSwordAnimation.animate(spritePlayer,batch); break;
+            case "attackingFireball": attackFireballAnimation.animate(spritePlayer,batch); break;
+            case "attackingMeteor": attackMeteorAnimation.animate(spritePlayer,batch); break;
+            case "attackingFireBreath": attackFireBreathAnimation.animate(spritePlayer,batch); break;
+            case "attackingShield": attackShieldAnimation.animate(spritePlayer,batch); break;
             default: spritePlayer.draw(batch); break;
         }
     }

@@ -21,12 +21,12 @@ public class PlayerCombat {
     public static int attackOrbDamage = 2;
     public static int attackMeteorDamage = 8;
     //mana costs
-    public static int attack1Mana=0;
-    public static int attack2Mana=12;
-    public static int attack3Mana=3;
-    public static int attack4Mana=25;
-    public static int attack5Mana=42;
-    public static int attack6Mana=23;
+    public static int attackSwordMana =0;
+    public static int attackShieldMana =25;
+    public static int attackFireballMana =12;
+    public static int attackOrbsMana =3;
+    public static int attackMeteorMana =42;
+    public static int attackFireBreathMana =23;
     //spell keepers
     private ArrayList<FireBall> fireBalls = new ArrayList<>();
     //we need this variable, because we need unique names for every fire ball because of collision detection
@@ -35,6 +35,8 @@ public class PlayerCombat {
     private ArrayList<Orb> orbs = new ArrayList<>();
     private FireShield fireShield = null;
     private FireBreath fireBreath = null;
+    private boolean isShielding = false;
+    private ShieldBlockEffect shieldBlockEffect = null;
 
     public PlayerCombat(){
         maxHealth = 100;
@@ -46,20 +48,43 @@ public class PlayerCombat {
     public void takeDamage(int damage){
         if (!isImmuneToDamage) {
             health -= damage;
+            Player.renderRed =true;
+            Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
             if (health <= 0) {
                 health = maxHealth;
             }
         } else System.out.println("im immune bitch!");
     }
 
+    //this is for when a real enemy attacks you and we need to check if blockable
+    public void takeDamage(int damage, float distance){
+        System.out.println("shielding: "+isShielding+" distance: "+distance+" isFlip: "+darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX());
+        if (isShielding && distance<0 && darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() || isShielding && distance>0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
+            if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
+                darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(-7,0);
+            } else darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(7,0);
+            setFireShieldToNull();
+            shieldBlockEffect=new ShieldBlockEffect(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x,darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y);
+        } else if (isImmuneToDamage){
+            System.out.println("im immune bitch!");
+        } else {
+            health -= damage;
+            Player.renderRed =true;
+            Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
+            if (health <= 0) {
+                health = maxHealth;
+            }
+        }
+    }
+
     public void drainMana(int spellNumber){
         switch (spellNumber){
-            case 1: mana-=attack1Mana; break;
-            case 2: mana-=attack2Mana; break;
-            case 3: mana-=attack3Mana; break;
-            case 4: mana-=attack4Mana; break;
-            case 5: mana-=attack5Mana; break;
-            case 6: mana-=attack6Mana; break;
+            case 1: mana-= attackSwordMana; break;
+            case 2: mana-= attackFireballMana; break;
+            case 3: mana-= attackOrbsMana; break;
+            case 4: mana-= attackShieldMana; break;
+            case 5: mana-= attackMeteorMana; break;
+            case 6: mana-= attackFireBreathMana; break;
         }
     }
 
@@ -72,16 +97,16 @@ public class PlayerCombat {
         }
     }
 
-    //sword is 1
-    public void attack1(){
-        if (mana>=attack1Mana) {
+    //sword
+    public void attackSword(){
+        if (mana>= attackSwordMana) {
             drainMana(1);
             darkknight.player.getPlayerMovement().setAttacking1(true);
             //if the player jumps and immediately presses 1, then his foot is still grounded.
             // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
             // therefore we need to make sure that the player is static when he attacks
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
-            darkknight.player.getPlayerGraphics().setAnimationState("attacking1");
+            darkknight.player.getPlayerGraphics().setAnimationState("attackingSword");
             //handling the actual attack logic
             //if sprite facing left
             if (darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
@@ -102,16 +127,16 @@ public class PlayerCombat {
         }
     }
 
-    //fireball is 2
-    public void attack2(){
-        if (mana>=attack2Mana) {
+    //fireball
+    public void attackFireball(){
+        if (mana>= attackFireballMana) {
             drainMana(2);
             darkknight.player.getPlayerMovement().setAttacking1(true);
             //if the player jumps and immediately presses 1, then his foot is still grounded.
             // he then starts attack, but that is overwritten when the player exits the walkable collider because he is on his way upwards.
             // therefore we need to make sure that the player is static when he attacks
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
-            darkknight.player.getPlayerGraphics().setAnimationState("attacking2");
+            darkknight.player.getPlayerGraphics().setAnimationState("attackingFireball");
             //handling the actual attack logic
             darkknight.player.getPlayerCombat().attack2FireBall();
         }
@@ -124,20 +149,20 @@ public class PlayerCombat {
         fireBalls.add(fireBall);
     }
 
-    //meteor is 5
-    public void attack3(){
+    //meteor
+    public void attackMeteor(){
         //i only allow 1 meteor
-        if (currentMeteor==null && mana>=attack5Mana) {
+        if (currentMeteor==null && mana>= attackMeteorMana) {
             drainMana(5);
             darkknight.player.getPlayerMovement().setAttacking1(true);
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
-            darkknight.player.getPlayerGraphics().setAnimationState("attacking3");
+            darkknight.player.getPlayerGraphics().setAnimationState("attackingMeteor");
             currentMeteor = new Meteor();
         }
     }
 
-    //orbs are 3
-    public void attack4(){
+    //orbs
+    public void attackOrbs(){
         if (orbs.size()>0){
             for (Orb orb : orbs){
                 if (orb.getAnimationState().equals("Stationary")){
@@ -146,7 +171,7 @@ public class PlayerCombat {
                 }
             }
         }
-        if (orbs.size()==0 && mana>=attack3Mana){
+        if (orbs.size()==0 && mana>= attackOrbsMana){
             drainMana(3);
             Player.orbsToDelete.clear();
             for (int i = 1; i <= 3; i++) {
@@ -155,9 +180,10 @@ public class PlayerCombat {
         }
     }
 
-    //fireShield is 4
-    public void attack5(){
-        if (fireShield==null && mana>=attack4Mana){
+    /*
+    //Fire Shield
+    public void attackShield(){
+        if (fireShield==null && mana>= attackShieldMana){
             drainMana(4);
             fireShield = new FireShield();
             //sets player to be immune
@@ -165,13 +191,25 @@ public class PlayerCombat {
             //in the fireShield class this is set to false when it dies
         }
     }
+     */
 
-    public void attack6(){
-        if (fireBreath==null && mana>=attack6Mana){
+    public void attackShield(){
+        if (!isShielding){
+            darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
+            System.out.println("SET VELOCITY TO 0");
+        }
+        isShielding=true;
+        darkknight.player.getPlayerMovement().setAttacking1(true);
+        darkknight.player.getPlayerGraphics().setAnimationState("attackingShield");
+    }
+
+    //FireBreath
+    public void attackFireBreath(){
+        if (fireBreath==null && mana>= attackFireBreathMana){
             drainMana(6);
             darkknight.player.getPlayerMovement().setAttacking1(true);
             darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(0, 0);
-            darkknight.player.getPlayerGraphics().setAnimationState("attacking6");
+            darkknight.player.getPlayerGraphics().setAnimationState("attackingFireBreath");
             fireBreath = new FireBreath();
         }
     }
@@ -230,5 +268,21 @@ public class PlayerCombat {
 
     public int getMana(){
         return mana;
+    }
+
+    public boolean isShielding(){
+        return isShielding;
+    }
+
+    public void setShielding(boolean bool){
+        isShielding=bool;
+    }
+
+    public void setShieldBlockEffectToNull(){
+        shieldBlockEffect=null;
+    }
+
+    public ShieldBlockEffect getShieldBlockEffect(){
+        return shieldBlockEffect;
     }
 }

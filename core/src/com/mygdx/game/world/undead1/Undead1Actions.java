@@ -17,7 +17,7 @@ public class Undead1Actions {
     private int health;
     private int maxHealth;
     private boolean isAlive = true;
-    private float combatRange = 12;
+    private float combatRange = 13;
     //this boolean is used to see if player has entered the sensor
     private boolean inCombat = false;
     //this is used to make sure he doesnt jump when he first starts running because his velocity is 0 when he starts
@@ -159,7 +159,7 @@ public class Undead1Actions {
     public void damagePlayerIfInRange(String attack){
         if (attack.equals("slamming") && !recentlyAttackedWithSlam){
             if (distanceToPlayer<=combatRange && distanceToPlayer>0 || distanceToPlayer<0 && distanceToPlayer>=-combatRange) {
-                darkknight.player.getPlayerCombat().takeDamage(20);
+                darkknight.player.getPlayerCombat().takeDamage(20,distanceToPlayer);
                 slamSound.play();
                 System.out.println("HIT: distance: " + distanceToPlayer);
                 recentlyAttackedWithSlam = true;
@@ -167,7 +167,7 @@ public class Undead1Actions {
             } else System.out.println("MISS: distance: "+distanceToPlayer);
         } else if (attack.equals("swinging") && !recentlyAttackedWithSwing){
             if (distanceToPlayer<=combatRange && distanceToPlayer>0 || distanceToPlayer<0 && distanceToPlayer>=-combatRange) {
-                darkknight.player.getPlayerCombat().takeDamage(20);
+                darkknight.player.getPlayerCombat().takeDamage(20, distanceToPlayer);
                 swingSound.play();
                 System.out.println("HIT: distance: " + distanceToPlayer);
                 recentlyAttackedWithSwing = true;

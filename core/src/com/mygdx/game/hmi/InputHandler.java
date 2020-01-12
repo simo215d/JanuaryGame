@@ -5,9 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.darkknight;
-import com.mygdx.game.world.CollisionDetector;
 
 public class InputHandler {
     public void handleInput(OrthographicCamera cam, Sprite sprite3){
@@ -62,42 +60,58 @@ public class InputHandler {
                     sprite3.setFlip(false, false);
                 }
             }
-            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerMovement().getIsAirBorne()) {
+
+            if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerMovement().getIsAirBorne() && !darkknight.player.getPlayerCombat().isShielding()) {
                 darkknight.player.getPlayerMovement().moveStop();
             }
+
             if (Gdx.input.isKeyPressed(Input.Keys.W) && !darkknight.player.getPlayerMovement().isAttacking1()) {
                 darkknight.player.getPlayerMovement().jump();
             }
 
             //sword
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
-                darkknight.player.getPlayerCombat().attack1();
+                darkknight.player.getPlayerCombat().attackSword();
             }
 
             //fireball
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
-                darkknight.player.getPlayerCombat().attack2();
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerCombat().attackFireball();
             }
 
+            /*
             //meteor
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_5) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
                 darkknight.player.getPlayerCombat().attack3();
             }
+             */
 
             //orbs
-            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)){
-                darkknight.player.getPlayerCombat().attack4();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
+                darkknight.player.getPlayerCombat().attackOrbs();
             }
 
-            //fire shield
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_4)){
-                darkknight.player.getPlayerCombat().attack5();
+            //shield
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)  && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
+                darkknight.player.getPlayerCombat().attackShield();
+            }
+
+            if (darkknight.player.getPlayerCombat().isShielding()){
+                if (!Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+                    darkknight.player.getPlayerCombat().setShielding(false);
+                    darkknight.player.getPlayerMovement().setAttacking1(false);
+                    darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
+                    darkknight.player.getPlayerGraphics().setAnimationState("");
+                    darkknight.player.getPlayerCombat().setImmuneToDamage(false);
+                }
             }
 
             //fire breath
+            /*
             if (Gdx.input.isKeyPressed(Input.Keys.NUM_6) && !darkknight.player.getPlayerMovement().getIsAirBorne()  && !darkknight.player.getPlayerMovement().isAttacking1() && !darkknight.player.getPlayerGraphics().getAnimationState().equals("jumping")){
                 darkknight.player.getPlayerCombat().attack6();
             }
+             */
 
             //only use this button if you know what it does...
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)){

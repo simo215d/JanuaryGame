@@ -3,6 +3,7 @@ package com.mygdx.game.player;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
 
@@ -17,6 +18,9 @@ public class Player {
     private Body playerBody;
     public static ArrayList<FireBall> fireBallsToDelete = new ArrayList<>();
     public static ArrayList<Orb> orbsToDelete = new ArrayList<>();
+    //2 next fields are required to see if we should render the character red as an indication of damage taken
+    public static int renderRedStartTime;
+    public static boolean renderRed = false;
 
     public Player(){
         playerPhysics = new PlayerPhysics();
@@ -27,23 +31,11 @@ public class Player {
         playerUI = new PlayerUI();
     }
 
-    public PlayerGraphics getPlayerGraphics() {
-        return playerGraphics;
-    }
-
-    public PlayerPhysics getPlayerPhysics() {
-        return playerPhysics;
-    }
-
-    public PlayerMovement getPlayerMovement() {
-        return playerMovement;
-    }
-
-    public PlayerCombat getPlayerCombat(){
-        return playerCombat;
-    }
-
     public void draw(Batch batch, OrthographicCamera camera){
+        //check if we should still render him red
+        if (renderRed && darkknight.gameTimeCentiSeconds-renderRedStartTime>1){
+            renderRed=false;
+        }
         playerCombat.generateMana();
         playerGraphics.draw(batch);
         playerUI.draw(batch, camera, playerCombat.getHealth(), playerCombat.getMaxHealth(), playerCombat.getMana(), playerCombat.getMaxMana());
@@ -61,6 +53,9 @@ public class Player {
         }
         if (playerCombat.getFireBreath()!=null){
             playerCombat.getFireBreath().draw(batch);
+        }
+        if (playerCombat.getShieldBlockEffect()!=null){
+            playerCombat.getShieldBlockEffect().draw(batch);
         }
         //check if there are any fireballs that should be deleted from our list
         FireBall fireBallToDelete = null;
@@ -95,5 +90,21 @@ public class Player {
     }
     public void deleteAnOrb(Orb orb){
         orbsToDelete.add(orb);
+    }
+
+    public PlayerGraphics getPlayerGraphics() {
+        return playerGraphics;
+    }
+
+    public PlayerPhysics getPlayerPhysics() {
+        return playerPhysics;
+    }
+
+    public PlayerMovement getPlayerMovement() {
+        return playerMovement;
+    }
+
+    public PlayerCombat getPlayerCombat(){
+        return playerCombat;
     }
 }

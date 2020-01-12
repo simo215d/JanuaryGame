@@ -1,6 +1,7 @@
 package com.mygdx.game.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -42,16 +43,16 @@ public class PlayerAnimation {
         } else {
             currentFrame.flip(currentFrame.isFlipX(), false);
         }
-        batch.draw(currentFrame, spritePlayer.getX(), spritePlayer.getY(),16,16);
+        if (Player.renderRed){
+            batch.setColor(Color.RED);
+            batch.draw(currentFrame, spritePlayer.getX(), spritePlayer.getY(),16,16);
+            batch.setColor(Color.WHITE);
+        } else batch.draw(currentFrame, spritePlayer.getX(), spritePlayer.getY(),16,16);
         //event upon animation ending
         if (stateTime>=frameDuration*FRAME_ROWS*FRAME_COLS){
-            //action based on what animation we are playing
-            switch (darkknight.player.getPlayerGraphics().getAnimationState()){
-                //this feels slow af because i made the fireball spawn from within the player body so this moved to playerCombat
-                //case "attacking2": darkknight.player.getPlayerCombat().attack2FireBall();
-            }
+            //shielding should'nt end when the animation is over. only when we aren't pressing the designated button
             //stop the animation
-            if (darkknight.player.getPlayerMovement().isAttacking1()){
+            if (darkknight.player.getPlayerMovement().isAttacking1() && !animationSheet.toString().equals("knightShieldSheet.png")){
                 darkknight.player.getPlayerMovement().setAttacking1(false);
                 darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
                 darkknight.player.getPlayerGraphics().setAnimationState("");
