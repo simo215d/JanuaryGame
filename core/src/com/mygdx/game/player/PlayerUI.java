@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.player.PlayerEffects.DeathTextEffect;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class PlayerUI {
     private Texture spellIconFireBreathTexture;
     private Sprite spellIconFireBreathSprite;
      */
+    //death screen
+    private DeathTextEffect deathTextEffect = null;
 
     public PlayerUI(){
         //spell frame
@@ -92,6 +95,7 @@ public class PlayerUI {
     }
 
     public void draw(Batch batch, OrthographicCamera camera, int health, int maxHealth, int mana, int maxMana){
+        //spell frame
         spellFrameSprite.setPosition(camera.position.x-spellFrameSprite.getWidth()/2,camera.position.y-24.6f);
         spellFrameSprite.draw(batch);
         //render player health bar
@@ -141,5 +145,18 @@ public class PlayerUI {
                  */
             }
         }
+        //death effect
+        if (deathTextEffect!=null){
+            deathTextEffect.draw(batch, camera.position.x,camera.position.y);
+        }
+    }
+
+    public void setDeathTextEffect(){
+        deathTextEffect=null;
+        deathTextEffect=new DeathTextEffect();
+    }
+
+    public void setDeathTextEffectToNull(){
+        deathTextEffect=null;
     }
 }

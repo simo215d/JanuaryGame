@@ -115,14 +115,14 @@ public class darkknight extends ApplicationAdapter {
 		level1.level1MapGraphics.getBushTexture().dispose();
 	}
 
-	private void destroyBodies(){
-	    //make sure the world is not in the middle of a step which is what locked means
-        if (bodiesToDestroy.size()>0 && !world.isLocked()){
+	private void destroyBodies() {
+		//make sure the world is not in the middle of a step which is what locked means
+		if (bodiesToDestroy.size() > 0 && !world.isLocked()) {
 			System.out.println("we destroy a body");
 			bodiesToDestroy.get(0).setActive(false);
 			world.destroyBody(bodiesToDestroy.get(0));
-            bodiesToDestroy.remove(0);
-			System.out.println("bodies in the world: "+world.getBodyCount());
-        }
-    }
+			bodiesToDestroy.remove(0);
+			System.out.println("bodies in the world: " + world.getBodyCount());
+		}
+	}
 }

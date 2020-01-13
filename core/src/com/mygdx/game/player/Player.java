@@ -2,10 +2,14 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.world.CollisionDetector;
+import com.mygdx.game.world.Level1;
 
 import java.util.ArrayList;
 
@@ -106,5 +110,25 @@ public class Player {
 
     public PlayerCombat getPlayerCombat(){
         return playerCombat;
+    }
+
+    public PlayerUI getPlayerUI(){
+        return playerUI;
+    }
+
+    public void death(){
+        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(-50,0,0);
+        playerCombat.setImmuneToDamage(true);
+        playerUI.setDeathTextEffect();
+    }
+
+    public void respawn(){
+        getPlayerUI().setDeathTextEffectToNull();
+        darkknight.world=new World(new Vector2(0, -10), true);
+        darkknight.level1=new Level1();
+        darkknight.player=new Player();
+        CollisionDetector.currentContacts.clear();
+        CollisionDetector.currentRightEnemies.clear();
+        CollisionDetector.currentLeftEnemies.clear();
     }
 }

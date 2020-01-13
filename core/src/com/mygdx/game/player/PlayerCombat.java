@@ -51,7 +51,8 @@ public class PlayerCombat {
             Player.renderRed =true;
             Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
             if (health <= 0) {
-                health = maxHealth;
+                health = 0;
+                darkknight.player.death();
             }
         } else System.out.println("im immune bitch!");
     }
@@ -72,7 +73,8 @@ public class PlayerCombat {
             Player.renderRed =true;
             Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
             if (health <= 0) {
-                health = maxHealth;
+                health = 0;
+                darkknight.player.death();
             }
         }
     }
@@ -284,5 +286,9 @@ public class PlayerCombat {
 
     public ShieldBlockEffect getShieldBlockEffect(){
         return shieldBlockEffect;
+    }
+
+    public void fullHeal(){
+        health=maxHealth;
     }
 }
