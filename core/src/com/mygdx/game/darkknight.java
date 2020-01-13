@@ -97,7 +97,7 @@ public class darkknight extends ApplicationAdapter {
             world.setContactListener(collisionDetector);
         }
 		//box2d collider graphics
-		//debugRenderer.render(world, cam.combined);
+		debugRenderer.render(world, cam.combined);
         //destroy unwanted bodies
 		destroyBodies();
 	}

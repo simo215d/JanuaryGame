@@ -11,6 +11,10 @@ public class PlayerPhysics {
     private PolygonShape playerBox;
     private FixtureDef fixtureDef;
     private Fixture fixture;
+    //player foot collider
+    private PolygonShape playerFootTriangleCollider;
+    private FixtureDef fixtureFootDefCollider;
+    private Fixture fixtureFootCollider;
     //player foot sensor
     private PolygonShape playerFootTriangle;
     private FixtureDef fixtureFootDef;
@@ -51,21 +55,33 @@ public class PlayerPhysics {
         playerBody = darkknight.world.createBody(playerBodyDef);
         playerBody.setGravityScale(2);
         //create the player box
-        Vector2[] verticesPlayerCollider = new Vector2[]{new Vector2(0,-2), new Vector2(-2,-1), new Vector2(-2,10), new Vector2(2,10), new Vector2(2,-1)};
+        Vector2[] verticesPlayerCollider = new Vector2[]{new Vector2(0,0), new Vector2(-2,-1), new Vector2(-2,10), new Vector2(2,10), new Vector2(2,-1)};
         playerBox = new PolygonShape();
         playerBox.set(verticesPlayerCollider);
         fixtureDef = new FixtureDef();
         fixtureDef.shape = playerBox;
         fixtureDef.density = 1f;
-        fixtureDef.friction = 0.5f;
+        fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0f;
         fixture = playerBody.createFixture(fixtureDef);
         fixture.setUserData("PlayerBody");
         playerBox.dispose();
+        //player foot collider
+        Vector2[] verticesFootCollider = new Vector2[]{new Vector2(0,-2f), new Vector2(-2f,-1f), new Vector2(2f,-1f)};
+        playerFootTriangleCollider = new PolygonShape();
+        playerFootTriangleCollider.set(verticesFootCollider);
+        fixtureFootDefCollider = new FixtureDef();
+        fixtureFootDefCollider.shape = playerFootTriangleCollider;
+        fixtureFootDefCollider.density = 1f;
+        fixtureFootDefCollider.friction = 0.5f;
+        fixtureFootDefCollider.restitution = 0f;
+        fixtureFootCollider = playerBody.createFixture(fixtureFootDefCollider);
+        fixtureFootCollider.setUserData("FootCollider");
+        playerFootTriangleCollider.dispose();
         //player foot sensor
-        Vector2[] verticesFootCollider = new Vector2[]{new Vector2(0,-2.3f), new Vector2(-1.8f,-1.2f), new Vector2(1.8f,-1.2f)};
+        Vector2[] verticesFootSensor = new Vector2[]{new Vector2(0,-2.3f), new Vector2(-1.8f,-1.2f), new Vector2(1.8f,-1.2f)};
         playerFootTriangle = new PolygonShape();
-        playerFootTriangle.set(verticesFootCollider);
+        playerFootTriangle.set(verticesFootSensor);
         fixtureFootDef = new FixtureDef();
         fixtureFootDef.shape = playerFootTriangle;
         fixtureFootDef.isSensor=true;

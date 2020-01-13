@@ -36,7 +36,7 @@ public class DeathTextEffect {
         //draw frame with position and scale
         batch.draw(currentFrame, x-50, y-35, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
         //when to respawn player again
-        if (stateTime>frameDuration*FRAME_COLS*FRAME_ROWS*2){
+        if (stateTime>frameDuration*FRAME_COLS*FRAME_ROWS*3){
             darkknight.player.respawn();
         }
     }

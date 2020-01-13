@@ -117,7 +117,7 @@ public class Player {
     }
 
     public void death(){
-        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(-50,0,0);
+        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(-25,100,0);
         playerCombat.setImmuneToDamage(true);
         playerUI.setDeathTextEffect();
     }
