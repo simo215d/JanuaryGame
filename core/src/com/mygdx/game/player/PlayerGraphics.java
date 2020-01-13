@@ -19,6 +19,9 @@ public class PlayerGraphics {
     //animation
     private ArrayList<PlayerAnimation> animations = new ArrayList<>();
     private PlayerAnimation jumpAnimation = new PlayerAnimation(3,1,"knightJumpSheet.png",0.1f, false);
+    private PlayerAnimation idleAnimation = new PlayerAnimation(2,1,"knightIdleSheet.png",1f, true);
+    private PlayerAnimation canPushAnimation = new PlayerAnimation(2,1,"knightCanPushSheet.png",0.5f, true);
+    private PlayerAnimation isPushingAnimation = new PlayerAnimation(4,1,"knightIsPushingSheet.png",0.15f, true);
     private PlayerAnimation runAnimation = new PlayerAnimation(5,1,"knightRunSheet.png",0.1f, true);
     private PlayerAnimation attackSwordAnimation = new PlayerAnimation(4,1,"knightAttack1Sheet.png",0.075f, false);
     private PlayerAnimation attackFireballAnimation = new PlayerAnimation(3,1,"knightAttack1FireSheet.png",0.1f, false);
@@ -40,6 +43,9 @@ public class PlayerGraphics {
         animations.add(attackFireballAnimation);
         animations.add(attackMeteorAnimation);
         animations.add(attackFireBreathAnimation);
+        animations.add(idleAnimation);
+        animations.add(canPushAnimation);
+        animations.add(isPushingAnimation);
     }
 
     public Sprite getSpritePlayer(){
@@ -71,6 +77,9 @@ public class PlayerGraphics {
             case "attackingMeteor": attackMeteorAnimation.animate(spritePlayer,batch); break;
             case "attackingFireBreath": attackFireBreathAnimation.animate(spritePlayer,batch); break;
             case "attackingShield": attackShieldAnimation.animate(spritePlayer,batch); break;
+            case "idle": idleAnimation.animate(spritePlayer,batch); break;
+            case "canPush": canPushAnimation.animate(spritePlayer,batch); break;
+            case "isPushing": isPushingAnimation.animate(spritePlayer,batch); break;
             default: spritePlayer.draw(batch); break;
         }
     }

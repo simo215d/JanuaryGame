@@ -152,7 +152,7 @@ public class PlayerUI {
     }
 
     public void setDeathTextEffect(){
-        deathTextEffect=null;
+        if (deathTextEffect==null)
         deathTextEffect=new DeathTextEffect();
     }
 

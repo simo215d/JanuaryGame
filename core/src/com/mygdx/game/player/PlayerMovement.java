@@ -2,7 +2,6 @@ package com.mygdx.game.player;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.darkknight;
-import com.mygdx.game.world.CollisionDetector;
 
 public class PlayerMovement {
     private boolean isAirBorne = true;

@@ -20,7 +20,8 @@ public class InputHandler {
             }
             //idle
             if (!Gdx.input.isKeyPressed(Input.Keys.E) && !Gdx.input.isKeyPressed(Input.Keys.Q) && !darkknight.player.getPlayerMovement().getIsAirBorne() && !darkknight.player.getPlayerMovement().getPushingRight() && !darkknight.player.getPlayerMovement().getPushingLeft() && !darkknight.player.getPlayerMovement().isAttacking1()){
-                darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
+                //darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight1.png"))));
+                if (!darkknight.player.getPlayerGraphics().getAnimationState().equals("idle"))
                 darkknight.player.getPlayerGraphics().setAnimationState("idle");
                 darkknight.player.getPlayerMovement().moveStop();
             }
@@ -36,27 +37,31 @@ public class InputHandler {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.player.getPlayerMovement().getPushingLeft() && !darkknight.player.getPlayerMovement().isAttacking1()) {
                 if (!darkknight.player.getPlayerMovement().getIsAirBorne()) {
-                    sprite3.setTexture(new Texture((Gdx.files.internal("knight5.png"))));
+                    if (!darkknight.player.getPlayerGraphics().getAnimationState().equals("isPushing"))
+                    darkknight.player.getPlayerGraphics().setAnimationState("isPushing");
                     sprite3.setFlip(true,false);
                     darkknight.player.getPlayerMovement().moveLeft();
                 }
             }
             if (Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.player.getPlayerMovement().getPushingRight() && !darkknight.player.getPlayerMovement().isAttacking1()) {
                 if (!darkknight.player.getPlayerMovement().getIsAirBorne()) {
-                    sprite3.setTexture(new Texture((Gdx.files.internal("knight5.png"))));
+                    if (!darkknight.player.getPlayerGraphics().getAnimationState().equals("isPushing"))
+                    darkknight.player.getPlayerGraphics().setAnimationState("isPushing");
                     sprite3.setFlip(false, false);
                     darkknight.player.getPlayerMovement().moveRight();
                 }
             }
             if (!Gdx.input.isKeyPressed(Input.Keys.Q) && darkknight.player.getPlayerMovement().getPushingLeft() && !darkknight.player.getPlayerMovement().isAttacking1()) {
                 if (!darkknight.player.getPlayerMovement().getIsAirBorne()) {
-                    sprite3.setTexture(new Texture((Gdx.files.internal("knight4.png"))));
+                    if (!darkknight.player.getPlayerGraphics().getAnimationState().equals("canPush"))
+                        darkknight.player.getPlayerGraphics().setAnimationState("canPush");
                     sprite3.setFlip(true,false);
                 }
             }
             if (!Gdx.input.isKeyPressed(Input.Keys.E) && darkknight.player.getPlayerMovement().getPushingRight() && !darkknight.player.getPlayerMovement().isAttacking1()) {
                 if (!darkknight.player.getPlayerMovement().getIsAirBorne()) {
-                    sprite3.setTexture(new Texture((Gdx.files.internal("knight4.png"))));
+                    if (!darkknight.player.getPlayerGraphics().getAnimationState().equals("canPush"))
+                        darkknight.player.getPlayerGraphics().setAnimationState("canPush");
                     sprite3.setFlip(false, false);
                 }
             }
@@ -123,6 +128,11 @@ public class InputHandler {
                     System.out.println("game paused");
                     darkknight.isWorldStopped=true;
                 }
+            }
+
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)){
+                System.out.println("ani state: "+darkknight.player.getPlayerGraphics().getAnimationState());
             }
 
             /*this is no longer needed

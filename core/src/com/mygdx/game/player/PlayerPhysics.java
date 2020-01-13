@@ -144,7 +144,7 @@ public class PlayerPhysics {
         fixtureUR.setUserData("UpperRightBody");
         playerURTriangle.dispose();
         //player right combat sensor
-        Vector2[] verticesRCCollider = new Vector2[]{new Vector2(2,-1), new Vector2(2,10), new Vector2(8,10), new Vector2(8,-1)};
+        Vector2[] verticesRCCollider = new Vector2[]{new Vector2(2,-1), new Vector2(2,10), new Vector2(9,10), new Vector2(9,-1)};
         playerRCTriangle = new PolygonShape();
         playerRCTriangle.set(verticesRCCollider);
         fixtureRCDef = new FixtureDef();
@@ -157,7 +157,7 @@ public class PlayerPhysics {
         fixtureRC.setUserData("RightCombatSensor");
         playerRCTriangle.dispose();
         //player left combat sensor
-        Vector2[] verticesLCCollider = new Vector2[]{new Vector2(-2,-1), new Vector2(-2,10), new Vector2(-8,10), new Vector2(-8,-1)};
+        Vector2[] verticesLCCollider = new Vector2[]{new Vector2(-2,-1), new Vector2(-2,10), new Vector2(-9,10), new Vector2(-9,-1)};
         playerLCTriangle = new PolygonShape();
         playerLCTriangle.set(verticesLCCollider);
         fixtureLCDef = new FixtureDef();

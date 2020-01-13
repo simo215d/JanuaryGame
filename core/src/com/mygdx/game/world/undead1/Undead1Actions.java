@@ -46,8 +46,10 @@ public class Undead1Actions {
     public void takeDamage(int damage){
         if(health-damage<=0){
             health=0;
+            if (isAlive){
+                deathSound.play();
+            }
             isAlive=false;
-            deathSound.play();
         } else{
             takeDamageSound.play();
             health-=damage;
