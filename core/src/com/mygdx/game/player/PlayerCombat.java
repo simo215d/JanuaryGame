@@ -16,15 +16,15 @@ public class PlayerCombat {
     private int manaGenerationRate = 1;
     private int previousManaTime = 0;
     //attack damage
-    private int attackSwordDamage = 2;
+    private int attackSwordDamage = 1;
     public static int attackFireballDamage = 4;
     public static int attackOrbDamage = 2;
     public static int attackMeteorDamage = 8;
     //mana costs
     public static int attackSwordMana =0;
     public static int attackShieldMana =25;
-    public static int attackFireballMana =12;
-    public static int attackOrbsMana =3;
+    public static int attackFireballMana =28;
+    public static int attackOrbsMana =13;
     public static int attackMeteorMana =42;
     public static int attackFireBreathMana =23;
     //spell keepers
@@ -52,14 +52,13 @@ public class PlayerCombat {
             Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
             if (health <= 0) {
                 health = 0;
-                darkknight.player.death();
+                if (!Player.isDead) darkknight.player.death();
             }
         } else System.out.println("im immune bitch!");
     }
 
     //this is for when a real enemy attacks you and we need to check if blockable
     public void takeDamage(int damage, float distance){
-        System.out.println("shielding: "+isShielding+" distance: "+distance+" isFlip: "+darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX());
         if (isShielding && distance<0 && darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() || isShielding && distance>0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()) {
             if (!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX()){
                 darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(-7,0);
@@ -74,7 +73,7 @@ public class PlayerCombat {
             Player.renderRedStartTime =(int)darkknight.gameTimeCentiSeconds;
             if (health <= 0) {
                 health = 0;
-                darkknight.player.death();
+                if (!Player.isDead) darkknight.player.death();
             }
         }
     }

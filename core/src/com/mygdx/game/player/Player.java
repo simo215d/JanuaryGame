@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.player.PlayerEffects.DeathAnimationEffect;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.CollisionDetector;
@@ -25,6 +26,8 @@ public class Player {
     //2 next fields are required to see if we should render the character red as an indication of damage taken
     public static int renderRedStartTime;
     public static boolean renderRed = false;
+    public static boolean isDead = false;
+    private DeathAnimationEffect deathAnimationEffect = null;
 
     public Player(){
         playerPhysics = new PlayerPhysics();
@@ -87,6 +90,11 @@ public class Player {
             playerCombat.getOrbs().remove(orbToDelete);
             fireBallsToDelete.clear();
         }
+        //draw death sprite if dead
+        if (isDead && deathAnimationEffect!=null){
+            deathAnimationEffect.draw(batch);
+            playerBody.setLinearVelocity(0,0);
+        }
     }
 
     public void deleteAFireBall(FireBall fireBall){
@@ -116,12 +124,19 @@ public class Player {
         return playerUI;
     }
 
-    public void death(){
-        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(-25,100,0);
-        playerCombat.setImmuneToDamage(true);
-        playerUI.setDeathTextEffect();
+    public void setDeathAnimationEffectToNull(){
+        deathAnimationEffect=null;
     }
 
+    //this is called from player combat take damage when health is<=0
+    public void death(){
+        isDead=true;
+        deathAnimationEffect = new DeathAnimationEffect(playerBody.getPosition().x, playerBody.getPosition().y, getPlayerGraphics().getSpritePlayer().isFlipX());
+        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(playerBody.getPosition().x,200,0);
+        playerCombat.setImmuneToDamage(true);
+    }
+
+    //this is called from death text effect when it is done animating
     public void respawn(){
         getPlayerUI().setDeathTextEffectToNull();
         darkknight.world=new World(new Vector2(0, -10), true);
@@ -130,5 +145,6 @@ public class Player {
         CollisionDetector.currentContacts.clear();
         CollisionDetector.currentRightEnemies.clear();
         CollisionDetector.currentLeftEnemies.clear();
+        isDead=false;
     }
 }

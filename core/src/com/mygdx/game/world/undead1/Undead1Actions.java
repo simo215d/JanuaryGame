@@ -31,7 +31,8 @@ public class Undead1Actions {
     private boolean renderRed = false;
     //this is used to see if enough time has passed since pauseTime
     private int attackCoolDownDeciSeconds = 30;
-    private float distanceToPlayer;
+    private float horizontalDistanceToPlayer;
+    private float verticalDistanceToPlayer;
     //to make sure only take damage once, since fps updates in graphics yadaydayda
     private boolean recentlyAttackedWithSlam = false;
     private boolean recentlyAttackedWithSwing = false;
@@ -76,23 +77,24 @@ public class Undead1Actions {
             renderRed=false;
         }
         if (isAlive) {
-            distanceToPlayer = physics.getBody().getPosition().x - darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x;
+            horizontalDistanceToPlayer = physics.getBody().getPosition().x - darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x;
+            verticalDistanceToPlayer = physics.getBody().getPosition().y - darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y;
             //run
-            if (inCombat && distanceToPlayer > combatRange && !isAttacking || inCombat && distanceToPlayer < -combatRange && !isAttacking) {
+            if (inCombat && horizontalDistanceToPlayer > combatRange && !isAttacking || inCombat && horizontalDistanceToPlayer < -combatRange && !isAttacking) {
                 actionState = "running";
                 //jump if stuck
                 if (physics.getBody().getLinearVelocity().x == 0.0f && hasMoved) {
                     //jump right
-                    if (distanceToPlayer < 0) {
+                    if (horizontalDistanceToPlayer < 0) {
                         physics.getBody().setLinearVelocity(physics.getBody().getLinearVelocity().x, 10);
                     }
                     //jump left
-                    if (distanceToPlayer > 0) {
+                    if (horizontalDistanceToPlayer > 0) {
                         physics.getBody().setLinearVelocity(physics.getBody().getLinearVelocity().x, 10);
                     }
                 }
                 //run left else right
-                if (distanceToPlayer > 0) {
+                if (horizontalDistanceToPlayer > 0) {
                     physics.getBody().setLinearVelocity(-10, physics.getBody().getLinearVelocity().y);
                 } else physics.getBody().setLinearVelocity(10, physics.getBody().getLinearVelocity().y);
                 hasMoved = true;
@@ -103,7 +105,7 @@ public class Undead1Actions {
                 physics.getBody().setLinearVelocity(0, physics.getBody().getLinearVelocity().y);
             }
             //fight
-            if (inCombat && distanceToPlayer <= combatRange && distanceToPlayer >= -combatRange) {
+            if (inCombat && horizontalDistanceToPlayer <= combatRange && horizontalDistanceToPlayer >= -combatRange) {
                 if ((int) darkknight.gameTimeCentiSeconds - pauseTime >= attackCoolDownDeciSeconds) {
                     fight(physics);
                 }
@@ -160,22 +162,22 @@ public class Undead1Actions {
 
     public void damagePlayerIfInRange(String attack){
         if (attack.equals("slamming") && !recentlyAttackedWithSlam){
-            if (distanceToPlayer<=combatRange && distanceToPlayer>0 || distanceToPlayer<0 && distanceToPlayer>=-combatRange) {
-                darkknight.player.getPlayerCombat().takeDamage(20,distanceToPlayer);
+            if (horizontalDistanceToPlayer <=combatRange && horizontalDistanceToPlayer >0 && verticalDistanceToPlayer<8 && verticalDistanceToPlayer>-8 || horizontalDistanceToPlayer <0 && horizontalDistanceToPlayer >=-combatRange && verticalDistanceToPlayer<8 && verticalDistanceToPlayer>-8) {
+                darkknight.player.getPlayerCombat().takeDamage(20, horizontalDistanceToPlayer);
                 slamSound.play();
-                System.out.println("HIT: distance: " + distanceToPlayer);
+                System.out.println("HIT: distance: " + horizontalDistanceToPlayer);
                 recentlyAttackedWithSlam = true;
                 recentlyAttackedWithSwing = false;
-            } else System.out.println("MISS: distance: "+distanceToPlayer);
+            } else System.out.println("MISS: distance: "+ horizontalDistanceToPlayer);
         } else if (attack.equals("swinging") && !recentlyAttackedWithSwing){
-            if (distanceToPlayer<=combatRange && distanceToPlayer>0 || distanceToPlayer<0 && distanceToPlayer>=-combatRange) {
-                darkknight.player.getPlayerCombat().takeDamage(20, distanceToPlayer);
+            if (horizontalDistanceToPlayer <=combatRange && horizontalDistanceToPlayer >0 && verticalDistanceToPlayer<8 && verticalDistanceToPlayer>-8 || horizontalDistanceToPlayer <0 && horizontalDistanceToPlayer >=-combatRange && verticalDistanceToPlayer<8 && verticalDistanceToPlayer>-8) {
+                darkknight.player.getPlayerCombat().takeDamage(20, horizontalDistanceToPlayer);
                 swingSound.play();
-                System.out.println("HIT: distance: " + distanceToPlayer);
+                System.out.println("HIT: distance: " + horizontalDistanceToPlayer);
                 recentlyAttackedWithSwing = true;
                 recentlyAttackedWithSlam = false;
             } else {
-                System.out.println("MISS: distance: "+distanceToPlayer);
+                System.out.println("MISS: distance: "+ horizontalDistanceToPlayer);
             }
         }
     }

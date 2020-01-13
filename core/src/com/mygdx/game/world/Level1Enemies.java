@@ -14,6 +14,7 @@ public class Level1Enemies {
     public ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //undead1s
     private Undead1 undead11 = new Undead1("TTTFUndead1",95,60);
+    private Undead1 undead12 = new Undead1("TTTFUndead2",120,60);
     public ArrayList<Undead1> undead1s = new ArrayList<>();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
@@ -26,6 +27,7 @@ public class Level1Enemies {
         targetDummies.add(targetDummy1);
         targetDummies.add(targetDummy2);
         undead1s.add(undead11);
+        undead1s.add(undead12);
         damageObjects.add(bonfire);
     }
 
