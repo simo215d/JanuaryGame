@@ -3,6 +3,7 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.world.targetdummy.TargetDummy;
 import com.mygdx.game.world.undead1.Undead1;
+import com.mygdx.game.world.undead2.Undead2;
 
 import java.util.ArrayList;
 
@@ -13,9 +14,11 @@ public class Level1Enemies {
     private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 20, 50);
     public ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //undead1s
-    private Undead1 undead11 = new Undead1("TTTFUndead1",95,60);
-    private Undead1 undead12 = new Undead1("TTTFUndead2",120,60);
+    private Undead1 undead1_1 = new Undead1("TTTFUndead1_1",120,60);
     public ArrayList<Undead1> undead1s = new ArrayList<>();
+    //undead2s
+    private Undead2 undead2_1 = new Undead2("TTTFUndead2_1",70,60);
+    public ArrayList<Undead2> undead2s = new ArrayList<>();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
     public ArrayList<DamageObject> damageObjects = new ArrayList<>();
@@ -26,13 +29,14 @@ public class Level1Enemies {
         enemies.add(undead1s);
         targetDummies.add(targetDummy1);
         targetDummies.add(targetDummy2);
-        undead1s.add(undead11);
-        undead1s.add(undead12);
+        undead1s.add(undead1_1);
+        undead2s.add(undead2_1);
         damageObjects.add(bonfire);
     }
 
     public void draw(Batch batch){
-        int undeadIndexToDelete = -1;
+        int undead1IndexToDelete = -1;
+        int undead2IndexToDelete = -1;
         for (ArrayList list : enemies){
             for (TargetDummy targetDummy : targetDummies){
                 targetDummy.draw(batch);
@@ -43,12 +47,21 @@ public class Level1Enemies {
             for (Undead1 undead1 : undead1s){
                 undead1.draw(batch);
                 if (undead1.isShouldBeDeleted()){
-                    undeadIndexToDelete=undead1s.indexOf(undead1);
+                    undead1IndexToDelete=undead1s.indexOf(undead1);
+                }
+            }
+            for (Undead2 undead2 : undead2s){
+                undead2.draw(batch);
+                if (undead2.isShouldBeDeleted()){
+                    undead2IndexToDelete=undead2s.indexOf(undead2);
                 }
             }
         }
-        if (undeadIndexToDelete!=-1){
-            undead1s.remove(undeadIndexToDelete);
+        if (undead1IndexToDelete!=-1){
+            undead1s.remove(undead1IndexToDelete);
+        }
+        if (undead2IndexToDelete!=-1){
+            undead2s.remove(undead2IndexToDelete);
         }
     }
 
@@ -64,6 +77,11 @@ public class Level1Enemies {
                 undead1.takeDamage(damage);
             }
         }
+        for (Undead2 undead2 : undead2s){
+            if (undead2.getName().equals(name)){
+                undead2.takeDamage(damage);
+            }
+        }
     }
 
     public void enterCombatWith(String name){
@@ -71,6 +89,11 @@ public class Level1Enemies {
         for (Undead1 undead1 : undead1s){
             if (undead1.getName().equals(name)){
                 undead1.setInCombat(true);
+            }
+        }
+        for (Undead2 undead2 : undead2s){
+            if (undead2.getName().equals(name)){
+                undead2.setInCombat(true);
             }
         }
     }

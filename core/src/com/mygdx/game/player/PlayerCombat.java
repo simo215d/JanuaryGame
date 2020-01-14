@@ -1,5 +1,7 @@
 package com.mygdx.game.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.*;
 import com.mygdx.game.world.CollisionDetector;
@@ -8,6 +10,9 @@ import com.mygdx.game.world.Level1;
 import java.util.ArrayList;
 
 public class PlayerCombat {
+    //sound
+    private Sound blockSound = Gdx.audio.newSound(Gdx.files.internal("sounds/blockSound.mp3"));
+    //stats
     private int maxHealth;
     private int health;
     private boolean isImmuneToDamage = false;
@@ -64,7 +69,7 @@ public class PlayerCombat {
                 darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(-7,0);
             } else darkknight.player.getPlayerPhysics().getPlayerBody().setLinearVelocity(7,0);
             setFireShieldToNull();
-            shieldBlockEffect=new ShieldBlockEffect(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x,darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y);
+            block();
         } else if (isImmuneToDamage){
             System.out.println("im immune bitch!");
         } else {
@@ -76,6 +81,11 @@ public class PlayerCombat {
                 if (!Player.isDead) darkknight.player.death();
             }
         }
+    }
+
+    public void block(){
+        blockSound.play(0.2f);
+        shieldBlockEffect=new ShieldBlockEffect(darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().x,darkknight.player.getPlayerPhysics().getPlayerBody().getPosition().y);
     }
 
     public void drainMana(int spellNumber){

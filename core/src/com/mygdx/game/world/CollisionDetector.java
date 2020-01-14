@@ -10,6 +10,8 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.world.undead2.Undead2;
+import com.mygdx.game.world.undead2.Undead2Arrow;
 
 import java.util.ArrayList;
 
@@ -182,6 +184,55 @@ public class CollisionDetector implements ContactListener {
                 Level1.level1Enemies.enterCombatWith(contact.getFixtureA().getUserData().toString().substring(13));
             }
         }
+        //check for undead 2 arrows if collision is not player and not attackable but is walkable
+        if (contact.getFixtureA().getUserData().toString().length()>=10 && contact.getFixtureB().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().toString().charAt(2)=='F' || contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureA().getUserData().toString().charAt(2)=='F' && contact.getFixtureB().getUserData().toString().length()>=10){
+            if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("FFFFArrow")){
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    if (contact.getFixtureA().getUserData().toString().substring(contact.getFixtureA().getUserData().toString().length()-3).equals(undead2.getName().substring(undead2.getName().length()-3)));
+                    undead2.getActions().destroyAnArrow(contact.getFixtureA().getUserData().toString());
+                }
+            }
+            if (contact.getFixtureB().getUserData().toString().substring(0,9).equals("FFFFArrow")){
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    if (contact.getFixtureB().getUserData().toString().substring(contact.getFixtureB().getUserData().toString().length()-3).equals(undead2.getName().substring(undead2.getName().length()-3)));
+                    undead2.getActions().destroyAnArrow(contact.getFixtureB().getUserData().toString());
+                }
+            }
+        }
+        //check for undead 2 arrows if collision is with player
+        if (contact.getFixtureA().getUserData().toString().length()>=10 && contact.getFixtureB().getUserData().toString().equals("PlayerBody") || contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().length()>=10){
+            if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("FFFFArrow")){
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    //make arrow damage player if player is not facing arrow and shielding
+                    for (Undead2Arrow undead2Arrow : undead2.getActions().getArrows()){
+                        if (undead2Arrow.getName().equals(contact.getFixtureA().getUserData().toString())){
+                            if (!(undead2Arrow.getBody().getLinearVelocity().x<0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding()) && !(undead2Arrow.getBody().getLinearVelocity().x>0 && darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding())){
+                                darkknight.player.getPlayerCombat().takeDamage(Undead2Arrow.damage);
+                            } else darkknight.player.getPlayerCombat().block();
+                        }
+                    }
+                    //destroy the arrow
+                    if (contact.getFixtureA().getUserData().toString().substring(contact.getFixtureA().getUserData().toString().length()-3).equals(undead2.getName().substring(undead2.getName().length()-3)));
+                    undead2.getActions().destroyAnArrow(contact.getFixtureA().getUserData().toString());
+                }
+            }
+            if (contact.getFixtureB().getUserData().toString().substring(0,9).equals("FFFFArrow")){
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    //make arrow damage player if player is not facing arrow and shielding
+                    for (Undead2Arrow undead2Arrow : undead2.getActions().getArrows()){
+                        if (undead2Arrow.getName().equals(contact.getFixtureB().getUserData().toString())){
+                            if (!(undead2Arrow.getBody().getLinearVelocity().x<0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding()) && !(undead2Arrow.getBody().getLinearVelocity().x>0 && darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding())){
+                                darkknight.player.getPlayerCombat().takeDamage(Undead2Arrow.damage);
+                            } else darkknight.player.getPlayerCombat().block();
+                        }
+                    }
+                    //destroy the arrow
+                    if (contact.getFixtureB().getUserData().toString().substring(contact.getFixtureB().getUserData().toString().length()-3).equals(undead2.getName().substring(undead2.getName().length()-3)));
+                    undead2.getActions().destroyAnArrow(contact.getFixtureB().getUserData().toString());
+                }
+            }
+        }
+        //TODO shield
     }
 
     @Override

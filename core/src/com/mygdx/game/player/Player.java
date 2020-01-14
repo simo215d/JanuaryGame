@@ -132,7 +132,8 @@ public class Player {
     public void death(){
         isDead=true;
         deathAnimationEffect = new DeathAnimationEffect(playerBody.getPosition().x, playerBody.getPosition().y, getPlayerGraphics().getSpritePlayer().isFlipX());
-        darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(playerBody.getPosition().x,200,0);
+        //this actions make collision detection very sad
+        //darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(playerBody.getPosition().x,200,0);
         playerCombat.setImmuneToDamage(true);
     }
 

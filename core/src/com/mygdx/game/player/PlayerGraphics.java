@@ -69,6 +69,7 @@ public class PlayerGraphics {
     }
 
     public void draw(Batch batch){
+        if (!Player.isDead){
         switch (animationState){
             case "jumping": jumpAnimation.animate(spritePlayer,batch); break;
             case "running": runAnimation.animate(spritePlayer,batch); break;
@@ -81,6 +82,7 @@ public class PlayerGraphics {
             case "canPush": canPushAnimation.animate(spritePlayer,batch); break;
             case "isPushing": isPushingAnimation.animate(spritePlayer,batch); break;
             default: spritePlayer.draw(batch); break;
+            }
         }
     }
 }
