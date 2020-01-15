@@ -10,10 +10,12 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.world.undead1.Undead1;
 import com.mygdx.game.world.undead2.Undead2;
 import com.mygdx.game.world.undead2.Undead2Arrow;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class CollisionDetector implements ContactListener {
     public static ArrayList<String> currentContacts = new ArrayList<>();
@@ -230,7 +232,68 @@ public class CollisionDetector implements ContactListener {
                 }
             }
         }
-        //TODO shield
+        //toxic shroom on collision with enemies
+        if (contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().toString().length()>=15 && contact.getFixtureB().getUserData().toString().substring(0,15).equals("FFFFShroomToxic") || contact.getFixtureA().getUserData().toString().length()>=15 && contact.getFixtureA().getUserData().toString().substring(0,15).equals("FFFFShroomToxic") && contact.getFixtureA().getUserData().toString().charAt(2)=='T'){
+            if (contact.getFixtureA().getUserData().toString().length()>=15 && contact.getFixtureA().getUserData().toString().substring(0,15).equals("FFFFShroomToxic")){
+                //find the shroom and explode it
+                for (ShroomToxic shroomToxic : Level1.level1Enemies.shroomToxics){
+                    if (shroomToxic.getName().equals(contact.getFixtureA().getUserData().toString())){
+                        shroomToxic.setExploding(true);
+                    }
+                }
+                //find the enemy and deal damage to it
+                for (Undead1 undead1 : Level1.level1Enemies.undead1s){
+                    if (undead1.getName().equals(contact.getFixtureB().getUserData().toString())){
+                        undead1.takeDamage(ShroomToxic.damage);
+                    }
+                }
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    if (undead2.getName().equals(contact.getFixtureB().getUserData().toString())){
+                        undead2.takeDamage(ShroomToxic.damage);
+                    }
+                }
+            }
+            if (contact.getFixtureB().getUserData().toString().length()>=15 && contact.getFixtureB().getUserData().toString().substring(0,15).equals("FFFFShroomToxic")){
+                //find the shroom and explode it
+                for (ShroomToxic shroomToxic : Level1.level1Enemies.shroomToxics){
+                    if (shroomToxic.getName().equals(contact.getFixtureB().getUserData().toString())){
+                        shroomToxic.setExploding(true);
+                    }
+                }
+                //find the enemy and deal damage to it
+                for (Undead1 undead1 : Level1.level1Enemies.undead1s){
+                    if (undead1.getName().equals(contact.getFixtureA().getUserData().toString())){
+                        undead1.takeDamage(ShroomToxic.damage);
+                    }
+                }
+                for (Undead2 undead2 : Level1.level1Enemies.undead2s){
+                    if (undead2.getName().equals(contact.getFixtureA().getUserData().toString())){
+                        undead2.takeDamage(ShroomToxic.damage);
+                    }
+                }
+            }
+        }
+        //toxic shroom on collision with player
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().length()>=15 && contact.getFixtureB().getUserData().toString().substring(0,15).equals("FFFFShroomToxic") || contact.getFixtureA().getUserData().toString().length()>=15 && contact.getFixtureA().getUserData().toString().substring(0,15).equals("FFFFShroomToxic") && contact.getFixtureB().getUserData().toString().equals("PlayerBody")){
+            //find the shroom and explode it
+            if (contact.getFixtureA().getUserData().toString().length()>=15 && contact.getFixtureA().getUserData().toString().substring(0,15).equals("FFFFShroomToxic")) {
+                for (ShroomToxic shroomToxic : Level1.level1Enemies.shroomToxics) {
+                    if (shroomToxic.getName().equals(contact.getFixtureA().getUserData().toString())) {
+                        shroomToxic.setExploding(true);
+                    }
+                }
+            }
+            //find the shroom and explode it
+            if (contact.getFixtureB().getUserData().toString().length()>=15 && contact.getFixtureB().getUserData().toString().substring(0,15).equals("FFFFShroomToxic")) {
+                for (ShroomToxic shroomToxic : Level1.level1Enemies.shroomToxics) {
+                    if (shroomToxic.getName().equals(contact.getFixtureB().getUserData().toString())) {
+                        shroomToxic.setExploding(true);
+                    }
+                }
+            }
+            //damage player
+            darkknight.player.getPlayerCombat().takeDamage(ShroomToxic.damage);
+        }
     }
 
     @Override

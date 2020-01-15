@@ -14,9 +14,7 @@ import com.mygdx.game.player.Player;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 import com.mygdx.game.world.targetdummy.TargetDummy;
-
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class darkknight extends ApplicationAdapter {
 	//it is not in seconds because we need 2 decimals if we want a fast paced action based on time
@@ -86,7 +84,7 @@ public class darkknight extends ApplicationAdapter {
 		batch.setProjectionMatrix(cam.combined);
 
 		//set background color
-        Gdx.gl.glClearColor( 0.1f, 0.05f, 0.05f, 1 );
+        Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
         //clear screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

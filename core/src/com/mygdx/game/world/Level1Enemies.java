@@ -22,16 +22,21 @@ public class Level1Enemies {
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
     public ArrayList<DamageObject> damageObjects = new ArrayList<>();
+    //toxic shrooms
+    private ShroomToxic shroomToxic1 = new ShroomToxic("FFFFShroomToxic1",80,16.5f);
+    public ArrayList<ShroomToxic> shroomToxics = new ArrayList<>();
 
     public Level1Enemies(){
         enemies.add(targetDummies);
         enemies.add(damageObjects);
         enemies.add(undead1s);
+        enemies.add(shroomToxics);
         targetDummies.add(targetDummy1);
         targetDummies.add(targetDummy2);
         undead1s.add(undead1_1);
         undead2s.add(undead2_1);
         damageObjects.add(bonfire);
+        shroomToxics.add(shroomToxic1);
     }
 
     public void draw(Batch batch){
@@ -55,6 +60,9 @@ public class Level1Enemies {
                 if (undead2.isShouldBeDeleted()){
                     undead2IndexToDelete=undead2s.indexOf(undead2);
                 }
+            }
+            for (ShroomToxic shroomToxic : shroomToxics){
+                shroomToxic.draw(batch);
             }
         }
         if (undead1IndexToDelete!=-1){
