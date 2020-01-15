@@ -1,6 +1,8 @@
 package com.mygdx.game.player;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -135,10 +137,20 @@ public class Player {
         //this actions make collision detection very sad
         //darkknight.player.getPlayerPhysics().getPlayerBody().setTransform(playerBody.getPosition().x,200,0);
         playerCombat.setImmuneToDamage(true);
+        for (PlayerAnimation playerAnimation : getPlayerGraphics().getAnimations()){
+            playerAnimation.getAnimationSheet().dispose();
+        }
+        getPlayerGraphics().getTexturePlayer().dispose();
+        for (Sound sound : getPlayerCombat().getSounds()){
+            sound.dispose();
+        }
     }
 
     //this is called from death text effect when it is done animating
     public void respawn(){
+        for (Texture texture : getPlayerUI().getTextures()){
+            texture.dispose();
+        }
         getPlayerUI().setDeathTextEffectToNull();
         darkknight.world=new World(new Vector2(0, -10), true);
         darkknight.level1=new Level1();

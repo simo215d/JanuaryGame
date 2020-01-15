@@ -40,9 +40,9 @@ public class ShieldBlockEffect {
     public void draw(Batch batch){
         stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
-        batch.draw(currentFrame, x, y+1, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
         if (stateTime>=frameDuration*FRAME_COLS*FRAME_ROWS){
             darkknight.player.getPlayerCombat().setShieldBlockEffectToNull();
-        }
+            sheet.dispose();
+        } else batch.draw(currentFrame, x, y+1, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
     }
 }

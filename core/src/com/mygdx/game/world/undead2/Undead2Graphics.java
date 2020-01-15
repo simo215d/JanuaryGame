@@ -149,19 +149,24 @@ public class Undead2Graphics {
                         currentFrame_death.flip(true, false);
                     }
                 }
-                //position and scale of frame
-                //if we should render red because of damage taken
-                if (actions.isRenderRed()) {
-                    batch.setColor(Color.RED);
-                    batch.draw(currentFrame_death, physicsX - 8, physicsY - 7.5f, 16, 16);
-                    batch.setColor(Color.WHITE);
-                } else batch.draw(currentFrame_death, physicsX - 8, physicsY - 7.5f, 16, 16);
                 if (stateTime_death>=frameDuration_death*FRAME_COLS_death*FRAME_ROWS_death*1.2f){
                     if (!hasCalledDie) {
                         undead2.die();
+                        greenHealthBarTexture.dispose();
+                        redHealthBarTexture.dispose();
+                        sheet_death.dispose();
+                        sheet_idle.dispose();
+                        sheet_shoot.dispose();
                         hasCalledDie=true;
                     }
-                }
+                } else
+                    //position and scale of frame
+                    //if we should render red because of damage taken
+                    if (actions.isRenderRed()) {
+                        batch.setColor(Color.RED);
+                        batch.draw(currentFrame_death, physicsX - 8, physicsY - 7.5f, 16, 16);
+                        batch.setColor(Color.WHITE);
+                    } else batch.draw(currentFrame_death, physicsX - 8, physicsY - 7.5f, 16, 16);
                 break;
         }
             //render the healthBar

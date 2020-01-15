@@ -63,4 +63,8 @@ public class PlayerAnimation {
     public void resetStateTime(){
         stateTime=0;
     }
+
+    public Texture getAnimationSheet(){
+        return animationSheet;
+    }
 }

@@ -11,8 +11,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.game.darkknight;
 
+import java.util.ArrayList;
+
 public class Guard1 {
     private boolean isTalking;
+    private ArrayList<Texture> textures = new ArrayList<>();
     //sprite left
     private Texture texture_L = new Texture(Gdx.files.internal("Guard1_Left.png"));
     private Sprite sprite_L;
@@ -29,6 +32,9 @@ public class Guard1 {
     private Fixture fixture;
 
     public Guard1(){
+        textures.add(texture_L);
+        textures.add(texture_R);
+        textures.add(texture_T);
         //sprite left
         sprite_L = new Sprite(texture_L,0,0,32,32);
         sprite_L.setPosition(44f,15f);
@@ -67,5 +73,9 @@ public class Guard1 {
 
     public void setTalking(boolean bool){
         isTalking=bool;
+    }
+
+    public ArrayList<Texture> getTextures(){
+        return textures;
     }
 }

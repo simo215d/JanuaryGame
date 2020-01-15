@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class PlayerUI {
     ArrayList<Sprite> spellIcons = new ArrayList<>();
+    private ArrayList<Texture> textures = new ArrayList<>();
     //spell frame
     private Texture spellFrameTexture;
     private Sprite spellFrameSprite;
@@ -92,6 +93,13 @@ public class PlayerUI {
         spellIcons.add(spellIconMeteorSprite);
         spellIcons.add(spellIconFireBreathSprite);
          */
+        textures.add(manaBarTexture);
+        textures.add(spellFrameTexture);
+        textures.add(greenHealthBarTexture);
+        textures.add(spellIconFireballTexture);
+        textures.add(spellIconOrbsTexture);
+        textures.add(spellIconShieldTexture);
+        textures.add(spellIconSwordTexture);
     }
 
     public void draw(Batch batch, OrthographicCamera camera, int health, int maxHealth, int mana, int maxMana){
@@ -158,5 +166,9 @@ public class PlayerUI {
 
     public void setDeathTextEffectToNull(){
         deathTextEffect=null;
+    }
+
+    public ArrayList<Texture> getTextures(){
+        return textures;
     }
 }

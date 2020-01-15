@@ -29,4 +29,8 @@ public class TargetDummy {
     public String getName(){
         return name;
     }
+
+    public TargetDummyGraphics getGraphics(){
+        return graphics;
+    }
 }

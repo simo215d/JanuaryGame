@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class PlayerCombat {
     //sound
     private Sound blockSound = Gdx.audio.newSound(Gdx.files.internal("sounds/blockSound.mp3"));
+    private ArrayList<Sound> sounds = new ArrayList<>();
     //stats
     private int maxHealth;
     private int health;
@@ -48,6 +49,8 @@ public class PlayerCombat {
         health=maxHealth;
         maxMana = 100;
         mana=maxMana;
+        //sound
+        sounds.add(blockSound);
     }
 
     public void takeDamage(int damage){
@@ -299,5 +302,9 @@ public class PlayerCombat {
 
     public void fullHeal(){
         health=maxHealth;
+    }
+
+    public ArrayList<Sound> getSounds(){
+        return sounds;
     }
 }

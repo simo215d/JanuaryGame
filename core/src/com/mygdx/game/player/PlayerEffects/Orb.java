@@ -115,7 +115,6 @@ public class Orb {
         fixture = body.createFixture(sensorShape,0);
         fixture.setUserData(name);
         fixture.setSensor(true);
-        sensorShape.dispose();
     }
 
     public void draw(Batch batch){
@@ -197,13 +196,13 @@ public class Orb {
                         currentFrame_EX.flip(true,false);
                     }
                 }
-                //position and scale of frame
-                if (flyRight) {
-                    batch.draw(currentFrame_EX, body.getPosition().x - 3f, body.getPosition().y - 2.25f, (float) sheet_EX.getWidth() / FRAME_COLS_EX / 2, (float) sheet_EX.getHeight() / FRAME_ROWS_EX / 2);
-                } else batch.draw(currentFrame_EX, body.getPosition().x - 1.5f, body.getPosition().y - 2.25f, (float) sheet_EX.getWidth() / FRAME_COLS_EX / 2, (float) sheet_EX.getHeight() / FRAME_ROWS_EX / 2);
                 if (stateTime_EX>0.1f*FRAME_COLS_EX*FRAME_ROWS_EX){
                     destroy();
                 }
+                //make sure that we dont draw after dispose and destroy is called
+                else if (flyRight) {
+                    batch.draw(currentFrame_EX, body.getPosition().x - 3f, body.getPosition().y - 2.25f, (float) sheet_EX.getWidth() / FRAME_COLS_EX / 2, (float) sheet_EX.getHeight() / FRAME_ROWS_EX / 2);
+                } else batch.draw(currentFrame_EX, body.getPosition().x - 1.5f, body.getPosition().y - 2.25f, (float) sheet_EX.getWidth() / FRAME_COLS_EX / 2, (float) sheet_EX.getHeight() / FRAME_ROWS_EX / 2);
                 break;
         }
     }
@@ -231,6 +230,11 @@ public class Orb {
     }
 
     public void destroy(){
+        sensorShape.dispose();
+        sheet_L1.dispose();
+        sheet_EX.dispose();
+        sheet_L2.dispose();
+        sheet_S.dispose();
         darkknight.player.deleteAnOrb(this);
     }
 

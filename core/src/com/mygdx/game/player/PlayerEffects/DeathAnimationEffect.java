@@ -46,6 +46,7 @@ public class DeathAnimationEffect {
         if (stateTime>=frameDuration*FRAME_COLS*FRAME_ROWS){
             darkknight.player.setDeathAnimationEffectToNull();
             darkknight.player.getPlayerUI().setDeathTextEffect();
+            sheet.dispose();
         }
     }
 }

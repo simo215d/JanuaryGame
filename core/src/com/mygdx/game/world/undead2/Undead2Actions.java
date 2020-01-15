@@ -113,6 +113,7 @@ public class Undead2Actions {
                 darkknight.bodiesToDestroy.add(undead2Arrow.getBody());
                 arrowToDeleteIndex=arrows.indexOf(undead2Arrow);
                 System.out.println("Deleting: "+undead2Arrow.getName());
+                undead2Arrow.getTexture().dispose();
             }
         }
         arrows.remove(arrowToDeleteIndex);

@@ -54,15 +54,15 @@ public class Undead2Arrow {
         sprite.draw(batch);
     }
 
-    public void hitPlayer(){
-        System.out.println("i hit player");
-    }
-
     public Body getBody(){
         return body;
     }
 
     public String getName(){
         return name;
+    }
+
+    public Texture getTexture(){
+        return texture;
     }
 }

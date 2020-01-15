@@ -38,6 +38,7 @@ public class DeathTextEffect {
         //when to respawn player again
         if (stateTime>frameDuration*FRAME_COLS*FRAME_ROWS*3){
             darkknight.player.respawn();
+            sheet.dispose();
         }
     }
 }

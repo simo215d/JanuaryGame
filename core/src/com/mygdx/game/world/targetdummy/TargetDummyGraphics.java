@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.game.darkknight;
 
+import java.util.ArrayList;
+
 public class TargetDummyGraphics{
     //actions TODO this should maybe be in a separate class later
-    public boolean isAttacked = false;
+    boolean isAttacked = false;
+    private ArrayList<Texture> textures = new ArrayList<>();
     //body sprite stuff
     private Texture targetdummyTexture;
     private Sprite targetdummySprite;
@@ -48,6 +51,11 @@ public class TargetDummyGraphics{
         }
         walkAnimation = new Animation<TextureRegion>(0.15f, walkFrames);
         stateTime = 0f;
+        //list of textures
+        textures.add(targetdummyTexture);
+        textures.add(greenHealthBarTexture);
+        textures.add(redHealthBarTexture);
+        textures.add(walkSheet);
     }
 
     public void draw(Batch batch, float physicsX, float physicsY, int health, int maxHealth){
@@ -89,5 +97,9 @@ public class TargetDummyGraphics{
         float healthScale = 5f*((float) health/(float) maxHealth);
         greenHealthBarSprite.setSize(healthScale,greenHealthBarSprite.getHeight());
         greenHealthBarSprite.draw(batch);
+    }
+
+    public ArrayList<Texture> getTextures(){
+        return textures;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -12,8 +13,10 @@ import com.mygdx.game.hmi.InputHandler;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
+import com.mygdx.game.world.targetdummy.TargetDummy;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class darkknight extends ApplicationAdapter {
 	//it is not in seconds because we need 2 decimals if we want a fast paced action based on time
@@ -82,6 +85,9 @@ public class darkknight extends ApplicationAdapter {
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 
+		//set background color
+        Gdx.gl.glClearColor( 0.1f, 0.05f, 0.05f, 1 );
+        //clear screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		//render sprites
@@ -112,7 +118,17 @@ public class darkknight extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		level1.level1MapGraphics.getBushTexture().dispose();
+		Level1.level1MapGraphics.getBushTexture().dispose();
+		world.dispose();
+		debugRenderer.dispose();
+		for (Texture texture : Level1.level1Allies.getGuard1().getTextures()){
+			texture.dispose();
+		}
+		for (TargetDummy targetDummy : Level1.level1Enemies.targetDummies){
+			for (Texture texture : targetDummy.getGraphics().getTextures()){
+				texture.dispose();
+			}
+		}
 	}
 
 	private void destroyBodies() {

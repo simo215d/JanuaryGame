@@ -85,7 +85,6 @@ public class FireBall {
         fixture = body.createFixture(sensorShape,0);
         fixture.setUserData(name);
         fixture.setSensor(true);
-        sensorShape.dispose();
         //set body position to fly forward based on what way player sprite is facing
         if (flyRight){
             body.setLinearVelocity(30f,0);
@@ -121,10 +120,10 @@ public class FireBall {
             }
             stateTime_EX += Gdx.graphics.getDeltaTime();
             TextureRegion currentFrame_EX = animation_EX.getKeyFrame(stateTime_EX, false);
-            batch.draw(currentFrame_EX, deathPositionX, deathPositionY-1.5f, (float) sheet_EX.getWidth()/FRAME_COLS_EX/2,(float) sheet_EX.getHeight()/FRAME_ROWS_EX/2);
+            //check for destruction before we draw
             if (stateTime_EX>=0.40f){
                 destroy();
-            }
+            } else batch.draw(currentFrame_EX, deathPositionX, deathPositionY-1.5f, (float) sheet_EX.getWidth()/FRAME_COLS_EX/2,(float) sheet_EX.getHeight()/FRAME_ROWS_EX/2);
         }
     }
 
@@ -142,5 +141,8 @@ public class FireBall {
 
     public void destroy(){
         darkknight.player.deleteAFireBall(this);
+        sensorShape.dispose();
+        sheet.dispose();
+        sheet_EX.dispose();
     }
 }

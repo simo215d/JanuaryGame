@@ -230,20 +230,27 @@ public class Undead1Graphics {
                         currentFrame_death.flip(true, false);
                     }
                 }
-                //position and scale of frame
-                //if we should render red because of damage taken
-                if (actions.isRenderRed()){
-                    batch.setColor(Color.RED);
-                    batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
-                    batch.setColor(Color.WHITE);
-                } else batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
                 //animation end
                 if (stateTime_death>=frameDuration_death*FRAME_COLS_death*FRAME_ROWS_death){
                     if (!hasCalledDie) {
                         undead1.die();
+                        redHealthBarTexture.dispose();
+                        greenHealthBarTexture.dispose();
+                        sheet_death.dispose();
+                        sheet_idle.dispose();
+                        sheet_run.dispose();
+                        sheet_slam.dispose();
+                        sheet_swing.dispose();
                         hasCalledDie=true;
                     }
                 }
+                //position and scale of frame
+                //if we should render red because of damage taken
+                else if (actions.isRenderRed()){
+                    batch.setColor(Color.RED);
+                    batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
+                    batch.setColor(Color.WHITE);
+                } else batch.draw(currentFrame_death, physicsX-16, physicsY-7.5f,32,32);
                 break;
         }
         //render the healthBar

@@ -54,14 +54,12 @@ public class CollisionDetector implements ContactListener {
             darkknight.player.getPlayerMovement().setPushingRight(true);
             darkknight.player.getPlayerGraphics().setAnimationState("pushingRight");
             darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(false,false);
-            darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
         }
         //push left
         if (contact.getFixtureA().getUserData().equals("UpperLeftBody") && contact.getFixtureB().getUserData().toString().charAt(1)=='T' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().equals("UpperLeftBody")){
             darkknight.player.getPlayerMovement().setPushingLeft(true);
             darkknight.player.getPlayerGraphics().setAnimationState("pushingLeft");
             darkknight.player.getPlayerGraphics().getSpritePlayer().setFlip(true,false);
-            darkknight.player.getPlayerGraphics().getSpritePlayer().setTexture(new Texture((Gdx.files.internal("knight4.png"))));
         }
         //player right combat sensor
         if (contact.getFixtureA().getUserData().equals("RightCombatSensor") && contact.getFixtureB().getUserData().toString().charAt(2)=='T' || contact.getFixtureA().getUserData().toString().charAt(2)=='T' && contact.getFixtureB().getUserData().equals("RightCombatSensor")){

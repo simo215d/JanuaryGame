@@ -26,7 +26,8 @@ public class DamageNumber {
     }
 
     public void draw(Batch batch, float x, float y){
-        if (darkknight.gameTimeCentiSeconds-startTime>=5){
+        if (darkknight.gameTimeCentiSeconds-startTime>=5 && !shouldBeDeleted){
+            text.dispose();
             shouldBeDeleted=true;
         }
         if (this.x==0 && this.y==0){
@@ -34,7 +35,7 @@ public class DamageNumber {
             this.y=y;
             System.out.println("we set position");
         }
-        text.draw(batch,""+damage,this.x,this.y+13+listPosition*3);
+        if (!shouldBeDeleted) text.draw(batch,""+damage,this.x,this.y+13+listPosition*3);
     }
 
     public boolean getShouldBeDeleted(){

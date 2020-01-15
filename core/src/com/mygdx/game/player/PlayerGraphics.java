@@ -85,4 +85,12 @@ public class PlayerGraphics {
             }
         }
     }
+
+    public ArrayList<PlayerAnimation> getAnimations(){
+        return animations;
+    }
+
+    public Texture getTexturePlayer(){
+        return texturePlayer;
+    }
 }
