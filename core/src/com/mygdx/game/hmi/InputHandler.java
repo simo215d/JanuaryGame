@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.darkknight;
+import com.mygdx.game.world.BridgeLift;
 
 public class InputHandler {
     public void handleInput(OrthographicCamera cam, Sprite sprite3){
@@ -133,6 +134,11 @@ public class InputHandler {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)){
                 System.out.println("ani state: "+darkknight.player.getPlayerGraphics().getAnimationState());
+            }
+
+            //check if r is pressed and if player can pull bridge lever
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R) && BridgeLift.playerIsNear && !BridgeLift.isOn){
+                BridgeLift.turnOn();
             }
 
             /*this is no longer needed

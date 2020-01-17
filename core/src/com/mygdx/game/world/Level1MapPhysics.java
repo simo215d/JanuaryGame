@@ -10,7 +10,7 @@ import com.mygdx.game.darkknight;
 public class Level1MapPhysics {
     //box colliders
     private BoxCollider groundBox1 = new BoxCollider(16,6,16,1,"TFFFGroundBody1");
-    private BoxCollider groundBox2 = new BoxCollider(80*2-32,14,48*2,1,"TFFFGroundBody2");
+    private BoxCollider groundBox2 = new BoxCollider(176,14,48*3,1,"TFFFGroundBody2");
     private BoxCollider wallBox1 = new BoxCollider(33f,10,1,3,"FTFFWallBody1");
     private BoxCollider wallBox2 = new BoxCollider(5,19,1,12,"FTFFWallBody2");
     //test joy body
