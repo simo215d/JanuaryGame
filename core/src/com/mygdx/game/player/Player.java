@@ -158,6 +158,7 @@ public class Player {
         CollisionDetector.currentContacts.clear();
         CollisionDetector.currentRightEnemies.clear();
         CollisionDetector.currentLeftEnemies.clear();
+        darkknight.cam.position.x=10;
         isDead=false;
     }
 }

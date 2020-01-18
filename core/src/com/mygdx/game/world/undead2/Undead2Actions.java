@@ -82,8 +82,10 @@ public class Undead2Actions {
     }
 
     public void setInCombat(Boolean bool){
-        actionState="shooting";
-        inCombat=bool;
+        if (isAlive) {
+            actionState = "shooting";
+            inCombat = bool;
+        }
     }
 
     public void setHasRecentlyShotArrow(boolean bool){

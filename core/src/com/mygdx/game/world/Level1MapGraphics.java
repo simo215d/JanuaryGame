@@ -42,7 +42,6 @@ public class Level1MapGraphics {
     private EarthTile earthTile17 = new EarthTile(208+16*3,8,4);
     private EarthTile earthTile18 = new EarthTile(208+16*4,8,4);
     private EarthTile earthTile19 = new EarthTile(208+16*5,8,4);
-    private EarthTile earthTile20 = new EarthTile(208+16*6,8,4);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
     private Sprite joySprite1;
@@ -69,14 +68,14 @@ public class Level1MapGraphics {
         tower1Sprite1.setPosition(-35,7.5f);
         tower1Sprite1.setSize(32,32);
         //create bottom/level0 earthTiles
-        for (int i = -3; i < 20; i++) {
+        for (int i = -3; i < 23; i++) {
             level0EarthSprites.add(new EarthTile(16*i,-8,2).getSprite());
             if (i<0){
                 level0EarthSprites.add(new EarthTile(16*i,0,1).getSprite());
             }
         }
         //create level1 earthTiles
-        for (int i = 2; i < 20; i++) {
+        for (int i = 2; i < 23; i++) {
             level1EarthSprites.add(new EarthTile(16*i,0,2).getSprite());
         }
         earthSprites.add(earthTile1.getSprite());
@@ -98,7 +97,6 @@ public class Level1MapGraphics {
         earthSprites.add(earthTile17.getSprite());
         earthSprites.add(earthTile18.getSprite());
         earthSprites.add(earthTile19.getSprite());
-        earthSprites.add(earthTile20.getSprite());
         bushSprites.add(bushSprite1);
         treeSprites.add(treeSprite1);
         shroomSprites.add(shroom1.getShroomSprite());

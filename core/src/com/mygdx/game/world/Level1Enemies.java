@@ -15,12 +15,14 @@ public class Level1Enemies {
     public ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //undead1s
     private Undead1 undead1_1 = new Undead1("TTTFUndead1_1",160,60);
+    private Undead1 undead1_2 = new Undead1("TTTFUndead1_2",254,30);
     public ArrayList<Undead1> undead1s = new ArrayList<>();
     //undead2s
     private Undead2 undead2_1 = new Undead2("TTTFUndead2_1",190,60);
     public ArrayList<Undead2> undead2s = new ArrayList<>();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
+    private DamageObject toxicEarth = new DamageObject("FFFTToxicEarth1",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*6,8, 22f, 3);
     public ArrayList<DamageObject> damageObjects = new ArrayList<>();
     //toxic shrooms
     private ShroomToxic shroomToxic1 = new ShroomToxic("FFFFShroomToxic1",105,16.5f);
@@ -34,8 +36,10 @@ public class Level1Enemies {
         targetDummies.add(targetDummy1);
         targetDummies.add(targetDummy2);
         undead1s.add(undead1_1);
+        undead1s.add(undead1_2);
         undead2s.add(undead2_1);
         damageObjects.add(bonfire);
+        damageObjects.add(toxicEarth);
         shroomToxics.add(shroomToxic1);
     }
 
