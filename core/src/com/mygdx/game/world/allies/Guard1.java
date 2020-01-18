@@ -23,7 +23,7 @@ public class Guard1 {
     private Texture texture_R = new Texture(Gdx.files.internal("Guard1_Right.png"));
     private Sprite sprite_R;
     //sprite text
-    private Texture texture_T = new Texture(Gdx.files.internal("Guard1_Text1.png"));
+    private Texture texture_T = new Texture(Gdx.files.internal("guard1_Text1.png"));
     private Sprite sprite_T;
     //box2d
     private BodyDef bodyDef;

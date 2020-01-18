@@ -51,7 +51,7 @@ public class FireBall {
         animation = new Animation<TextureRegion>(0.1f, animationFrames);
         stateTime = 0f;
         //animation explosion
-        sheet_EX = new Texture(Gdx.files.internal("FireBallExplosionSheet1.png"));
+        sheet_EX = new Texture(Gdx.files.internal("fireBallExplosionSheet1.png"));
         TextureRegion[][] tmp_EX = TextureRegion.split(sheet_EX, sheet_EX.getWidth() / FRAME_COLS_EX, sheet_EX.getHeight() / FRAME_ROWS_EX);
         TextureRegion[] animationFrames_EX = new TextureRegion[FRAME_COLS_EX * FRAME_ROWS_EX];
         int index_EX = 0;
