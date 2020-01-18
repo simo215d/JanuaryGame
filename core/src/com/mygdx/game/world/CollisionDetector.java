@@ -146,6 +146,7 @@ public class CollisionDetector implements ContactListener {
                         orb.setAnimationState("Exploding");
                         System.out.println("we destroy "+orb.getName()+" because it hits an enemy");
                         darkknight.bodiesToDestroy.add(orb.getBody());
+                        orb.setBodyHasBeenDeleted(true);
                     }
                 }
             } else {
@@ -158,6 +159,7 @@ public class CollisionDetector implements ContactListener {
                             orb.setAnimationState("Exploding");
                             System.out.println("we destroy "+orb.getName()+" because it hits an object");
                             darkknight.bodiesToDestroy.add(orb.getBody());
+                            orb.setBodyHasBeenDeleted(true);
                         }
                     }
                 }

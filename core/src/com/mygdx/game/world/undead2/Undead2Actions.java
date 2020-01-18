@@ -118,6 +118,7 @@ public class Undead2Actions {
                 undead2Arrow.getTexture().dispose();
             }
         }
+        if (arrowToDeleteIndex!=-1)
         arrows.remove(arrowToDeleteIndex);
         System.out.println("numbers of arrows: "+arrows.size());
     }

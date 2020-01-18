@@ -13,6 +13,7 @@ public class Orb {
     private long spawnTime;
     private boolean flyRight = false;
     private boolean isGameEnding = false;
+    private boolean bodyHasBeenDeleted = false;
     private float deathPositionX=0;
     private float deathPositionY=0;
     private boolean hasBeenLaunched = false;
@@ -121,8 +122,11 @@ public class Orb {
         //after 50 deci seconds aka 5 seconds the orb will game-end itself.
         //to make sure it only game-ends itself once we need a boolean to insure this.
         if (darkknight.gameTimeCentiSeconds-spawnTime>50 && !isGameEnding){
+            if (!bodyHasBeenDeleted) {
+                bodyHasBeenDeleted=true;
+                darkknight.bodiesToDestroy.add(body);
+            }
             darkknight.player.deleteAnOrb(this);
-            darkknight.bodiesToDestroy.add(body);
             System.out.println("mf's time ran out");
             isGameEnding=true;
         }
@@ -263,5 +267,9 @@ public class Orb {
             body.setLinearVelocity(-40,0);
             hasBeenLaunched=false;
         }
+    }
+
+    public void setBodyHasBeenDeleted(boolean b){
+        bodyHasBeenDeleted=b;
     }
 }
