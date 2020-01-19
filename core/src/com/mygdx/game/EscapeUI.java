@@ -61,6 +61,8 @@ public class EscapeUI {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
+                //doing this because there still seems to be some things open/in use, in Task manager
+                System.exit(0);
             }
         });
         //listener for continue button
