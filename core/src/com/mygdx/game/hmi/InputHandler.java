@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.EscapeUI;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.world.BridgeLift;
 
@@ -139,6 +140,13 @@ public class InputHandler {
             //check if r is pressed and if player can pull bridge lever
             if (Gdx.input.isKeyJustPressed(Input.Keys.R) && BridgeLift.playerIsNear && !BridgeLift.isOn){
                 BridgeLift.turnOn();
+            }
+
+            //set game menu active
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+                if (!EscapeUI.isActive){
+                    EscapeUI.isActive=true;
+                } else EscapeUI.isActive=false;
             }
 
             /*this is no longer needed

@@ -43,6 +43,7 @@ public class darkknight extends ApplicationAdapter {
 	//public static PlayerPhysics playerPhysics;
 	private CollisionDetector collisionDetector;
 	private ShapeRenderer shapeRendererBackGround;
+	private EscapeUI escapeUI;
 
 	@Override
 	public void create() {
@@ -76,6 +77,7 @@ public class darkknight extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		shapeRendererBackGround=new ShapeRenderer();
+		escapeUI = new EscapeUI();
 	}
 
 	@Override
@@ -112,6 +114,8 @@ public class darkknight extends ApplicationAdapter {
 		level1.draw(batch);
 		//player.getPlayerGraphics().draw(batch);
 		player.draw(batch, cam);
+        //render the ui
+        escapeUI.draw(batch);
 		batch.end();
 		//box2d
         if (bodiesToDestroy.size()==0 && !isWorldStopped) {
