@@ -26,6 +26,7 @@ public class Level1Enemies {
     public ArrayList<DamageObject> damageObjects = new ArrayList<>();
     //toxic shrooms
     private ShroomToxic shroomToxic1 = new ShroomToxic("FFFFShroomToxic1",105,16.5f);
+    private ShroomToxic shroomToxic2 = new ShroomToxic("FFFFShroomToxic2",230,16.5f);
     public ArrayList<ShroomToxic> shroomToxics = new ArrayList<>();
 
     public Level1Enemies(){
@@ -41,6 +42,7 @@ public class Level1Enemies {
         damageObjects.add(bonfire);
         damageObjects.add(toxicEarth);
         shroomToxics.add(shroomToxic1);
+        shroomToxics.add(shroomToxic2);
     }
 
     public void draw(Batch batch){

@@ -18,6 +18,7 @@ public class Level1MapGraphics {
     private ArrayList<Sprite> joyers = new ArrayList<>();
     private ArrayList<Sprite> buildings = new ArrayList<>();
     private Texture bushTexture = new Texture(Gdx.files.internal("bush1.png"));
+    private Texture bush2Texture = new Texture(Gdx.files.internal("bush2.png"));
     private Texture treeTexture = new Texture(Gdx.files.internal("tree1.png"));
     private Texture joyTexture = new Texture(Gdx.files.internal("joyemoji.png"));
     private Texture tree2Texture = new Texture(Gdx.files.internal("tree2.png"));
@@ -44,8 +45,11 @@ public class Level1MapGraphics {
     private EarthTile earthTile19 = new EarthTile(208+16*5,8,4);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
+    private Sprite bush2Sprite1;
+    private Sprite bush2Sprite2;
     private Sprite joySprite1;
     private Sprite tree2Sprite1;
+    private Sprite tree2Sprite2;
     private Sprite tower1Sprite1;
     private BridgeLift bridgeLift = new BridgeLift();
     //we need this because the constructor build the body
@@ -58,12 +62,21 @@ public class Level1MapGraphics {
         bushSprite1 = new Sprite(bushTexture,0,0,32,32);
         bushSprite1.setPosition(-6,2.5f);
         bushSprite1.setSize(16,16);
+        bush2Sprite1 = new Sprite(bush2Texture,0,0,10,10);
+        bush2Sprite1.setPosition(125,15f);
+        bush2Sprite1.setSize(5,5);
+        bush2Sprite2 = new Sprite(bush2Texture,0,0,10,10);
+        bush2Sprite2.setPosition(300,15f);
+        bush2Sprite2.setSize(5,5);
         joySprite1 = new Sprite(joyTexture,0,0,16,16);
         joySprite1.setPosition(2f,10f);
         joySprite1.setSize(8f,8f);
         tree2Sprite1 = new Sprite(tree2Texture,0,0,32,64);
         tree2Sprite1.setPosition(110,15f);
         tree2Sprite1.setSize(16,32);
+        tree2Sprite2 = new Sprite(tree2Texture,0,0,32,64);
+        tree2Sprite2.setPosition(210,15f);
+        tree2Sprite2.setSize(16,32);
         tower1Sprite1 = new Sprite(tower1Texture,0,0,64,64);
         tower1Sprite1.setPosition(-35,7.5f);
         tower1Sprite1.setSize(32,32);
@@ -98,10 +111,13 @@ public class Level1MapGraphics {
         earthSprites.add(earthTile18.getSprite());
         earthSprites.add(earthTile19.getSprite());
         bushSprites.add(bushSprite1);
+        bushSprites.add(bush2Sprite1);
+        bushSprites.add(bush2Sprite2);
         treeSprites.add(treeSprite1);
         shroomSprites.add(shroom1.getShroomSprite());
         joyers.add(joySprite1);
         treeSprites.add(tree2Sprite1);
+        treeSprites.add(tree2Sprite2);
         buildings.add(tower1Sprite1);
     }
 

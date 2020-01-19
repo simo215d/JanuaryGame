@@ -2,18 +2,23 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.hmi.InputHandler;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 import com.mygdx.game.world.targetdummy.TargetDummy;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class darkknight extends ApplicationAdapter {
@@ -37,6 +42,7 @@ public class darkknight extends ApplicationAdapter {
 	private Box2DDebugRenderer debugRenderer;
 	//public static PlayerPhysics playerPhysics;
 	private CollisionDetector collisionDetector;
+	private ShapeRenderer shapeRendererBackGround;
 
 	@Override
 	public void create() {
@@ -68,6 +74,8 @@ public class darkknight extends ApplicationAdapter {
 		cam.update();
 
 		batch = new SpriteBatch();
+
+		shapeRendererBackGround=new ShapeRenderer();
 	}
 
 	@Override
@@ -85,8 +93,18 @@ public class darkknight extends ApplicationAdapter {
 
 		//set background color
         Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
-        //clear screen
+		//clear screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		shapeRendererBackGround.setProjectionMatrix(cam.combined);
+		shapeRendererBackGround.begin(ShapeRenderer.ShapeType.Filled);
+		//the blue color scales with cameras position until a certain point where it just stays the same
+		//calculation is done with rgb
+		if ((255-(cam.position.x+50))/255f<97/255f){
+			shapeRendererBackGround.rect(cam.position.x-50,cam.position.y-25,100,50,Color.BLACK,Color.BLACK,Color.valueOf("#40875d"),Color.valueOf("#40875d"));
+		} else {
+			shapeRendererBackGround.rect(cam.position.x-50,cam.position.y-25,100,50,new Color().add((97-cam.position.x)/255f,(97-cam.position.x)/255f,(97-cam.position.x)/255f,1),new Color().add((97-cam.position.x)/255f,(97-cam.position.x)/255f,(97-cam.position.x)/255f,1),new Color().add(67/255f,135/255f,(255-(cam.position.x+50))/255f,1),new Color().add(67/255f,135/255f,(255-(cam.position.x+50))/255f,1));
+		}
+		shapeRendererBackGround.end();
 
 		//render sprites
 		batch.begin();
