@@ -299,7 +299,6 @@ public class CollisionDetector implements ContactListener {
         //bridge lift sensor
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("LiftSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("LiftSensor")){
             BridgeLift.playerIsNear=true;
-            System.out.println("player entered and should see \"Press R\" and do input and check if player is near");
         }
     }
 
@@ -352,7 +351,6 @@ public class CollisionDetector implements ContactListener {
         //bridge lift sensor
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("LiftSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("LiftSensor")){
             BridgeLift.playerIsNear=false;
-            System.out.println("player exited");
         }
     }
 
