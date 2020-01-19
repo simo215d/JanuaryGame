@@ -11,6 +11,7 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.DeathAnimationEffect;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.world.BridgeLift;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 
@@ -159,6 +160,8 @@ public class Player {
         CollisionDetector.currentRightEnemies.clear();
         CollisionDetector.currentLeftEnemies.clear();
         darkknight.cam.position.x=10;
+        BridgeLift.isOn=false;
+        BridgeLift.liftingState="still";
         isDead=false;
     }
 }

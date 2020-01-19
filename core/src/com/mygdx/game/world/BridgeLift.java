@@ -188,7 +188,7 @@ public class BridgeLift {
             bridgeLiftLeverSprite.setFlip(false,false);
             bridgeLiftLeverSprite.draw(batch);
         }
-        if (playerIsNear){
+        if (playerIsNear && !isOn){
             rSprite.draw(batch);
         }
     }
