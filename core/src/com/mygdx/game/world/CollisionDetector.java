@@ -300,6 +300,10 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("LiftSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("LiftSensor")){
             BridgeLift.playerIsNear=true;
         }
+        //bridge torch sensor
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFTorchSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFTorchSensor")){
+            BridgeTorch.playerIsNear=true;
+        }
     }
 
     @Override
@@ -351,6 +355,10 @@ public class CollisionDetector implements ContactListener {
         //bridge lift sensor
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("LiftSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("LiftSensor")){
             BridgeLift.playerIsNear=false;
+        }
+        //bridge torch sensor
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFTorchSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFTorchSensor")){
+            BridgeTorch.playerIsNear=false;
         }
     }
 

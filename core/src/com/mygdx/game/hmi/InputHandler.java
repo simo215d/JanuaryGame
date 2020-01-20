@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.EscapeUI;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.world.BridgeLift;
+import com.mygdx.game.world.BridgeTorch;
 
 public class InputHandler {
     public void handleInput(OrthographicCamera cam, Sprite sprite3){
@@ -140,6 +141,11 @@ public class InputHandler {
             //check if r is pressed and if player can pull bridge lever
             if (Gdx.input.isKeyJustPressed(Input.Keys.R) && BridgeLift.playerIsNear && !BridgeLift.isOn){
                 BridgeLift.turnOn();
+            }
+
+            //check for bridge torch
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R) && BridgeTorch.playerIsNear && !BridgeTorch.isOn){
+                BridgeTorch.isOn=true;
             }
 
             //set game menu active

@@ -43,6 +43,7 @@ public class Level1MapGraphics {
     private EarthTile earthTile17 = new EarthTile(208+16*3,8,4);
     private EarthTile earthTile18 = new EarthTile(208+16*4,8,4);
     private EarthTile earthTile19 = new EarthTile(208+16*5,8,4);
+    private BridgeTorch bridgeTorch = new BridgeTorch(292,33f);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
     private Sprite bush2Sprite1;
@@ -160,6 +161,7 @@ public class Level1MapGraphics {
             sprite.draw(batch);
         }
         bridgeLift.draw(batch);
+        bridgeTorch.draw(batch);
     }
 
     //TODO DISPOSE SHIT?

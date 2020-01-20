@@ -26,8 +26,8 @@ public class darkknight extends ApplicationAdapter {
 	public static long gameTimeCentiSeconds;
 	private long startTime;
 	//this array list stores bodies we want to get rid off, and deletes them when render/world.step is done
-    public static ArrayList<Body> bodiesToDestroy = new ArrayList<>();
-    public static boolean isWorldStopped = false;
+	public static ArrayList<Body> bodiesToDestroy = new ArrayList<>();
+	public static boolean isWorldStopped = false;
 
 	public static OrthographicCamera cam;
 	private SpriteBatch batch;
@@ -84,8 +84,8 @@ public class darkknight extends ApplicationAdapter {
 	public void render() {
 		//update game time centi seconds
 		gameTimeCentiSeconds =((TimeUtils.timeSinceMillis(startTime)) / 100L);
-	    //downward fall multiplier
-        player.getPlayerPhysics().fallFaster(1f);
+		//downward fall multiplier
+		player.getPlayerPhysics().fallFaster(1f);
 		//player follow circle
 		player.getPlayerGraphics().getSpritePlayer().setPosition(player.getPlayerPhysics().getPlayerBody().getPosition().x-player.getPlayerGraphics().getSpritePlayer().getWidth()/2,player.getPlayerPhysics().getPlayerBody().getPosition().y-3f);
 		//checks for inputs
@@ -94,7 +94,7 @@ public class darkknight extends ApplicationAdapter {
 		batch.setProjectionMatrix(cam.combined);
 
 		//set background color
-        Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
+		Gdx.gl.glClearColor( 0.1f, 0.1f, 0.1f, 1 );
 		//clear screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		shapeRendererBackGround.setProjectionMatrix(cam.combined);
@@ -114,17 +114,17 @@ public class darkknight extends ApplicationAdapter {
 		level1.draw(batch);
 		//player.getPlayerGraphics().draw(batch);
 		player.draw(batch, cam);
-        //render the ui
-        escapeUI.draw(batch);
+		//render the ui
+		escapeUI.draw(batch);
 		batch.end();
 		//box2d
-        if (bodiesToDestroy.size()==0 && !isWorldStopped) {
-            world.step(1 / 60f, 6, 2);
-            world.setContactListener(collisionDetector);
-        }
+		if (bodiesToDestroy.size()==0 && !isWorldStopped) {
+			world.step(1 / 60f, 6, 2);
+			world.setContactListener(collisionDetector);
+		}
 		//box2d collider graphics
-		//debugRenderer.render(world, cam.combined);
-        //destroy unwanted bodies
+		debugRenderer.render(world, cam.combined);
+		//destroy unwanted bodies
 		destroyBodies();
 	}
 
