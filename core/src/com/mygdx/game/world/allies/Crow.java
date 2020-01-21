@@ -14,6 +14,7 @@ import com.mygdx.game.darkknight;
 
 public class Crow {
     public static boolean isInPosition;
+    private boolean setToDestroy;
     //box2d
     private BodyDef bodyDef;
     private Body body;
@@ -26,6 +27,7 @@ public class Crow {
     private float stateTime;
 
     public Crow(){
+        isInPosition=false;
         //box2d
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -53,7 +55,15 @@ public class Crow {
     }
 
     public void flap(){
-        body.setLinearVelocity(4,5);
+        if (body.getPosition().x>420){
+            body.setLinearVelocity(6,15);
+        } else if (body.getPosition().y<30){
+            body.setLinearVelocity(6,5);
+        }
+        if (body.getPosition().y>50){
+            darkknight.bodiesToDestroy.add(body);
+            setToDestroy=true;
+        }
         stateTime=0;
     }
 
@@ -67,8 +77,12 @@ public class Crow {
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
         //position and scale of frame
         batch.draw(currentFrame, body.getPosition().x-8, body.getPosition().y-8,16,16);
-        if (stateTime>=0.1*FRAME_COLS*FRAME_ROWS && isInPosition && body.getPosition().y<30){
+        if (stateTime>=0.1*FRAME_COLS*FRAME_ROWS && isInPosition){
             flap();
         }
+    }
+
+    public boolean isSetToDestroy(){
+        return setToDestroy;
     }
 }

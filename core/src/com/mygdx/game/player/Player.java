@@ -12,6 +12,7 @@ import com.mygdx.game.player.PlayerEffects.DeathAnimationEffect;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.BridgeLift;
+import com.mygdx.game.world.BridgeTorch;
 import com.mygdx.game.world.CollisionDetector;
 import com.mygdx.game.world.Level1;
 
@@ -145,6 +146,8 @@ public class Player {
         for (Sound sound : getPlayerCombat().getSounds()){
             sound.dispose();
         }
+        BridgeTorch.isOn=false;
+        BridgeTorch.playerIsNear=false;
     }
 
     //this is called from death text effect when it is done animating

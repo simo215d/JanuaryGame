@@ -11,6 +11,8 @@ import com.mygdx.game.darkknight;
 import java.util.ArrayList;
 
 public class DamageObject {
+    private boolean flipX;
+    private boolean shouldBeRendered;
     private ArrayList<Long> usedTimes = new ArrayList<>();
     private int damage;
     private int modFactor;
@@ -30,7 +32,9 @@ public class DamageObject {
     private float stateTime; // A variable for tracking elapsed time for the animation
     private float frameDuration;
 
-    public DamageObject(String name, int damage, int modFactor, String textureURL, int textureColumns, int textureRows, float frameDuration, float positionX, float positionY, float boxWidth, float boxHeight){
+    public DamageObject(String name, int damage, int modFactor, String textureURL, int textureColumns, int textureRows, float frameDuration, float positionX, float positionY, float boxWidth, float boxHeight, boolean flipX, boolean shouldBeRendered){
+        this.shouldBeRendered=shouldBeRendered;
+        this.flipX=flipX;
         usedTimes.add(0L);
         this.damage=damage;
         this.modFactor=modFactor;
@@ -80,7 +84,11 @@ public class DamageObject {
         stateTime += Gdx.graphics.getDeltaTime();
         // Get current frame of animation for the current stateTime
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+        if (flipX && !currentFrame.isFlipX()){
+            currentFrame.flip(true,false);
+        }
         //position and scale of frame
+        if (shouldBeRendered)
         batch.draw(currentFrame, positionX, positionY, (float) sheet.getWidth()/FRAME_COLS/2,(float) sheet.getHeight()/FRAME_ROWS/2);
     }
 

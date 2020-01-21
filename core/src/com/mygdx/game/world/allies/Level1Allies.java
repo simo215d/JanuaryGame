@@ -7,6 +7,9 @@ public class Level1Allies {
     Crow crow1;
 
     public void draw(Batch batch){
+        if (crow1!=null && crow1.isSetToDestroy()){
+            crow1=null;
+        }
         if (crow1!=null)
         crow1.draw(batch);
         guard1.draw(batch);

@@ -43,6 +43,13 @@ public class Level1MapGraphics {
     private EarthTile earthTile17 = new EarthTile(208+16*3,8,4);
     private EarthTile earthTile18 = new EarthTile(208+16*4,8,4);
     private EarthTile earthTile19 = new EarthTile(208+16*5,8,4);
+    private EarthTile earthTile20 = new EarthTile(208+16*14,8,4);
+    private EarthTile earthTile21 = new EarthTile(208+16*15,8,4);
+    private EarthTile earthTile22 = new EarthTile(208+16*16,8,4);
+    private EarthTile earthTile23 = new EarthTile(208+16*17,8,4);
+    private EarthTile earthTile24 = new EarthTile(208+16*18,8,4);
+    private EarthTile earthTile25 = new EarthTile(208+16*19,8,4);
+    private EarthTile earthTile26 = new EarthTile(208+16*20,8,4);
     private BridgeTorch bridgeTorch = new BridgeTorch(292,33f);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
@@ -111,6 +118,13 @@ public class Level1MapGraphics {
         earthSprites.add(earthTile17.getSprite());
         earthSprites.add(earthTile18.getSprite());
         earthSprites.add(earthTile19.getSprite());
+        earthSprites.add(earthTile20.getSprite());
+        earthSprites.add(earthTile21.getSprite());
+        earthSprites.add(earthTile22.getSprite());
+        earthSprites.add(earthTile23.getSprite());
+        earthSprites.add(earthTile24.getSprite());
+        earthSprites.add(earthTile25.getSprite());
+        earthSprites.add(earthTile26.getSprite());
         bushSprites.add(bushSprite1);
         bushSprites.add(bush2Sprite1);
         bushSprites.add(bush2Sprite2);

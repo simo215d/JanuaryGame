@@ -21,8 +21,10 @@ public class Level1Enemies {
     private Undead2 undead2_1 = new Undead2("TTTFUndead2_1",190,60);
     public ArrayList<Undead2> undead2s = new ArrayList<>();
     //bonfire test
-    private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1);
-    private DamageObject toxicEarth = new DamageObject("FFFTToxicEarth1",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*6,8, 22f, 3);
+    private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1, false, true);
+    private DamageObject toxicEarth = new DamageObject("FFFTToxicEarth1",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*6,8, 22f, 3, false, true);
+    private DamageObject toxicEarth2 = new DamageObject("FFFTToxicEarth2",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*10,8, 22f, 3, true, true);
+    private DamageObject toxicEarth3JustAsDamageObjectToFillTheGap = new DamageObject("FFFTToxicEarth3",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*8,8, 22f, 3, false, false);
     public ArrayList<DamageObject> damageObjects = new ArrayList<>();
     //toxic shrooms
     private ShroomToxic shroomToxic1 = new ShroomToxic("FFFFShroomToxic1",105,16.5f);
@@ -41,6 +43,8 @@ public class Level1Enemies {
         undead2s.add(undead2_1);
         damageObjects.add(bonfire);
         damageObjects.add(toxicEarth);
+        damageObjects.add(toxicEarth2);
+        damageObjects.add(toxicEarth3JustAsDamageObjectToFillTheGap);
         shroomToxics.add(shroomToxic1);
         shroomToxics.add(shroomToxic2);
     }

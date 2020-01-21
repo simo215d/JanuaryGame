@@ -34,6 +34,8 @@ public class BridgeTorch {
     private float stateTime;
 
     public BridgeTorch(float x, float y){
+        isOn=false;
+        playerIsNear=false;
         //sprite
         torchOffSprite = new Sprite(torchOffTexture,0,0,32,32);
         torchOffSprite.setPosition(x,y);

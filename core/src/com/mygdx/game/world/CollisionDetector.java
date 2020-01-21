@@ -156,10 +156,12 @@ public class CollisionDetector implements ContactListener {
                     System.out.println("we destroy orb because it hit a non sensor and non attackable");
                     for (Orb orb : darkknight.player.getPlayerCombat().getOrbs()){
                         if (contact.getFixtureA().getUserData().toString().equals(orb.getName()) || contact.getFixtureB().getUserData().toString().equals(orb.getName())){
-                            orb.setAnimationState("Exploding");
-                            System.out.println("we destroy "+orb.getName()+" because it hits an object");
-                            darkknight.bodiesToDestroy.add(orb.getBody());
-                            orb.setBodyHasBeenDeleted(true);
+                            if (!orb.getAnimationState().equals("Stationary")) {
+                                orb.setAnimationState("Exploding");
+                                System.out.println("we destroy " + orb.getName() + " because it hits an object");
+                                darkknight.bodiesToDestroy.add(orb.getBody());
+                                orb.setBodyHasBeenDeleted(true);
+                            }
                         }
                     }
                 }
