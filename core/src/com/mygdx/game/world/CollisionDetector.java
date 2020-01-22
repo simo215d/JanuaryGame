@@ -10,6 +10,7 @@ import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
+import com.mygdx.game.world.allies.Merchant;
 import com.mygdx.game.world.undead1.Undead1;
 import com.mygdx.game.world.undead2.Undead2;
 import com.mygdx.game.world.undead2.Undead2Arrow;
@@ -306,6 +307,10 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFTorchSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFTorchSensor")){
             BridgeTorch.playerIsNear=true;
         }
+        //bridge merchant sensor
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFPotionWagonSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFPotionWagonSensor")){
+            Merchant.playerIsNear=true;
+        }
     }
 
     @Override
@@ -361,6 +366,10 @@ public class CollisionDetector implements ContactListener {
         //bridge torch sensor
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFTorchSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFTorchSensor")){
             BridgeTorch.playerIsNear=false;
+        }
+        //bridge merchant sensor
+        if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFPotionWagonSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFPotionWagonSensor")){
+            Merchant.playerIsNear=false;
         }
     }
 

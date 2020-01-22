@@ -23,6 +23,8 @@ public class Level1MapGraphics {
     private Texture joyTexture = new Texture(Gdx.files.internal("joyemoji.png"));
     private Texture tree2Texture = new Texture(Gdx.files.internal("tree2.png"));
     private Texture tower1Texture = new Texture(Gdx.files.internal("tower1.png"));
+    private Texture tent1Texture = new Texture(Gdx.files.internal("tent1.png"));
+    private Texture armoryTexture = new Texture(Gdx.files.internal("armoryStand.png"));
     //top level earthSprites are always made this way
     private EarthTile earthTile1 = new EarthTile(0,0,1);
     private EarthTile earthTile2 = new EarthTile(16,0,1);
@@ -58,7 +60,12 @@ public class Level1MapGraphics {
     private Sprite joySprite1;
     private Sprite tree2Sprite1;
     private Sprite tree2Sprite2;
+    private Sprite tree2Sprite3;
+    private Sprite tree2Sprite4;
     private Sprite tower1Sprite1;
+    private Sprite tent1Sprite1;
+    private Sprite tent1Sprite2;
+    private Sprite armorySprite1;
     private BridgeLift bridgeLift = new BridgeLift();
     //we need this because the constructor build the body
     private Shroom shroom1 = new Shroom();
@@ -85,18 +92,33 @@ public class Level1MapGraphics {
         tree2Sprite2 = new Sprite(tree2Texture,0,0,32,64);
         tree2Sprite2.setPosition(210,15f);
         tree2Sprite2.setSize(16,32);
+        tree2Sprite3 = new Sprite(tree2Texture,0,0,32,64);
+        tree2Sprite3.setPosition(435,15f);
+        tree2Sprite3.setSize(16,32);
+        tree2Sprite4 = new Sprite(tree2Texture,0,0,32,64);
+        tree2Sprite4.setPosition(492,15f);
+        tree2Sprite4.setSize(16,32);
         tower1Sprite1 = new Sprite(tower1Texture,0,0,64,64);
         tower1Sprite1.setPosition(-35,7.5f);
         tower1Sprite1.setSize(32,32);
+        tent1Sprite1 = new Sprite(tent1Texture,0,0,32,32);
+        tent1Sprite1.setPosition(455,15f);
+        tent1Sprite1.setSize(16,16);
+        tent1Sprite2 = new Sprite(tent1Texture,0,0,32,32);
+        tent1Sprite2.setPosition(510,15f);
+        tent1Sprite2.setSize(16,16);
+        armorySprite1 = new Sprite(armoryTexture,0,0,16,32);
+        armorySprite1.setPosition(495,15f);
+        armorySprite1.setSize(8,16);
         //create bottom/level0 earthTiles
-        for (int i = -3; i < 23; i++) {
+        for (int i = -3; i < 34; i++) {
             level0EarthSprites.add(new EarthTile(16*i,-8,2).getSprite());
             if (i<0){
                 level0EarthSprites.add(new EarthTile(16*i,0,1).getSprite());
             }
         }
         //create level1 earthTiles
-        for (int i = 2; i < 23; i++) {
+        for (int i = 2; i < 34; i++) {
             level1EarthSprites.add(new EarthTile(16*i,0,2).getSprite());
         }
         earthSprites.add(earthTile1.getSprite());
@@ -133,7 +155,12 @@ public class Level1MapGraphics {
         joyers.add(joySprite1);
         treeSprites.add(tree2Sprite1);
         treeSprites.add(tree2Sprite2);
+        treeSprites.add(tree2Sprite3);
+        treeSprites.add(tree2Sprite4);
         buildings.add(tower1Sprite1);
+        buildings.add(tent1Sprite1);
+        buildings.add(tent1Sprite2);
+        buildings.add(armorySprite1);
     }
 
     public void shroomBounce(String shroomData){

@@ -150,6 +150,11 @@ public class InputHandler {
                 BridgeTorch.isOn=true;
             }
 
+            //check wagon
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
+                Level1.level1Allies.getMerchant().healPlayer();
+            }
+
             //set game menu active
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
                 if (!EscapeUI.isActive){
