@@ -11,6 +11,9 @@ import com.mygdx.game.player.PlayerCombat;
 import com.mygdx.game.player.PlayerEffects.FireBall;
 import com.mygdx.game.player.PlayerEffects.Orb;
 import com.mygdx.game.world.allies.Merchant;
+import com.mygdx.game.world.necromancer.BloodBall;
+import com.mygdx.game.world.necromancer.BloodMeteor;
+import com.mygdx.game.world.necromancer.Necromancer;
 import com.mygdx.game.world.undead1.Undead1;
 import com.mygdx.game.world.undead2.Undead2;
 import com.mygdx.game.world.undead2.Undead2Arrow;
@@ -310,6 +313,69 @@ public class CollisionDetector implements ContactListener {
         //bridge merchant sensor
         if (contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("FFFFPotionWagonSensor") || contact.getFixtureB().getUserData().toString().equals("PlayerBody") && contact.getFixtureA().getUserData().toString().equals("FFFFPotionWagonSensor")){
             Merchant.playerIsNear=true;
+        }
+        //check for BloodBall if collision is with player
+        if (contact.getFixtureA().getUserData().toString().length()>=10 && contact.getFixtureB().getUserData().toString().equals("PlayerBody") || contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().length()>=10){
+            if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("BloodBall")){
+                //make ball damage player if player is not facing ball and shielding
+                for (BloodBall bloodBall : darkknight.level1.level1Enemies.getNecromancer1().getActions().getBloodBalls()){
+                    if (bloodBall.getName().equals(contact.getFixtureA().getUserData().toString())){
+                        if (!(bloodBall.getBody().getLinearVelocity().x<0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding())){
+                                darkknight.player.getPlayerCombat().takeDamage(BloodBall.damage);
+                        } else darkknight.player.getPlayerCombat().block();
+                    }
+                }
+                //destroy the arrow
+                Level1.level1Enemies.getNecromancer1().getActions().destroyBloodBall(contact.getFixtureA().getUserData().toString());
+            }
+            if (contact.getFixtureB().getUserData().toString().substring(0,9).equals("BloodBall")){
+                //make ball damage player if player is not facing ball and shielding
+                for (BloodBall bloodBall : darkknight.level1.level1Enemies.getNecromancer1().getActions().getBloodBalls()){
+                    if (bloodBall.getName().equals(contact.getFixtureB().getUserData().toString())){
+                        if (!(bloodBall.getBody().getLinearVelocity().x<0 && !darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding())){
+                            darkknight.player.getPlayerCombat().takeDamage(BloodBall.damage);
+                        } else darkknight.player.getPlayerCombat().block();
+                    }
+                }
+                //destroy the blood ball
+                Level1.level1Enemies.getNecromancer1().getActions().destroyBloodBall(contact.getFixtureB().getUserData().toString());
+            }
+        }
+        //check for blood balls if collision is not player and not attackable but is pushable
+        if (contact.getFixtureA().getUserData().toString().length()>=10 && contact.getFixtureB().getUserData().toString().charAt(1)=='T' && contact.getFixtureB().getUserData().toString().charAt(2)=='F' || contact.getFixtureA().getUserData().toString().charAt(1)=='T' && contact.getFixtureA().getUserData().toString().charAt(2)=='F' && contact.getFixtureB().getUserData().toString().length()>=10){
+            if (contact.getFixtureA().getUserData().toString().substring(0,9).equals("BloodBall")){
+                Level1.level1Enemies.getNecromancer1().getActions().destroyBloodBall(contact.getFixtureA().getUserData().toString());
+            }
+            if (contact.getFixtureB().getUserData().toString().substring(0,9).equals("BloodBall")){
+                Level1.level1Enemies.getNecromancer1().getActions().destroyBloodBall(contact.getFixtureB().getUserData().toString());
+            }
+        }
+        //check for blood meteor if collision is not player and not attackable but is walkable
+        if (contact.getFixtureA().getUserData().toString().equals("BloodMeteor") && contact.getFixtureB().getUserData().toString().charAt(0)=='T' && contact.getFixtureB().getUserData().toString().charAt(2)=='F' || contact.getFixtureA().getUserData().toString().charAt(0)=='T' && contact.getFixtureA().getUserData().toString().charAt(2)=='F' && contact.getFixtureB().getUserData().toString().equals("BloodMeteor")){
+            if (!Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().isExploding()) {
+                Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().setExploding(true);
+                darkknight.bodiesToDestroy.add(Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().getBody());
+            }
+            if (!Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().isExploding()) {
+                Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().setExploding(true);
+                darkknight.bodiesToDestroy.add(Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().getBody());
+            }
+        }
+        //blood meteor and player body
+        //check for blood meteor if collision is not player and not attackable but is walkable
+        if (contact.getFixtureA().getUserData().toString().equals("BloodMeteor") && contact.getFixtureB().getUserData().toString().equals("PlayerBody") || contact.getFixtureA().getUserData().toString().equals("PlayerBody") && contact.getFixtureB().getUserData().toString().equals("BloodMeteor")){
+            //damage player if not shielding and facing right
+            if (!(!darkknight.player.getPlayerGraphics().getSpritePlayer().isFlipX() && darkknight.player.getPlayerCombat().isShielding())){
+                darkknight.player.getPlayerCombat().takeDamage(BloodMeteor.damage);
+            }
+            if (!Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().isExploding()) {
+                Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().setExploding(true);
+                darkknight.bodiesToDestroy.add(Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().getBody());
+            }
+            if (!Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().isExploding()) {
+                Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().setExploding(true);
+                darkknight.bodiesToDestroy.add(Level1.level1Enemies.getNecromancer1().getActions().getBloodMeteor().getBody());
+            }
         }
     }
 

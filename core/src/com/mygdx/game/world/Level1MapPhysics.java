@@ -12,7 +12,7 @@ public class Level1MapPhysics {
     private BoxCollider groundBox1 = new BoxCollider(16,6,16,1,"TFFFGroundBody1");
     private BoxCollider groundBox2 = new BoxCollider(173,14,47*3,1,"TFFFGroundBody2");
     private BoxCollider groundBox3 = new BoxCollider(364,10,60,1,"TFFFGroundBody3");
-    private BoxCollider groundBox4 = new BoxCollider(484,14,60,1,"TFFFGroundBody4");
+    private BoxCollider groundBox4 = new BoxCollider(564,14,140,1,"TFFFGroundBody4");
     private BoxCollider wallBox1 = new BoxCollider(33f,10,1,3,"FTFFWallBody1");
     private BoxCollider wallBox2 = new BoxCollider(5,19,1,12,"FTFFWallBody2");
     //test joy body

@@ -52,6 +52,16 @@ public class Level1MapGraphics {
     private EarthTile earthTile24 = new EarthTile(208+16*18,8,4);
     private EarthTile earthTile25 = new EarthTile(208+16*19,8,4);
     private EarthTile earthTile26 = new EarthTile(208+16*20,8,4);
+    private EarthTile earthTile27 = new EarthTile(208+16*21,8,4);
+    private EarthTile earthTile28 = new EarthTile(208+16*22,8,4);
+    private EarthTile earthTile29 = new EarthTile(208+16*23,8,4);
+    private EarthTile earthTile30 = new EarthTile(208+16*24,8,4);
+    private EarthTile earthTile31 = new EarthTile(208+16*25,8,4);
+    private EarthTile earthTile32 = new EarthTile(208+16*26,8,4);
+    private EarthTile earthTile33 = new EarthTile(208+16*27,8,4);
+    private EarthTile earthTile34 = new EarthTile(208+16*28,8,4);
+    private EarthTile earthTile35 = new EarthTile(208+16*29,8,4);
+    private EarthTile earthTile36 = new EarthTile(208+16*30,8,4);
     private BridgeTorch bridgeTorch = new BridgeTorch(292,33f);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
@@ -111,14 +121,14 @@ public class Level1MapGraphics {
         armorySprite1.setPosition(495,15f);
         armorySprite1.setSize(8,16);
         //create bottom/level0 earthTiles
-        for (int i = -3; i < 34; i++) {
+        for (int i = -3; i < 44; i++) {
             level0EarthSprites.add(new EarthTile(16*i,-8,2).getSprite());
             if (i<0){
                 level0EarthSprites.add(new EarthTile(16*i,0,1).getSprite());
             }
         }
         //create level1 earthTiles
-        for (int i = 2; i < 34; i++) {
+        for (int i = 2; i < 44; i++) {
             level1EarthSprites.add(new EarthTile(16*i,0,2).getSprite());
         }
         earthSprites.add(earthTile1.getSprite());
@@ -147,6 +157,16 @@ public class Level1MapGraphics {
         earthSprites.add(earthTile24.getSprite());
         earthSprites.add(earthTile25.getSprite());
         earthSprites.add(earthTile26.getSprite());
+        earthSprites.add(earthTile27.getSprite());
+        earthSprites.add(earthTile28.getSprite());
+        earthSprites.add(earthTile29.getSprite());
+        earthSprites.add(earthTile30.getSprite());
+        earthSprites.add(earthTile31.getSprite());
+        earthSprites.add(earthTile32.getSprite());
+        earthSprites.add(earthTile33.getSprite());
+        earthSprites.add(earthTile34.getSprite());
+        earthSprites.add(earthTile35.getSprite());
+        earthSprites.add(earthTile36.getSprite());
         bushSprites.add(bushSprite1);
         bushSprites.add(bush2Sprite1);
         bushSprites.add(bush2Sprite2);

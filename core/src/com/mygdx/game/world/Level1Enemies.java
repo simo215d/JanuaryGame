@@ -1,6 +1,7 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.world.necromancer.Necromancer;
 import com.mygdx.game.world.targetdummy.TargetDummy;
 import com.mygdx.game.world.undead1.Undead1;
 import com.mygdx.game.world.undead2.Undead2;
@@ -20,6 +21,8 @@ public class Level1Enemies {
     //undead2s
     private Undead2 undead2_1 = new Undead2("TTTFUndead2_1",190,60);
     public ArrayList<Undead2> undead2s = new ArrayList<>();
+    //necromancer
+    private Necromancer necromancer1 = new Necromancer();
     //bonfire test
     private DamageObject bonfire = new DamageObject("FFFTbonfire1",5,5,"bonfire1Sheet.png",5,1,0.3f,40,14, 2.5f, 1, false, true);
     private DamageObject toxicEarth = new DamageObject("FFFTToxicEarth1",20,5,"earthWithToxicSheet.png",2,1,1f,208+16*6,8, 22f, 3, false, true);
@@ -52,6 +55,7 @@ public class Level1Enemies {
     public void draw(Batch batch){
         int undead1IndexToDelete = -1;
         int undead2IndexToDelete = -1;
+        necromancer1.update(batch);
         for (ArrayList list : enemies){
             for (TargetDummy targetDummy : targetDummies){
                 targetDummy.draw(batch);
@@ -100,6 +104,9 @@ public class Level1Enemies {
                 undead2.takeDamage(damage);
             }
         }
+        if (necromancer1.getName().equals(name)){
+            necromancer1.takeDamage(damage);
+        }
     }
 
     public void enterCombatWith(String name){
@@ -114,5 +121,12 @@ public class Level1Enemies {
                 undead2.setInCombat(true);
             }
         }
+        if (necromancer1.getName().equals(name)){
+            necromancer1.setInCombat(true);
+        }
+    }
+
+    public Necromancer getNecromancer1(){
+        return necromancer1;
     }
 }
