@@ -25,6 +25,7 @@ public class Level1MapGraphics {
     private Texture tower1Texture = new Texture(Gdx.files.internal("tower1.png"));
     private Texture tent1Texture = new Texture(Gdx.files.internal("tent1.png"));
     private Texture armoryTexture = new Texture(Gdx.files.internal("armoryStand.png"));
+    private Texture guard2Texture = new Texture(Gdx.files.internal("guard2.png"));
     //top level earthSprites are always made this way
     private EarthTile earthTile1 = new EarthTile(0,0,1);
     private EarthTile earthTile2 = new EarthTile(16,0,1);
@@ -65,6 +66,7 @@ public class Level1MapGraphics {
     private BridgeTorch bridgeTorch = new BridgeTorch(292,33f);
     private Sprite treeSprite1;
     private Sprite bushSprite1;
+    private Sprite bushSprite2;
     private Sprite bush2Sprite1;
     private Sprite bush2Sprite2;
     private Sprite joySprite1;
@@ -72,10 +74,13 @@ public class Level1MapGraphics {
     private Sprite tree2Sprite2;
     private Sprite tree2Sprite3;
     private Sprite tree2Sprite4;
+    private Sprite tree2Sprite5;
+    private Sprite tree2Sprite6;
     private Sprite tower1Sprite1;
     private Sprite tent1Sprite1;
     private Sprite tent1Sprite2;
     private Sprite armorySprite1;
+    private Sprite guard2Sprite;
     private BridgeLift bridgeLift = new BridgeLift();
     //we need this because the constructor build the body
     private Shroom shroom1 = new Shroom();
@@ -108,6 +113,12 @@ public class Level1MapGraphics {
         tree2Sprite4 = new Sprite(tree2Texture,0,0,32,64);
         tree2Sprite4.setPosition(492,15f);
         tree2Sprite4.setSize(16,32);
+        tree2Sprite5 = new Sprite(tree2Texture,0,0,32,64);
+        tree2Sprite5.setPosition(530,15f);
+        tree2Sprite5.setSize(16,32);
+        tree2Sprite6 = new Sprite(tree2Texture,0,0,32,64);
+        tree2Sprite6.setPosition(660,15f);
+        tree2Sprite6.setSize(16,32);
         tower1Sprite1 = new Sprite(tower1Texture,0,0,64,64);
         tower1Sprite1.setPosition(-35,7.5f);
         tower1Sprite1.setSize(32,32);
@@ -120,6 +131,9 @@ public class Level1MapGraphics {
         armorySprite1 = new Sprite(armoryTexture,0,0,16,32);
         armorySprite1.setPosition(495,15f);
         armorySprite1.setSize(8,16);
+        guard2Sprite = new Sprite(guard2Texture,0,0,32,32);
+        guard2Sprite.setPosition(445,15f);
+        guard2Sprite.setSize(16,16);
         //create bottom/level0 earthTiles
         for (int i = -3; i < 44; i++) {
             level0EarthSprites.add(new EarthTile(16*i,-8,2).getSprite());
@@ -177,6 +191,8 @@ public class Level1MapGraphics {
         treeSprites.add(tree2Sprite2);
         treeSprites.add(tree2Sprite3);
         treeSprites.add(tree2Sprite4);
+        treeSprites.add(tree2Sprite5);
+        treeSprites.add(tree2Sprite6);
         buildings.add(tower1Sprite1);
         buildings.add(tent1Sprite1);
         buildings.add(tent1Sprite2);
@@ -223,6 +239,7 @@ public class Level1MapGraphics {
         }
         bridgeLift.draw(batch);
         bridgeTorch.draw(batch);
+        guard2Sprite.draw(batch);
     }
 
     //TODO DISPOSE SHIT?
