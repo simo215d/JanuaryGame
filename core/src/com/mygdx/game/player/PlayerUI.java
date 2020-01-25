@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.darkknight;
 import com.mygdx.game.player.PlayerEffects.DeathTextEffect;
+import com.mygdx.game.player.PlayerEffects.VictoryAnimationEffect;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class PlayerUI {
      */
     //death screen
     private DeathTextEffect deathTextEffect = null;
+    private VictoryAnimationEffect victoryAnimationEffect = null;
 
     public PlayerUI(){
         //spell frame
@@ -157,11 +159,22 @@ public class PlayerUI {
         if (deathTextEffect!=null){
             deathTextEffect.draw(batch, camera.position.x,camera.position.y);
         }
+        if (victoryAnimationEffect!=null){
+            victoryAnimationEffect.draw(batch,camera.position.x, camera.position.y);
+        }
     }
 
     public void setDeathTextEffect(){
         if (deathTextEffect==null)
         deathTextEffect=new DeathTextEffect();
+    }
+
+    public void setVictoryAnimationEffect(){
+        victoryAnimationEffect = new VictoryAnimationEffect();
+    }
+
+    public VictoryAnimationEffect getVictoryAnimationEffect(){
+        return victoryAnimationEffect;
     }
 
     public void setDeathTextEffectToNull(){

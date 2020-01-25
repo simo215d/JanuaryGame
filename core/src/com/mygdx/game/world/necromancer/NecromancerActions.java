@@ -9,6 +9,7 @@ public class NecromancerActions {
     private int health;
     private int maxHealth;
     private String actionState = "idle";
+    private boolean isDead;
     //combat fields
     private boolean inCombat;
     private boolean canAct = true;
@@ -30,16 +31,19 @@ public class NecromancerActions {
     }
 
     public void takeDamage(int damage){
-        health-=damage;
-        if (health<=0){
-            System.out.println("I DIED ;D");
-            health=maxHealth;
-        }
-        renderRed=true;
-        renderRedStartTime=(int) darkknight.gameTimeCentiSeconds;
-        damageNumbers.add(new DamageNumber(damage, damageNumbers));
-        if (!inCombat){
-            setInCombat(true);
+        if (!isDead) {
+            health -= damage;
+            if (health <= 0) {
+                isDead = true;
+                health = 0;
+                actionState="death";
+            }
+            renderRed = true;
+            renderRedStartTime = (int) darkknight.gameTimeCentiSeconds;
+            damageNumbers.add(new DamageNumber(damage, damageNumbers));
+            if (!inCombat) {
+                setInCombat(true);
+            }
         }
     }
 
@@ -62,7 +66,7 @@ public class NecromancerActions {
         if (isPaused && darkknight.gameTimeCentiSeconds-pauseTime>30){
             setPaused(false);
         }
-        if (inCombat && canAct && !isPaused) fight();
+        if (inCombat && canAct && !isPaused && !isDead) fight();
     }
 
     private void fight(){
@@ -136,6 +140,7 @@ public class NecromancerActions {
     }
 
     public void setPaused(boolean b){
+        if (!isDead)
         actionState="idle";
         pauseTime=darkknight.gameTimeCentiSeconds;
         isPaused=b;
@@ -152,5 +157,9 @@ public class NecromancerActions {
     public void setBloodMeteorToNull(){
         bloodMeteor=null;
         System.out.println("METEOR IS NULL NOW :D:DD:DD:");
+    }
+
+    public boolean isDead(){
+        return isDead;
     }
 }

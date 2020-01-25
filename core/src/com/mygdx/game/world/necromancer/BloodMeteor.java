@@ -41,7 +41,7 @@ public class BloodMeteor {
         //box2d
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x-5, y+2);
+        bodyDef.position.set(x-5, y+8);
         bodyDef.fixedRotation=true;
         body = darkknight.world.createBody(bodyDef);
         body.setGravityScale(4);

@@ -21,7 +21,7 @@ public class NecromancerPhysics {
         //box2d body
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(new Vector2(115, 40));
+        bodyDef.position.set(new Vector2(650, 40));
         bodyDef.fixedRotation=true;
         body = darkknight.world.createBody(bodyDef);
         colliderShape = new PolygonShape();

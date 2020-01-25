@@ -7,23 +7,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.darkknight;
 
-public class DeathAnimationEffect {
-    //animation alive
-    private int FRAME_COLS = 7, FRAME_ROWS = 1;
+public class VictoryAnimationEffect {
+    private int FRAME_COLS = 17, FRAME_ROWS = 1;
     private Animation<TextureRegion> animation;
     private Texture sheet;
     private float stateTime;
-    private float frameDuration = 0.25f;
-    private float x;
-    private float y;
-    private boolean isFlipX;
+    private static float frameDuration = 0.2f;
 
-    public DeathAnimationEffect(float x, float y, boolean isFlipX){
-        this.x=x;
-        this.y=y;
-        this.isFlipX=isFlipX;
+    public VictoryAnimationEffect(){
         //animation
-        sheet = new Texture(Gdx.files.internal("knightDeathSheet.png"));
+        sheet = new Texture(Gdx.files.internal("uiVictorySheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth() / FRAME_COLS, sheet.getHeight() / FRAME_ROWS);
         TextureRegion[] animationFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
@@ -36,16 +29,17 @@ public class DeathAnimationEffect {
         stateTime = 0f;
     }
 
-    public void draw(Batch batch){
+    public void draw(Batch batch, float x, float y){
         stateTime += Gdx.graphics.getDeltaTime();
         // Get current frame of animation for the current stateTime
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
         //draw frame with position and scale
-        batch.draw(currentFrame, x-8, y-3, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
-        if (stateTime>=frameDuration*FRAME_COLS*FRAME_ROWS){
-            darkknight.player.setDeathAnimationEffectToNull();
-            darkknight.player.getPlayerUI().setDeathTextEffect();
-            sheet.dispose();
+        batch.draw(currentFrame, x-50, y-35, (float) sheet.getWidth() / FRAME_COLS / 2, (float) sheet.getHeight() / FRAME_ROWS / 2);
+        //when to respawn player again
+        if (stateTime>frameDuration*FRAME_COLS*FRAME_ROWS*1.5f){
+            Gdx.app.exit();
+            //doing this because there still seems to be some things open/in use, in Task manager
+            System.exit(0);
         }
     }
 }

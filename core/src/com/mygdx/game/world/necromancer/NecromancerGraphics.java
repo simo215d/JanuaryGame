@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.darkknight;
 
 public class NecromancerGraphics {
     private boolean hasLaunched;
@@ -33,7 +34,7 @@ public class NecromancerGraphics {
     private Texture sheet_shoot;
     private float stateTime_shoot;
     //death animation
-    private static final int FRAME_COLS_death = 4, FRAME_ROWS_death = 1;
+    private static final int FRAME_COLS_death = 6, FRAME_ROWS_death = 1;
     private Animation<TextureRegion> animation_death;
     private Texture sheet_death;
     private float stateTime_death;
@@ -93,7 +94,7 @@ public class NecromancerGraphics {
                 frames_death[index_death++] = tmp_death[i][j];
             }
         }
-        animation_death = new Animation<TextureRegion>(0.10f, frames_death);
+        animation_death = new Animation<TextureRegion>(0.25f, frames_death);
         stateTime_death = 0f;
     }
 
@@ -153,15 +154,21 @@ public class NecromancerGraphics {
                     batch.draw(currentFrame_death, physics.getBody().getPosition().x-16, physics.getBody().getPosition().y-10,32,32);
                     batch.setColor(Color.WHITE);
                 } else batch.draw(currentFrame_death, physics.getBody().getPosition().x-16, physics.getBody().getPosition().y-10,32,32);
+                if (stateTime_death>0.25f*FRAME_COLS_death*FRAME_ROWS_death){
+                    if (darkknight.player.getPlayerUI().getVictoryAnimationEffect()==null)
+                    darkknight.player.getPlayerUI().setVictoryAnimationEffect();
+                }
                 break;
         }
         //render the healthBar
-        redHealthBarSprite.setPosition(-2.5f+physics.getBody().getPosition().x,physics.getBody().getPosition().y+10);
-        redHealthBarSprite.draw(batch);
-        greenHealthBarSprite.setPosition(-2.5f+physics.getBody().getPosition().x,physics.getBody().getPosition().y+10);
-        //this calculates the scale of the green bar based on how many percent the object is missing from its max health
-        float healthScale = 5f*((float) actions.getHealth()/(float) actions.getMaxHealth());
-        greenHealthBarSprite.setSize(healthScale,greenHealthBarSprite.getHeight());
-        greenHealthBarSprite.draw(batch);
+        if (!actions.isDead()) {
+            redHealthBarSprite.setPosition(-2.5f + physics.getBody().getPosition().x, physics.getBody().getPosition().y + 10);
+            redHealthBarSprite.draw(batch);
+            greenHealthBarSprite.setPosition(-2.5f + physics.getBody().getPosition().x, physics.getBody().getPosition().y + 10);
+            //this calculates the scale of the green bar based on how many percent the object is missing from its max health
+            float healthScale = 5f * ((float) actions.getHealth() / (float) actions.getMaxHealth());
+            greenHealthBarSprite.setSize(healthScale, greenHealthBarSprite.getHeight());
+            greenHealthBarSprite.draw(batch);
+        }
     }
 }
