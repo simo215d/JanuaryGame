@@ -186,7 +186,7 @@ public class Level1MapGraphics {
         bushSprites.add(bush2Sprite2);
         treeSprites.add(treeSprite1);
         shroomSprites.add(shroom1.getShroomSprite());
-        joyers.add(joySprite1);
+        //joyers.add(joySprite1);
         treeSprites.add(tree2Sprite1);
         treeSprites.add(tree2Sprite2);
         treeSprites.add(tree2Sprite3);

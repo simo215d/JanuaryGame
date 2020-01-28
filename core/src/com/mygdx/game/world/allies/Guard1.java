@@ -44,9 +44,9 @@ public class Guard1 {
         sprite_R.setPosition(44f,15f);
         sprite_R.setSize(16,16);
         //sprite text
-        sprite_T = new Sprite(texture_T,0,0,128,16);
-        sprite_T.setPosition(36f,31f);
-        sprite_T.setSize(32,4);
+        sprite_T = new Sprite(texture_T,0,0,128,70);
+        sprite_T.setPosition(36,29);
+        sprite_T.setSize(32,17.5f);
         //box2d
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

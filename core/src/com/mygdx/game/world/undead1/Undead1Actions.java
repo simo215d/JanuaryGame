@@ -8,11 +8,11 @@ import com.mygdx.game.world.DamageNumber;
 import java.util.ArrayList;
 
 public class Undead1Actions {
-    private Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/sound_oof.mp3"));
+    //private Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/sound_oof.mp3"));
     private Sound slamSound = Gdx.audio.newSound(Gdx.files.internal("sounds/donk.mp3"));
     private Sound swingSound = Gdx.audio.newSound(Gdx.files.internal("sounds/klonk.mp3"));
     private Sound missSound = Gdx.audio.newSound(Gdx.files.internal("sounds/woosh.mp3"));
-    private Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("sounds/marioScream.mp3"));
+    //private Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("sounds/marioScream.mp3"));
     private String actionState = "idle";
     private int health;
     private int maxHealth;
@@ -48,11 +48,11 @@ public class Undead1Actions {
         if(health-damage<=0){
             health=0;
             if (isAlive){
-                deathSound.play();
+                //deathSound.play();
             }
             isAlive=false;
         } else{
-            takeDamageSound.play();
+            //takeDamageSound.play();
             health-=damage;
         }
         inCombat=true;

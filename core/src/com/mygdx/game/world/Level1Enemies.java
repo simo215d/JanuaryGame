@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Level1Enemies {
     ArrayList<ArrayList> enemies = new ArrayList<>();
     //targetDummies
-    private TargetDummy targetDummy2 = new TargetDummy("TTTFDummyBody2",20, 60);
-    private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 20, 50);
+    //private TargetDummy targetDummy2 = new TargetDummy("TTTFDummyBody2",20, 60);
+    private TargetDummy targetDummy1 = new TargetDummy("TTTFDummyBody1", 7.5f, 35);
     public ArrayList<TargetDummy> targetDummies = new ArrayList<>();
     //undead1s
     private Undead1 undead1_1 = new Undead1("TTTFUndead1_1",160,60);
@@ -40,7 +40,7 @@ public class Level1Enemies {
         enemies.add(undead1s);
         enemies.add(shroomToxics);
         targetDummies.add(targetDummy1);
-        targetDummies.add(targetDummy2);
+        //targetDummies.add(targetDummy2);
         undead1s.add(undead1_1);
         undead1s.add(undead1_2);
         undead2s.add(undead2_1);
