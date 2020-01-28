@@ -139,7 +139,7 @@ public class Undead1Actions {
                 numberOfAttacks-=1;
                 recentlyAttackedWithSlam=true;
                 recentlyAttackedWithSwing=false;
-                missSound.play();
+                missSound.play(0.5f);
             }
         }
         if (attack.equals("swinging")){
@@ -148,7 +148,7 @@ public class Undead1Actions {
                 numberOfAttacks-=1;
                 recentlyAttackedWithSlam=false;
                 recentlyAttackedWithSwing=true;
-                missSound.play();
+                missSound.play(0.5f);
             }
         }
         if (numberOfAttacks==0){
