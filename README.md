@@ -11,3 +11,6 @@ Button 4 prepares three small fireballs. press 4 again to launch them one at a t
 Ability 3 and 4 requires mana to use.  </br>
 Reaching 0 health will result in death and the player respawns at the beginning. </br>
 Killing the final boss with result in victory and the game will shut down.  </br>
+
+### Screenshot from game
+![GitHub Logo](https://user-images.githubusercontent.com/54975711/73264870-0ae6ee00-41d4-11ea-8fc7-75c21716f8c1.png)
