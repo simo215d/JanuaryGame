@@ -2,8 +2,7 @@
 school project - January game development project
 
 
-written in java using libgdx and box2d
-
+written in java using libgdx and box2d </br>
 art made with Aseprite
 
 
