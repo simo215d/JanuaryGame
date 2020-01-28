@@ -1,5 +1,4 @@
 # JanuaryGame
-school project - January game development project </br> </br>
 ### How is it made
 written in java using libgdx and box2d </br>
 art made with Aseprite </br> </br>
