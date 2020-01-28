@@ -1,7 +1,7 @@
 # JanuaryGame
 ### How is it made
-Written in java using libgdx and box2d </br>
-Art and animations made with Aseprite </br>
+Written in java using libgdx and box2d. </br>
+Art and animations made with Aseprite. </br>
 ### About the game and how to play
 You control a character with q (move left), w (jump), e (move right) and r (interact). </br>
 Button 1 is a sword which strikes alle enemies in front of the player. </br>
