@@ -1,6 +1,6 @@
 # JanuaryGame
-### Link to repository with jar which you can download
-https://github.com/simo215d/JanuaryGame_JarFile </br>
+### Link to my website where you can download the jar
+https://simo215d.github.io/ </br>
 ### How is it made
 Written in java using libgdx and box2d. </br>
 Art and animations made with Aseprite. </br>
